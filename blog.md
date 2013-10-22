@@ -51,7 +51,7 @@ thrown by request handling (<code>@RequestMapping</code>) methods in the same co
 
   1. Handle exceptions without the <code>@ResponseStatus</code> annotation (typically predefined exceptions
 that you didn't write)
-  2. Redirect the user to a customer error view
+  2. Redirect the user to a dedicated error view
   3. Build a totally custom error response
 
 The following controller demonstrates these three options:
@@ -134,13 +134,11 @@ driven interceptor.
 Any class annotated with <code>@ControllerAdvice</code> becomes a controller-advice and three types of method
 are supported:
 
-<ul>
-<li>Exception handling methods annotated with <code>@ExceptionHandler</code></li>
-<li>Model enhancement methods (for adding additional data to the model) annotated with
-<code>@ModelAttribute</code></li>
-<li>Binder initialization methods (used for configuring form-handling) annotated with
-<code>@InitBinder</code></li>
-</ul>
+  * Exception handling methods annotated with <code>@ExceptionHandler</code>.
+  * Model enhancement methods (for adding additional data to the model) annotated with
+<code>@ModelAttribute</code>.  Note that these attributes are _not_ available to the exception handling views.
+  * Binder initialization methods (used for configuring form-handling) annotated with
+<code>@InitBinder</code>.
 
 We are only going to look at exception handling - see the online manual for more on
 <code>@ControllerAdvice</code> methods.
@@ -202,7 +200,7 @@ public interface HandlerExceptionResolver {
 ```
 
 The <code>handler</code> refers to the controller that generated the exception (remember that
-<code>@Cotnroller</code> instances are only one type of handler supported by Spring MVC.
+<code>@Controller</code> instances are only one type of handler supported by Spring MVC.
 For example: <code>HttpInvokerExporter</code> and the WebFlow Executor are also types of handler). 
 
 Behind the scenes, MVC creates three such resolvers by default.  It is these resolvers that implement the
@@ -211,7 +209,7 @@ behaviours discussed above:
   * <code>ResponseStatusExceptionResolver</code> looks for uncaught exceptions
 annotated by <code>@ResponseStatus</code> (as described in Section 1)
   * <code>DefaultHandlerExceptionResolver</code> converts standard Spring exceptions and converts them
-to HTTP Status Codes (I have not mentioned this above as it is internal Spring MVC).
+to HTTP Status Codes (I have not mentioned this above as it is internal to Spring MVC).
   * <code>ExceptionHandlerExceptionResolver</code> matches uncaught exceptions against for
 suitable <code>@ExceptionHandler</code> methods on both the handler and on any controller-advices.
 
@@ -230,7 +228,8 @@ already - the <code>SimpleMappingExceptionResolver</code>.  It provides options 
   * Specify a default (fallback) error page for any exception not handled anywhere else
   * Log a message (this is not enabled by default).
   * Set the name of the <code>exception</code> attribute to add to the Model so it can be used inside a View
-(such as a JSP). By default this attribute is named ```exception```.  Set to ```null``` to disable.
+(such as a JSP). By default this attribute is named ```exception```.  Set to ```null``` to disable.  Remember
+that views returned from `@ExceptionHandler` methods _do not_ have access to the exception.
 
 Here is a typical configuration using XML:
 
@@ -327,7 +326,7 @@ To make sure it gets used, also set the inherited order property (for example in
 your new class) to a value less than <code>MAX_INT</code> so it runs _before_ the default
 ExceptionHandlerExceptionResolver instance (it is easier to create your own handler instance than try to
 modify/replace the one created by Spring.  See <code>ExampleExceptionHandlerExceptionResolver</code> in the
-demo app for details.
+demo app for details).
 
 ###Errors and REST
 
