@@ -7,6 +7,9 @@
 	<name>Demo application for Exception Handling Blog</name>
 	<packaging>war</packaging>
 
+	<!-- Must inherit from the Spring Boot parent POM . Note that we are using 
+		milestone 5. Spring Boot is still in pre-release so some of the APIs may 
+		change before final release. -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -16,6 +19,7 @@
 	<!-- Spring boot automatically picks up any other dependencies that it recognises 
 		such as JPA or the Jackson marshaller. -->
 	<dependencies>
+		<!-- Spring Boot itself. Version number inherited from parent POM. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -26,19 +30,21 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
-		<!-- Thymeleaf for page rendering -->
+		<!-- Thymeleaf for page rendering. This dependency must exist or Spring 
+			Boot will not setup Thymeleaf. -->
 		<dependency>
 			<groupId>org.thymeleaf</groupId>
 			<artifactId>thymeleaf-spring3</artifactId>
 		</dependency>
 
-		<!-- JSP for one demo page as well -->
+		<!-- Need the following for JSP to work as well -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		
+
+		<!-- Run with Tomct embedded. Can use other containers if you prefer. -->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
