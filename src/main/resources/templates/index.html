@@ -1,0 +1,98 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Exception Blog Demo Code</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style>
+li {
+	margin-bottom: 1em;
+} /* Quick and dirtly styling */
+</style>
+</head>
+<body>
+	<h1>Exceptions Demo</h1>
+
+	<p th:switch="${profile}">
+		Demo running with <span th:text="${profile}">profile</span> profile: <span
+			th:case="'GLOBAL'">Exceptions handled globally using a <tt>@ControllerAdvice</tt>
+			and <tt>SimpleMappingExceptionResolver</tt>.
+		</span> <span th:case="'CONTROLLER'">Exceptions handled locally by the
+			controller, unhandled exceptions handled by Spring-Boot's default
+			error-view.</span>
+	</p>
+
+	<p>Each of the links below demonstrates one of the exceptions
+		discussed in the Blog (see http://).</p>
+
+	<p>
+		By default the exceptions are handled by the controller that raises
+		them. To switch to global exception handling using a
+		<tt>@ControllerAdvice</tt>
+		edit
+		<tt>Main.java</tt>
+		, then find its constructor and change the profile from
+		<tt>CONTROLLER_PROFILE</tt>
+		to
+		<tt>GLOBAL_PROFILE</tt>
+		. To fully understand this demo, review the output in the server log
+		as you click the links below.
+	</p>
+	<p>
+		This demo uses the <a href="http://thymeleaf.org">Thymeleaf</a> view
+		generation system to generate HTML pages (it's a nice alternative to
+		JSP and configured by Spring Boot automatically).
+	</p>
+	<p>
+		The <i>Whitelabel Error Page</i> is the default error page generated
+		by Spring-Boot. When the GLOBAL profile is enabled, so is the
+		<tt>SimpleMappingExceptionResolver</tt>
+		and its default error view runs instead.
+	</p>
+
+	<ul>
+		<li>Throw <a href="orderNotFound">OrderNotFoundException</a> -
+			should generate a 404.
+		</li>
+		<li>Throw <a href="dataIntegrityViolation">DataIntegrityViolationException</a>
+			- should generate a 409.
+		</li>
+		<li>Throw <a href="databaseError1">SQLException</a> - should
+			return a specific database-error page.
+		</li>
+		<li>Throw <a href="databaseError2">DataAccessException</a> -
+			should also return the database-error page. Demonstrates catching
+			multiple exceptions with one handler.
+		</li>
+		<li>Throw <a href="invalidCreditCard">InvalidCreditCardException</a>
+			- should generate a specific credit-card error page due to
+			configuration of <tt>SimpleMappingExceptionResolver</tt> (GLOBAL
+			profile only, otherwise Default Error page is used).
+		</li>
+		<li>Throw <a href="databaseException">DatabaseException</a> -
+			should generate a specific database-error page due to configuration
+			of <tt>SimpleMappingExceptionResolver</tt> (GLOBAL profile only,
+			otherwise Default Error page is used).
+		</li>
+		<li>Throw <a href="customException">CustomException</a> - should
+			generate a support oriented error page with hidden stack-trace hidden
+			in the page source. <i>This is the only page generated using JSP
+				(Thymeleaf cannot yet generate dynamic output inside HTML comments -
+				planned for V2.1)</i>
+		</li>
+		<li>Throw <a href="unhandledException">UnhandledException</a> -
+			should invoke the default (fall-back) error page. Note how
+			uninformative it is. Subclass <tt>SimpleMappingExceptionResolver</tt>
+			and override its <tt>getModelAndView()</tt> method to make additional
+			context available in the model and in the error page. Or go with the
+			default error-page from Spring Boot.
+		</li>
+		<li>A genuinely <a href="unknown">Unknown page</a>. There is no
+			handler for this URL, so the framework will generate a 404. (No
+			exception handlers do this, this is the standard Spring MVC response
+			to a URL it has no handler for).
+		</li>
+	</ul>
+
+</body>
+</html>

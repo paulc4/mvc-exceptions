@@ -1,0 +1,44 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Exception Blog Demo Code</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Database Error</h1>
+	<p>An internal data storage error has occurred accessing:
+	<ul>
+		<tt th:text="${#httpServletRequest.requestURL}" />
+	</ul>
+	</p>
+
+	<h3>Notes</h3>
+	<p>Notice that there is very little information here. Firstly,
+		end-users should not see internal exception details, but secondly, no
+		exception details are available anyway.</p>
+	<p>
+		Compare this to the code in
+		<tt>ExceptionHandlingController.handleError()</tt>
+		or
+		<tt>GlobalControllerExceptionHandler.handleError()</tt>
+		which explicitly creates a Model and can put extra details into it.
+	</p>
+	<p>
+		Alternatively you could extend <a
+			href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/mvc/method/annotation/ExceptionHandlerExceptionResolver.html">
+			ExceptionHandlerExceptionResolver</a> and override
+	</p>
+	<pre>    doResolveHandlerMethodException(HttpServletRequest request, HttpServletResponse response,
+        HandlerMethod handlerMethod, Exception exception)</pre>
+	<p>
+		to add exception and other attributes to the model. Also set the
+		inherited
+		<tt>order</tt>
+		data-member to a value less than MAX_INT so it runs before the default
+		<tt>ExceptionHandlerExceptionResolver</tt>
+		instance (it is easier to create your own handler than try to modify
+		the one created by Spring.
+	</p>
+</body>
+</html>

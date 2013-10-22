@@ -1,0 +1,33 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Exception Blog Demo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Custom Error Page</h1>
+	<p>Application has encountered an error. Please contact support on
+		...</p>
+
+	<p>
+		Failed URL:
+		<tt th:text="${url}">a url</tt>
+		generated
+		<tt th:text="${exception}">exception details</tt>
+	</p>
+
+
+	<span th:remove="tag">
+	<div th:inline="${details}">details</div>
+		[[${details}]]
+	</span>
+
+	<!--
+    Failed URL: [[${url}]]
+    Exception:  ${exception.message}
+        <c:forEach items="${exception.stackTrace}" var="ste">    ${ste} 
+    </c:forEach>
+    -->
+</body>
+</html>
