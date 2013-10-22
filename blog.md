@@ -9,6 +9,10 @@ where possible.  They are a cross-cutting concern better handled separately in d
 
 There are three options: per exception, per controller or globally.
 
+_A demonstration application that shows the points discussed here can be found at
+<a href="https://github.com/paulc4/mvc-exceptions">https://github.com/paulc4/mvc-exceptions</a>.
+See <a href="#sample-application-and-spring-boot">Sample Application and Spring Boot</a> below for details._
+
 ##Using HTTP Status Codes
 
 Normally any unhandled exception thrown when processing a web-request causes the server to return an
@@ -317,12 +321,13 @@ public class MyMappingExceptionResolver extends SimpleMappingExceptionResolver {
 
 It is also possible to extend <code>ExceptionHandlerExceptionResolver</code> and override its
 <code>doResolveHandlerMethodException</code> method in the same way. It has almost the same signature
-(it takes the new <code>HandlerMethod</code> instead of a <code>Handler</code>).
+(it just takes the new <code>HandlerMethod</code> instead of a <code>Handler</code>).
 
-To make sure it gets used, also set the inherited order data-member (for example in the constructor of
+To make sure it gets used, also set the inherited order property (for example in the constructor of
 your new class) to a value less than <code>MAX_INT</code> so it runs _before_ the default
 ExceptionHandlerExceptionResolver instance (it is easier to create your own handler instance than try to
-modify/replace the one created by Spring.
+modify/replace the one created by Spring.  See <code>ExampleExceptionHandlerExceptionResolver</code> in the
+demo app for details.
 
 ###Errors and REST
 
