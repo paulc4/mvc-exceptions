@@ -402,6 +402,6 @@ usual way.
 In the demo application I show how to create a support-ready error page with a stack-trace hidden in the
 HTML source (as a comment).  Turns out you cannot currently do this with Thymeleaf (next release they tell me)
 so I have used JSP instead for just that page.  There is some additional configuration in the demo code to
-allow JSP and Thymeleaf to work side by side (Spring Boot cannot set this up automatically - see Javadoc
-in <code>ExtraThymeleadConfiguration</code> for details).
+allow JSP and Thymeleaf to work side by side (Spring Boot cannot set this up automatically - it needs application
+specific information.  See Javadoc in <code>ExtraThymeleadConfiguration</code> for details).
 
