@@ -381,8 +381,8 @@ However if you have a preference for XML configuration or Annotations, that's fi
 A demonstration application can be found at <a href="http://github.com/paulc4/mvc-exceptions">github</a>.
 It uses Spring Boot and Thymeleaf to build a simple web application.  Some explanation is needed ...
 
-<a href="htp://spring.io/spring-boot">Spring Boot</a> allows a Spring project to be setup with
-minimal configuration. Spring Boot sets up the most commonly used defaults automatically when it detects
+<a href="http://spring.io/spring-boot">Spring Boot</a> allows a Spring project to be setup with
+minimal configuration. Spring Boot creates sensible defaults automatically when it detects
 certain key classes and packages on the claspath.  For example if it sees that you are using a Servlet
 environment, it sets up Spring MVC with the most commonly used view-resolvers, hander mappings and so forth.
 If it sees JSP and/or Thymeleaf, it sets up these view-layers.
