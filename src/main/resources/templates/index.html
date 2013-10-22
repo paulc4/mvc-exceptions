@@ -23,7 +23,7 @@ li {
 	</p>
 
 	<p>Each of the links below demonstrates one of the exceptions
-		discussed in the Blog (see http://).</p>
+		discussed in the Blog (see http://spring.io).</p>
 
 	<p>
 		By default the exceptions are handled by the controller that raises
@@ -94,5 +94,18 @@ li {
 		</li>
 	</ul>
 
+	<h3>Spring Boot URLs</h3>
+	<p>For those interested, Spring Boot provides RESTful URLs for
+		interogating your application (they return JSON):</p>
+
+	<ul>
+		<li><a th:href="@{/beans}">The beans</a></li>
+		<li><a th:href="@{/env}">The environment</a></li>
+		<li><a th:href="@{/dump}">Thread dump</a></li>
+		<li><a th:href="@{/health}">Application health</a></li>
+		<li><a th:href="@{/info}">Application information</a></li>
+		<li><a th:href="@{/metrics}">Application metrics</a></li>
+		<li><a th:href="@{/trace}">Request call trace</a></li>
+	</ul>
 </body>
 </html>
