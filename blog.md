@@ -123,7 +123,9 @@ do something like this to output the exception and the corresponding stack-trace
     -->
 ```
 
-The result looks like this: [INSERT IMAGE].
+The result looks like this:
+
+![Example of an error page with a hidden exception for support](http://assets.spring.io/wp/wp-content/uploads/2013/10/support-page-example.png "Error Page with Hidden Exception")
 
 ##Global Exception handling using @ControllerAdvice Classes
 
