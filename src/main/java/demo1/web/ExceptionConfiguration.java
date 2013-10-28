@@ -28,7 +28,7 @@ public class ExceptionConfiguration {
 	public ExceptionConfiguration() {
 		logger = LoggerFactory.getLogger(getClass());
 	}
-
+	
 	/**
 	 * Setup the classic SimpleMappingExceptionResolver. This provides useful
 	 * defaults for logging and handling exceptions. It has been part of Spring

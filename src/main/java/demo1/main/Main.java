@@ -1,12 +1,15 @@
 package demo1.main;
 
-import org.springframework.boot.SpringApplication;
+import java.util.Properties;
+
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.AbstractEnvironment;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.web.context.support.StandardServletEnvironment;
 
 /**
  * Main entry point for our application using Spring Boot. It can be run as an
@@ -36,7 +39,10 @@ public class Main extends SpringBootServletInitializer {
 	public static final String GLOBAL_PROFILE = "global";
 
 	// Set true for Global exception handling profile
-	protected boolean global = true;
+	protected boolean global = false;
+
+	// Holds Spring Boot configuration properties
+	protected Properties props = new Properties();
 
 	/**
 	 * We are using the constructor to perform some useful initialisations:
@@ -45,25 +51,37 @@ public class Main extends SpringBootServletInitializer {
 	 * selects how exceptions will be handled. Profiles are a Spring feature
 	 * from V3.1 onwards.
 	 * <li>Disable Thymeleaf caching. See {@link ThymeleafAutoConfiguration} to
-	 * see how this is used.
+	 * see how this is used.</li>
+	 * <li>Enable DEBUG level logging so you can see Spring MVC as its working.</li>
 	 * </ol>
 	 */
 	public Main() {
-		// Set active profiles - in this case, just one.
-		System.setProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME,
-				global ? GLOBAL_PROFILE : CONTROLLER_PROFILE);
 
 		// Disable caching - during development if a page is changed, the
-		// changes can be seen next time it is rendered. Should be true in
+		// changes can be seen next time it is rendered. Should be 'true' in
 		// production for efficiency.
-		System.setProperty("spring.thymeleaf.cache", "false");
+		props.setProperty("spring.thymeleaf.cache", "false");
 
-		// Setup JSP. The "support" error view shows how to embed exception
+		// Setup JSP by defining the prefix and suffix properties of the
+		// InternalResourceViewResolver.
+		//
+		// NOTE: The "support" error view shows how to embed exception
 		// information inside an HTML comment so it is only visible by looking
 		// at the page source. We are only using JSP for this one page because
-		// Thymeleaf can't yet generate dynamic content inside comments.
-		System.setProperty("spring.view.prefix", "/WEB-INF/");
-		System.setProperty("spring.view.suffix", ".jsp");
+		// Thymeleaf can't (yet) generate dynamic content inside comments.
+		props.setProperty("spring.view.prefix", "/WEB-INF/");
+		props.setProperty("spring.view.suffix", ".jsp");
+
+		// Set these as system properties (for now) and they will get picked up
+		// by Spring Boot. In Spring Boot M6 the builder can set these - see
+		// configure(SpringApplicationBuilder() below.
+		//
+		// Alternatively put them in the Spring Boot properties file:
+		// classpath:application.properties
+		System.setProperties(props);
+
+		// Enable internal logging for Spring MVC
+		DemoUtilities.setLogLevel("org.springframework.web", "DEBUG");
 	}
 
 	/**
@@ -94,7 +112,9 @@ public class Main extends SpringBootServletInitializer {
 	 *            Any command line arguments.
 	 */
 	protected void runAsJavaApplication(String[] args) {
-		SpringApplication.run(Main.class, args);
+		SpringApplicationBuilder application = new SpringApplicationBuilder();
+		configure(application);
+		application.run(args);
 	}
 
 	/**
@@ -105,6 +125,12 @@ public class Main extends SpringBootServletInitializer {
 	@Override
 	protected void configure(SpringApplicationBuilder application) {
 		application.sources(Main.class);
+
+		// Set active profiles - in this case, just one.
+		application.profiles(global ? GLOBAL_PROFILE : CONTROLLER_PROFILE);
+
+		// In Spring Boot M6, we can use the builder.
+		// application.properties(props);
 	}
 
 }

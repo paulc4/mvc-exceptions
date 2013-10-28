@@ -33,6 +33,7 @@ public class DemoUtilities {
 	 */
 	public static void setLogLevel(String loggerName, String newLevel) {
 		Logger slf4jLogger = LoggerFactory.getLogger(loggerName);
+		System.out.println(" >>> >>> >>> >>> LOGGER IS A " + slf4jLogger.getClass());
 
 		// Work out what type of logging sl4j is using and set the logging level
 		if (slf4jLogger instanceof ch.qos.logback.classic.Logger)

@@ -44,7 +44,7 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Run with Tomct embedded. Can use other containers if you prefer. -->
+		<!-- Run with Tomcat embedded. Can use other containers if you prefer. -->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>

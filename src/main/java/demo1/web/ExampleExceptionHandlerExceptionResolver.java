@@ -9,7 +9,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExc
 
 /**
  * Not used in this application, but an example of how to extend the
- * <t>ExceptionHandlerExceptionResolver</tt> to provide extra information in the
+ * <tt>ExceptionHandlerExceptionResolver</tt> to provide extra information in the
  * model for the view. To use, add a @Bean method to
  * {@link ExceptionConfiguration} to return an instance.
  * 
