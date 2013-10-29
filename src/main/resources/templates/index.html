@@ -44,10 +44,15 @@ li {
 		JSP and configured by Spring Boot automatically).
 	</p>
 	<p>
-		The <i>Whitelabel Error Page</i> is the default error page generated
-		by Spring-Boot. When the GLOBAL profile is enabled, so is the
+		Spring-Boot sets up <i>error</i> view as the default because Thymeleaf
+		has the corresponding <i>error.html</i> template. Rename <i>error.html</i>
+		to <i>error2.html</i> to see the difference.
+	</p>
+	<p>
+		When the GLOBAL profile is enabled, so is the
 		<tt>SimpleMappingExceptionResolver</tt>
-		and its default error view runs instead.
+		and its default error view is used. This can be seen when clicking on
+		the <i>unhandledException</i> link.
 	</p>
 
 	<ul>

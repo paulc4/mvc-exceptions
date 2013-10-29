@@ -125,9 +125,12 @@ public class Main extends SpringBootServletInitializer {
 	}
 
 	/**
-	 * Tell Spring Boot that we are the entry-point class when running as a
-	 * Servlet application. This method is only used when running in a
-	 * container.
+	 * Configure the application usign the supplied builder. This method is
+	 * invoked automatically when running in a container and explicitly by
+	 * {@link #runAsJavaApplication(String[])}.
+	 * 
+	 * @param application
+	 *            Spring Boot application builder.
 	 */
 	@Override
 	protected void configure(SpringApplicationBuilder application) {
@@ -140,20 +143,14 @@ public class Main extends SpringBootServletInitializer {
 				useJavaConfig ? Profiles.JAVA_CONFIG_PROFILE
 						: Profiles.XML_CONFIG_PROFILE);
 
-		// Set additional properties. Ugly cast because Properties is a
-		// Map<Object,Object>. This API does not exist in 0.5.0.M5 or earlier.
-		//    application.properties((Map<String, Object>) ((Map) props));
-
 		// Convert our properties to a list of Strings
 		List<String> strings = new ArrayList<String>();
 		for (Map.Entry<Object, Object> entry : props.entrySet())
 			strings.add((String) entry.getKey() + "=" + entry.getValue());
 
- 		application.properties(strings.toArray(new String[props.size()]));
-
-		// Old code (0.5.0.M5 or earlier)
-		// Iterate over the properties and use System.setProperty() instead.
-		// Do NOT use System.setProperties(props) or you will lose all the
-		// default System properties and get some very weird errors!!
+		// Set additional properties. This API does not exist in 0.5.0.M5 or
+		// earlier. Note: the other overloading (using a Map<String,Object>)
+		// works differently and is not suitable here.
+		application.properties(strings.toArray(new String[props.size()]));
 	}
 }
