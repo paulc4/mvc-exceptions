@@ -4,16 +4,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>mvc-exceptions</artifactId>
-	<name>Demo application for Exception Handling Blog</name>
+	<name>Demo application for Spring Exception Handling Blog</name>
 	<packaging>war</packaging>
 
 	<!-- Must inherit from the Spring Boot parent POM . Note that we are using 
-		milestone 5. Spring Boot is still in pre-release so some of the APIs may 
-		change before final release. -->
+		the current snapshot release. Spring Boot is still in pre-release so some 
+		of the APIs may change before final release. -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>0.5.0.M5</version>
+		<version>0.5.0.BUILD-SNAPSHOT</version>
 	</parent>
 
 	<!-- Spring boot automatically picks up any other dependencies that it recognises 

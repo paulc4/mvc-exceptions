@@ -239,10 +239,11 @@ Here is a typical configuration using XML:
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
             <map>
-                <entry key="DataAccessException" value="databaseError"/>
+                <entry key="DatabaseException" value="databaseError"/>
                 <entry key="InvalidCreditCardException" value="creditCardError"/>
             </map>
         </property>
+        <!-- See note below on how this interacts with Spring Boot -->
         <property name="defaultErrorView" value="error"/>
         <property name="exceptionAttribute" value="ex"/>
         
@@ -263,7 +264,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
               new SimpleMappingExceptionResolver();
 
         Properties mappings = new Properties();
-        mappings.setProperty("SimpleMappingExceptionResolver", "databaseError");
+        mappings.setProperty("DatabaseException", "databaseError");
         mappings.setProperty("InvalidCreditCardException", "creditCardError");
 
         r.setExceptionMappings(mappings);  // None by default
@@ -382,6 +383,30 @@ However if you have a preference for XML configuration or Annotations, that's fi
 A demonstration application can be found at <a href="http://github.com/paulc4/mvc-exceptions">github</a>.
 It uses Spring Boot and Thymeleaf to build a simple web application.  Some explanation is needed ...
 
+####About the Demo
+The demo runs in one of two modes: _controller_ or _global_.  This is set via a boolean
+flag in class <tt>Main</tt> which in turn enables a corresponding Spring Bean profile.
+
+  1. When <tt>Main.global</tt> is set to <tt>false</tt>, _controller_ mode is enabled.
+     The <tt>ExceptionHandlingController</tt> is created which handles all requests
+     and also any exceptions generated.
+  2. When <tt>Main.global</tt> is set to <tt>true</tt>, _global_ mode is enabled.
+     The 
+
+A description of the most important files in the application is in the project's
+<a href="http://github.com/paulc4/mvc-exception/README.md">README.md.
+The one and only web-page is <a href="http://github.com/paulc4/mvc-exception/src/resources/templates/index.html">index.html
+- it contains several links, all of which raise exceptions.  There is also a list of
+Spring Boot endpoints for those interested in Spring Boot.
+
+####Warning
+
+  * This project is built using the latest M5 snapshot release of Spring Boot.
+  * APIs may have changed and this project may not build.
+  * Check http://spring.io/spring-boot for snapshot, milestone and other releases.
+  * Update the pom.xml if necessary.
+
+#### About Sring Boot
 <a href="http://spring.io/spring-boot">Spring Boot</a> allows a Spring project to be setup with
 minimal configuration. Spring Boot creates sensible defaults automatically when it detects
 certain key classes and packages on the claspath.  For example if it sees that you are using a Servlet
@@ -392,17 +417,22 @@ Spring MVC offers no default (fall-back) error page out-of-the-box.  The most co
 page has always been the <code>SimpleMappingExceptionResolver</code> (since Spring V1 in fact). However
 Spring Boot does provide a default error-handling page - the so-called "Whitelabel Error Page".  A minimal
 page with just the HTTP status information and any error details (such as the message from an uncaught
-exception).  By defining a <code>@Bean</code> method called <code>defaultErrorView()</code> you can
-return your own error <code>View</code> instance.
+exception).  If you run the application in _controller_ mode you will see it being used.
 
-What if you are already using <code>SimpleMappingExceptionResolver</code> to do this?  Simple, define
-a <code>defaultErrorView()</code> method that returns <code>null</code>.  This stops Spring Boot setting
-up a default error page, so the system falls back onto <code>SimpleMappingExceptionResolver</code> in the
-usual way.
+At start-up, Spring Boot tries to find a view called "error" that matches your view technology. Otherwise it
+defines its fall-back "Whitelabel" error page.  By defining a <code>@Bean</code> method
+called <code>defaultErrorView()</code> you can return your own error <code>View</code> instance.
+(see <tt>ErrorMvcAutoConfiguration</tt> for more information).
+
+What if you are already using <code>SimpleMappingExceptionResolver</code> to setup a default
+error view?  Simple, make sure the <code>defaultErrorView</code> property is called _error_
+and it will override the default from Spring Boot.  (Make sure you are using Spring Boot
+version <code>0.5.0.BUILD-SNAPSHOT</code> or later.  This does _not_ work with milestone
+<code>0.5.0.M5</code> or earlier).
 
 In the demo application I show how to create a support-ready error page with a stack-trace hidden in the
 HTML source (as a comment).  Turns out you cannot currently do this with Thymeleaf (next release they tell me)
 so I have used JSP instead for just that page.  There is some additional configuration in the demo code to
 allow JSP and Thymeleaf to work side by side (Spring Boot cannot set this up automatically - it needs application
-specific information.  See Javadoc in <code>ExtraThymeleadConfiguration</code> for details).
+specific information.  See Javadoc in <a href="http://github.com/paulc4/mvc-exception/src/main/java/demo1/web/ExtraThymeleadConfiguration>ExtraThymeleadConfiguration</a> for details).
 

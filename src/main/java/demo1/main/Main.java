@@ -1,15 +1,18 @@
 package demo1.main;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.core.env.AbstractEnvironment;
-import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.web.context.support.StandardServletEnvironment;
+import org.springframework.context.annotation.ImportResource;
 
 /**
  * Main entry point for our application using Spring Boot. It can be run as an
@@ -20,26 +23,34 @@ import org.springframework.web.context.support.StandardServletEnvironment;
  * <li><tt>@EnableAutoConfiguration</tt>: makes Spring Boot setup its defaults.
  * <li><tt>@ComponentScan</tt>: Scan for @Component classes, including @Configuration
  * classes.
- * <li><tt>@ImportResource</tt>: Import Spring XML configuration files.
+ * <li><tt>@ImportResource</tt>: Import Spring XML configuration file(s).
  * </ul>
  * 
  * @author Paul Chapman
  */
 @EnableAutoConfiguration
 @ComponentScan("demo1.web")
-// Find controllers
+@ImportResource("classpath:mvc-configuration.xml")
 public class Main extends SpringBootServletInitializer {
 
-	// Controller profile - exceptions handled by methods on the
-	// ExceptionController class.
-	public static final String CONTROLLER_PROFILE = "controller";
+	/**
+	 * Set true for Global exception handling profile. Value = <b>{@value} </b>
+	 * 
+	 * @see Profiles
+	 */
+	public static final boolean global = false;
 
-	// Global profile - exceptions handled via a @ControllerAdvice
-	// instance.
-	public static final String GLOBAL_PROFILE = "global";
+	/**
+	 * Set to true for Java Configuration or false for XML configuration. Value
+	 * = <b>{@value} </b>. This profile is only used if {@link #global} is
+	 * <tt>true</tt>.
+	 * 
+	 * @see Profiles
+	 */
+	public static final boolean useJavaConfig = true;
 
-	// Set true for Global exception handling profile
-	protected boolean global = false;
+	// Local logger
+	protected Logger logger;
 
 	// Holds Spring Boot configuration properties
 	protected Properties props = new Properties();
@@ -57,6 +68,9 @@ public class Main extends SpringBootServletInitializer {
 	 */
 	public Main() {
 
+		logger = LoggerFactory.getLogger(getClass());
+		logger.info("Application starting");
+
 		// Disable caching - during development if a page is changed, the
 		// changes can be seen next time it is rendered. Should be 'true' in
 		// production for efficiency.
@@ -72,16 +86,8 @@ public class Main extends SpringBootServletInitializer {
 		props.setProperty("spring.view.prefix", "/WEB-INF/");
 		props.setProperty("spring.view.suffix", ".jsp");
 
-		// Set these as system properties (for now) and they will get picked up
-		// by Spring Boot. In Spring Boot M6 the builder can set these - see
-		// configure(SpringApplicationBuilder() below.
-		//
-		// Alternatively put them in the Spring Boot properties file:
-		// classpath:application.properties
-		System.setProperties(props);
-
 		// Enable internal logging for Spring MVC
-		DemoUtilities.setLogLevel("org.springframework.web", "DEBUG");
+		LoggingUtilities.setLogLevel("org.springframework.web", "DEBUG");
 	}
 
 	/**
@@ -115,6 +121,7 @@ public class Main extends SpringBootServletInitializer {
 		SpringApplicationBuilder application = new SpringApplicationBuilder();
 		configure(application);
 		application.run(args);
+		logger.info("Go to this URL: http://localhost:8080/");
 	}
 
 	/**
@@ -126,11 +133,27 @@ public class Main extends SpringBootServletInitializer {
 	protected void configure(SpringApplicationBuilder application) {
 		application.sources(Main.class);
 
-		// Set active profiles - in this case, just one.
-		application.profiles(global ? GLOBAL_PROFILE : CONTROLLER_PROFILE);
+		// Set active profiles. Note that XML_CONFIG and JAVA_CONFIG are only
+		// used when GLOBAL_PROFILE is also active.
+		application.profiles(global ? Profiles.GLOBAL_PROFILE
+				: Profiles.CONTROLLER_PROFILE,
+				useJavaConfig ? Profiles.JAVA_CONFIG_PROFILE
+						: Profiles.XML_CONFIG_PROFILE);
 
-		// In Spring Boot M6, we can use the builder.
-		// application.properties(props);
+		// Set additional properties. Ugly cast because Properties is a
+		// Map<Object,Object>. This API does not exist in 0.5.0.M5 or earlier.
+		//    application.properties((Map<String, Object>) ((Map) props));
+
+		// Convert our properties to a list of Strings
+		List<String> strings = new ArrayList<String>();
+		for (Map.Entry<Object, Object> entry : props.entrySet())
+			strings.add((String) entry.getKey() + "=" + entry.getValue());
+
+ 		application.properties(strings.toArray(new String[props.size()]));
+
+		// Old code (0.5.0.M5 or earlier)
+		// Iterate over the properties and use System.setProperty() instead.
+		// Do NOT use System.setProperties(props) or you will lose all the
+		// default System properties and get some very weird errors!!
 	}
-
 }

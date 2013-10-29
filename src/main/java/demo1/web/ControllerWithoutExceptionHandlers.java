@@ -18,6 +18,7 @@ import demo1.exceptions.DatabaseException;
 import demo1.exceptions.InvalidCreditCardException;
 import demo1.exceptions.OrderNotFoundException;
 import demo1.exceptions.UnhandledException;
+import demo1.main.Profiles;
 
 /**
  * A controller whose request-handler methods deliberately throw exceptions to
@@ -30,7 +31,7 @@ import demo1.exceptions.UnhandledException;
  * @author Paul Chapman
  */
 @Controller
-@Profile("global")
+@Profile(Profiles.GLOBAL_PROFILE)
 public class ControllerWithoutExceptionHandlers {
 
 	protected Logger logger;
@@ -45,12 +46,15 @@ public class ControllerWithoutExceptionHandlers {
 
 	/**
 	 * What profile are we currently using?
+	 * <p>
+	 * Note that error views do not have automatically have access to the model,
+	 * so they do not have access to model-attributes either.
 	 * 
 	 * @return Always "GLOBAL".
 	 */
 	@ModelAttribute("profile")
 	public String getProfile() {
-		return "GLOBAL";
+		return Profiles.GLOBAL_PROFILE.toUpperCase();
 	}
 
 	/**

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.dao.DataAccessException;
@@ -25,6 +26,7 @@ import demo1.exceptions.DatabaseException;
 import demo1.exceptions.InvalidCreditCardException;
 import demo1.exceptions.OrderNotFoundException;
 import demo1.exceptions.UnhandledException;
+import demo1.main.Profiles;
 
 /**
  * A controller whose request-handler methods deliberately throw exceptions to
@@ -37,8 +39,11 @@ import demo1.exceptions.UnhandledException;
  * @author Paul Chapman
  */
 @Controller
-@Profile("controller")
+@Profile(Profiles.CONTROLLER_PROFILE)
 public class ExceptionHandlingController {
+
+	@Autowired
+	ThymeleafHelper helper;
 
 	protected Logger logger;
 
@@ -47,17 +52,20 @@ public class ExceptionHandlingController {
 	}
 
 	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-	/* . . . . . . . . . . . . . . MODEL ATTRIBUTES . . . . . . . . . . . . . . */
+	/* . . . . . . . . . . . . . . MODEL ATTRIBUTES . . . . . . . . . . . . .. */
 	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 	/**
 	 * What profile are we currently using?
+	 * <p>
+	 * Note that error views do not have automatically have access to the model,
+	 * so they do not have access to model-attributes either.
 	 * 
 	 * @return Always "CONTROLLER".
 	 */
 	@ModelAttribute("profile")
 	public String getProfile() {
-		return "CONTROLLER";
+		return Profiles.CONTROLLER_PROFILE.toUpperCase();
 	}
 
 	/**
@@ -71,7 +79,7 @@ public class ExceptionHandlingController {
 	}
 
 	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-	/* . . . . . . . . . . . . . . REQUEST HANDLERS . . . . . . . . . . . . . . */
+	/* . . . . . . . . . . . . . . REQUEST HANDLERS . . . . . . . . . . . . .. */
 	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 	/**
@@ -200,7 +208,7 @@ public class ExceptionHandlingController {
 	}
 
 	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-	/* . . . . . . . . . . . . . EXCEPTION HANDLERS . . . . . . . . . . . . . . */
+	/* . . . . . . . . . . . . . EXCEPTION HANDLERS . . . . . . . . . . . . .. */
 	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 	// Convert a predefined exception to an HTTP Status code
@@ -238,20 +246,6 @@ public class ExceptionHandlingController {
 		mav.addObject("exception", exception);
 		mav.addObject("url", req.getRequestURI());
 		mav.addObject("timestamp", getTimestamp());
-
-		StringBuffer sb = new StringBuffer();
-		sb.append("<!-- url: ");
-		sb.append(req.getRequestURI());
-		sb.append("\n");
-
-		for (StackTraceElement ste : exception.getStackTrace()) {
-			sb.append("&nbsp; &nbsp; ");
-			sb.append(ste.toString());
-			sb.append("\n");
-		}
-
-		sb.append("-->\n");
-		mav.addObject("details", sb.toString());
 
 		mav.setViewName("support");
 		return mav;

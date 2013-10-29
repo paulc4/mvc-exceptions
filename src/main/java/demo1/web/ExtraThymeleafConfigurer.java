@@ -36,8 +36,9 @@ public class ExtraThymeleafConfigurer {
 	public ExtraThymeleafConfigurer(ThymeleafViewResolver resolver) {
 		logger = LoggerFactory.getLogger(getClass());
 
-		// Hide support from Thymeleaf so it can be rendered via JSP instead.
-		logger.info("Hiding 'support' view from Thymeleaf.  Allows JSP to render it instead.");
+		// Hide 'support' view from Thymeleaf so it can be rendered via JSP
+		// instead.
+		logger.info("Hiding 'support' view from Thymeleaf. Allows JSP to render it instead.");
 		resolver.setExcludedViewNames(new String[] { "support" });
 	}
 }

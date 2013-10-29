@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import demo1.exceptions.CustomException;
+import demo1.main.Profiles;
 
 /**
  * Performs the same exception handling as {@link ExceptionHandlingController}
@@ -28,7 +29,7 @@ import demo1.exceptions.CustomException;
  * @author Paul Chapman
  */
 @ControllerAdvice
-@Profile("global")
+@Profile(Profiles.GLOBAL_PROFILE)
 public class GlobalControllerExceptionHandler {
 
 	protected Logger logger;
@@ -76,6 +77,7 @@ public class GlobalControllerExceptionHandler {
 		mav.addObject("exception", exception);
 		mav.addObject("url", req.getRequestURI());
 		mav.addObject("timestamp", new Date().toString());
+		
 		mav.setViewName("support");
 		return mav;
 	}

@@ -1,6 +1,12 @@
 mvc-exceptions
 ==============
 
+WARNINGS:
+    This project is built using the latest M5 snapshot release of Spring Boot.
+    APIs may change and this project may not build.
+    Check http://spring.io/spring-boot for snapshot, milestone and other releases.
+    Update the pom.xml if necessary.
+
 Demo of points covered on my MVC Exceptions blog
 
 The files are:
@@ -17,6 +23,8 @@ The files are:
      * A couple of utilities used elsewhere - the code is put here to keep the classes that use them simpler.
   * <code>src/main/java/demo1/main/Main.java</code>
      * Main entyr point for the application.  Can run as a Java application (using an embedded Tomcat container) or as a WAR inside a container.  Sets a few inisialization properties.
+  * <code>src/main/java/demo1/main/Profiles.java</code>
+    * The Spring Bean profiles used in the application.
   * <code>src/main/java/demo1/web/BeanLogger.java</code>
      * Simple BeanPostProcessor to log all beana created.  Not required by the demo, but as Spring Boot is new, it allows all the beans created to be logged.
   * <code>src/main/java/demo1/web/ControllerWithoutExceptionHandlers.java</code>
