@@ -319,6 +319,9 @@ public class MyMappingExceptionResolver extends SimpleMappingExceptionResolver {
 }
 ```
 
+This code is in the demo application as
+<a href="https://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/web/ExampleSimpleMappingExceptionResolver.java">ExampleSimpleMappingExceptionResolver</a>
+
 ###Extending ExceptionHandlerExceptionResolver
 
 It is also possible to extend <code>ExceptionHandlerExceptionResolver</code> and override its
@@ -328,8 +331,9 @@ It is also possible to extend <code>ExceptionHandlerExceptionResolver</code> and
 To make sure it gets used, also set the inherited order property (for example in the constructor of
 your new class) to a value less than <code>MAX_INT</code> so it runs _before_ the default
 ExceptionHandlerExceptionResolver instance (it is easier to create your own handler instance than try to
-modify/replace the one created by Spring.  See <code>ExampleExceptionHandlerExceptionResolver</code> in the
-demo app for details).
+modify/replace the one created by Spring).  See
+<a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/web/ExampleExceptionHandlerExceptionResolver.java">ExampleExceptionHandlerExceptionResolver</a>
+in the demo app for more.
 
 ###Errors and REST
 
@@ -378,35 +382,41 @@ However if you have a preference for XML configuration or Annotations, that's fi
    what order controller-advices are processed.
 </ul>
 
-###Sample Application and Spring Boot
+##Sample Application and Spring Boot
 
 A demonstration application can be found at <a href="http://github.com/paulc4/mvc-exceptions">github</a>.
 It uses Spring Boot and Thymeleaf to build a simple web application.  Some explanation is needed ...
 
-####About the Demo
+###About the Demo
 The demo runs in one of two modes: _controller_ or _global_.  This is set via a boolean
-flag in class <tt>Main</tt> which in turn enables a corresponding Spring Bean profile.
+flag in class <a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/main/Main.java">Main</a>
+which in turn enables a corresponding Spring Bean profile.
 
-  1. When <tt>Main.global</tt> is set to <tt>false</tt>, _controller_ mode is enabled.
-     The <tt>ExceptionHandlingController</tt> is created which handles all requests
-     and also any exceptions generated.
-  2. When <tt>Main.global</tt> is set to <tt>true</tt>, _global_ mode is enabled.
-     The 
+  1. When <tt>Main.global</tt> is set to <tt>false</tt>, _controller_ mode is enabled. A
+     <a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/web/ExceptionHandlingController.java">ExceptionHandlingController</a></tt>
+     is created which handles all requests and also any exceptions generated.
+  2. When <tt>Main.global</tt> is set to <tt>true</tt>, _global_ mode is enabled. A
+     <a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/web/ControllerWithoutExceptionHandlers.java">ControllerWithoutExceptionHandlers</a>
+     is created to just handle requests.  Exceptions are handled globally by an instance of 
+     <code>SimpleMappingExceptionResolver</code> and by
+     <a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/web/GlobalControllerExceptionHandler.java">GlobalControllerExceptionHandler</a>
+     which is a controller-advice.
 
 A description of the most important files in the application is in the project's
-<a href="http://github.com/paulc4/mvc-exception/README.md">README.md.
-The one and only web-page is <a href="http://github.com/paulc4/mvc-exception/src/resources/templates/index.html">index.html
-- it contains several links, all of which raise exceptions.  There is also a list of
+<a href="http://github.com/paulc4/mvc-exceptions/blob/master/README.md">README.md</a>.
+The one and only web-page is
+<a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/resources/templates/index.html">index.html</a>
+- it contains several links, all of which raise exceptions.  At the bottom of the page are links to
 Spring Boot endpoints for those interested in Spring Boot.
 
-####Warning
+###Warning
 
   * This project is built using the latest M5 snapshot release of Spring Boot.
   * APIs may have changed and this project may not build.
   * Check http://spring.io/spring-boot for snapshot, milestone and other releases.
   * Update the pom.xml if necessary.
 
-#### About Sring Boot
+###About Spring Boot
 <a href="http://spring.io/spring-boot">Spring Boot</a> allows a Spring project to be setup with
 minimal configuration. Spring Boot creates sensible defaults automatically when it detects
 certain key classes and packages on the claspath.  For example if it sees that you are using a Servlet
@@ -434,5 +444,9 @@ In the demo application I show how to create a support-ready error page with a s
 HTML source (as a comment).  Turns out you cannot currently do this with Thymeleaf (next release they tell me)
 so I have used JSP instead for just that page.  There is some additional configuration in the demo code to
 allow JSP and Thymeleaf to work side by side (Spring Boot cannot set this up automatically - it needs application
-specific information.  See Javadoc in <a href="http://github.com/paulc4/mvc-exception/src/main/java/demo1/web/ExtraThymeleadConfiguration>ExtraThymeleadConfiguration</a> for details).
+specific information.  See Javadoc in
+<a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/web/ExtraThymeleafConfigurer.java">ExtraThymeleafConfigurer</a>
+for details).
+
+
 
