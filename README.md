@@ -2,12 +2,13 @@ mvc-exceptions
 ==============
 
 WARNINGS:
-    This project is built using the latest M5 snapshot release of Spring Boot.
-    APIs may change and this project may not build.
-    Check http://spring.io/spring-boot for snapshot, milestone and other releases.
-    Update the pom.xml if necessary.
 
-Demo of points covered on my MVC Exceptions blog
+  * This project is built using the latest M5 snapshot release of Spring Boot.
+  * APIs may change and this project may not build.
+  * Check http://spring.io/spring-boot for snapshot, milestone and other releases.
+  * Update the pom.xml if necessary.
+
+This application demos most of the points covered on my MVC Exceptions blog.
 
 The files are:
 
@@ -19,8 +20,8 @@ The files are:
   * <code>src/main/java/demo1/exceptions/OrderNotFoundException.java</code>
   * <code>src/main/java/demo1/exceptions/UnhandledException.java</code>
      * Custom exceptions - see blog for usage.
-  * <code>src/main/java/demo1/main/DemoUtilities.java</code>
-     * A couple of utilities used elsewhere - the code is put here to keep the classes that use them simpler.
+  * <code>src/main/java/demo1/main/LoggingUtilities.java</code>
+     * Handy utility for setting logging levels - the code is put here to keep the classes that use it simpler.
   * <code>src/main/java/demo1/main/Main.java</code>
      * Main entyr point for the application.  Can run as a Java application (using an embedded Tomcat container) or as a WAR inside a container.  Sets a few inisialization properties.
   * <code>src/main/java/demo1/main/Profiles.java</code>
