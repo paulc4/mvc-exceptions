@@ -75,9 +75,10 @@ public class GlobalControllerExceptionHandler {
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("exception", exception);
-		mav.addObject("url", req.getRequestURI());
-		mav.addObject("timestamp", new Date().toString());
-		
+		mav.addObject("url", req.getRequestURL());
+		mav.addObject("timestamp", new Date());
+		mav.addObject("status", 500);
+
 		mav.setViewName("support");
 		return mav;
 	}

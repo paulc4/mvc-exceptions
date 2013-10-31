@@ -34,6 +34,27 @@ import org.springframework.context.annotation.ImportResource;
 public class Main extends SpringBootServletInitializer {
 
 	/**
+	 * Options for setting up a <tt>SimpleMappingExceptionResolver</tt>.
+	 * 
+	 * @see Main#smerConfig
+	 */
+	public enum ResolverSetup {
+		NONE("none"), // Do not create
+		JAVA(Profiles.JAVA_CONFIG_PROFILE), // create using Java configuration
+		XML(Profiles.XML_CONFIG_PROFILE); // create using XML
+
+		String value;
+
+		ResolverSetup(String value) {
+			this.value = value;
+		}
+
+		public String toString() {
+			return value;
+		}
+	}
+
+	/**
 	 * Set true for Global exception handling profile. Value = <b>{@value} </b>
 	 * 
 	 * @see Profiles
@@ -41,19 +62,30 @@ public class Main extends SpringBootServletInitializer {
 	public static final boolean global = false;
 
 	/**
-	 * Set to true for Java Configuration or false for XML configuration. Value
-	 * = <b>{@value} </b>. This profile is only used if {@link #global} is
-	 * <tt>true</tt>.
+	 * Is a <tt>SimpleMappingExceptionResolver</tt> to be created and if so how?
+	 * Set to 'NONE' to not define one, to 'JAVA' to configure using Java
+	 * Configuration or 'XML' for XML configuration.
 	 * 
 	 * @see Profiles
 	 */
-	public static final boolean useJavaConfig = true;
+	public static final ResolverSetup smerConfig = ResolverSetup.XML;
 
 	// Local logger
 	protected Logger logger;
 
 	// Holds Spring Boot configuration properties
 	protected Properties props = new Properties();
+
+	/**
+	 * Retrieve requested Profiles. Depends on value of {@link #global} and
+	 * {@link #useJavaConfig}.
+	 * 
+	 * @return Comma-separated list of profiles, forced to upper-case.
+	 */
+	public static String getProfiles() {
+		return (global ? Profiles.GLOBAL_PROFILE : Profiles.CONTROLLER_PROFILE)
+				+ ", " + smerConfig;
+	}
 
 	/**
 	 * We are using the constructor to perform some useful initialisations:
@@ -69,7 +101,7 @@ public class Main extends SpringBootServletInitializer {
 	public Main() {
 
 		logger = LoggerFactory.getLogger(getClass());
-		logger.info("Application starting");
+		logger.info("Application starting ");
 
 		// Disable caching - during development if a page is changed, the
 		// changes can be seen next time it is rendered. Should be 'true' in
@@ -85,6 +117,17 @@ public class Main extends SpringBootServletInitializer {
 		// Thymeleaf can't (yet) generate dynamic content inside comments.
 		props.setProperty("spring.view.prefix", "/WEB-INF/");
 		props.setProperty("spring.view.suffix", ".jsp");
+
+		// Spring boot assumes the fallback error page maps to /error. Set this
+		// property to specify an alternative mapping. If using a
+		// SimpleMappingExceptionResolver, make sure it's defaultErrorView
+		// corresponds to the same page (see ErrorMvcAutoConfiguration).
+		//
+		props.setProperty("error.path", "/error");
+
+		// Set to false to turn-off Spring Boot's error page. Unhandled
+		// exceptions will be handled by container in the usual way.
+		props.setProperty("error.whitelabel.enabled", "true");
 
 		// Enable internal logging for Spring MVC
 		LoggingUtilities.setLogLevel("org.springframework.web", "DEBUG");
@@ -136,14 +179,23 @@ public class Main extends SpringBootServletInitializer {
 	protected void configure(SpringApplicationBuilder application) {
 		application.sources(Main.class);
 
-		// Set active profiles. Note that XML_CONFIG and JAVA_CONFIG are only
-		// used when GLOBAL_PROFILE is also active.
-		application.profiles(global ? Profiles.GLOBAL_PROFILE
-				: Profiles.CONTROLLER_PROFILE,
-				useJavaConfig ? Profiles.JAVA_CONFIG_PROFILE
-						: Profiles.XML_CONFIG_PROFILE);
+		// Set active profiles.
+		// @formatter:off
+		List<String> profiles = new ArrayList<String>();
+		profiles.add(global ? Profiles.GLOBAL_PROFILE
+								: Profiles.CONTROLLER_PROFILE);
+
+		if (smerConfig != ResolverSetup.NONE)
+			profiles.add(smerConfig == ResolverSetup.JAVA ?
+		        Profiles.JAVA_CONFIG_PROFILE : Profiles.XML_CONFIG_PROFILE);
+
+		logger.info("Spring Boot configuration: profiles = " + profiles);
+		application.profiles(profiles.toArray(new String[profiles.size()]));
+		// @formatter:on
 
 		// Convert our properties to a list of Strings
+		logger.info("Spring Boot configuratoon: properties = " + props);
+
 		List<String> strings = new ArrayList<String>();
 		for (Map.Entry<Object, Object> entry : props.entrySet())
 			strings.add((String) entry.getKey() + "=" + entry.getValue());

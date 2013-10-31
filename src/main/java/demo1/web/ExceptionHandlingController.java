@@ -26,6 +26,7 @@ import demo1.exceptions.DatabaseException;
 import demo1.exceptions.InvalidCreditCardException;
 import demo1.exceptions.OrderNotFoundException;
 import demo1.exceptions.UnhandledException;
+import demo1.main.Main;
 import demo1.main.Profiles;
 
 /**
@@ -61,11 +62,11 @@ public class ExceptionHandlingController {
 	 * Note that error views do not have automatically have access to the model,
 	 * so they do not have access to model-attributes either.
 	 * 
-	 * @return Always "CONTROLLER".
+	 * @return Always includes "CONTROLLER".
 	 */
-	@ModelAttribute("profile")
-	public String getProfile() {
-		return Profiles.CONTROLLER_PROFILE.toUpperCase();
+	@ModelAttribute("profiles")
+	public String getProfiles() {
+		return Main.getProfiles();
 	}
 
 	/**
@@ -83,7 +84,7 @@ public class ExceptionHandlingController {
 	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 	/**
-	 * Controller to demonstrate exception handling..
+	 * Home page.
 	 * 
 	 * @return The view name (an HTML page with Thymeleaf markup).
 	 */
@@ -244,8 +245,9 @@ public class ExceptionHandlingController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("exception", exception);
-		mav.addObject("url", req.getRequestURI());
+		mav.addObject("url", req.getRequestURL());
 		mav.addObject("timestamp", getTimestamp());
+		mav.addObject("status", 500);
 
 		mav.setViewName("support");
 		return mav;

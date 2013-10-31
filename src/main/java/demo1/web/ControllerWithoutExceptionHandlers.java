@@ -18,6 +18,7 @@ import demo1.exceptions.DatabaseException;
 import demo1.exceptions.InvalidCreditCardException;
 import demo1.exceptions.OrderNotFoundException;
 import demo1.exceptions.UnhandledException;
+import demo1.main.Main;
 import demo1.main.Profiles;
 
 /**
@@ -50,11 +51,11 @@ public class ControllerWithoutExceptionHandlers {
 	 * Note that error views do not have automatically have access to the model,
 	 * so they do not have access to model-attributes either.
 	 * 
-	 * @return Always "GLOBAL".
+	 * @return Always includes "GLOBAL".
 	 */
-	@ModelAttribute("profile")
-	public String getProfile() {
-		return Profiles.GLOBAL_PROFILE.toUpperCase();
+	@ModelAttribute("profiles")
+	public String getProfiles() {
+		return Main.getProfiles();
 	}
 
 	/**

@@ -1,5 +1,7 @@
 package demo1.web;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -46,8 +48,11 @@ public class ExampleSimpleMappingExceptionResolver extends
 		ModelAndView mav = super.doResolveException(request, response, handler,
 				exception);
 
-		// Make the URL available to the view
-		mav.addObject("url", request.getRequestURI());
+		// Make more information available to the view - note that
+		// SimpleMappingExceptionResolver adds the exception already
+		mav.addObject("url", request.getRequestURL());
+		mav.addObject("timestamp", new Date());
+		mav.addObject("status", 500);
 		return mav;
 	}
 }

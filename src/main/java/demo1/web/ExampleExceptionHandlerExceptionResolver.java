@@ -1,5 +1,7 @@
 package demo1.web;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -55,8 +57,11 @@ public class ExampleExceptionHandlerExceptionResolver extends
 		ModelAndView mav = super.doResolveHandlerMethodException(request,
 				response, handlerMethod, exception);
 
-		// Make the URL available to the view
-		mav.addObject("url", request.getRequestURI());
+		// Make more information available to the view
+		mav.addObject("exception", exception);
+		mav.addObject("url", request.getRequestURL());
+		mav.addObject("timestamp", new Date());
+		mav.addObject("status", 500);
 		return mav;
 	}
 }

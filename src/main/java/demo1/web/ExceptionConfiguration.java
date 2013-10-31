@@ -47,7 +47,6 @@ public class ExceptionConfiguration {
 	 * @return The new resolver
 	 */
 	@Bean(name = "simpleMappingExceptionResolver")
-	@Profile(Profiles.GLOBAL_PROFILE)
 	public SimpleMappingExceptionResolver createSimpleMappingExceptionResolver() {
 		logger.info("Creating SimpleMappingExceptionResolver");
 		SimpleMappingExceptionResolver r = new SimpleMappingExceptionResolver();
