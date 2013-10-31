@@ -32,7 +32,7 @@ import demo1.web.GlobalControllerExceptionHandler;
  * @author Paul Chapman
  */
 public interface Profiles {
-
+	
 	/**
 	 * Controller profile - exceptions handled by methods on the
 	 * ExceptionController class. Value = <b>{@value} </b>
@@ -43,11 +43,13 @@ public interface Profiles {
 	 * instance. Value = <b>{@value} </b>
 	 */
 	public static final String GLOBAL_PROFILE = "global";
+
 	/**
 	 * Java configuration profile - see {@link ExceptionConfiguration}. Value =
 	 * <b>{@value} </b>
 	 */
 	public static final String JAVA_CONFIG_PROFILE = "java-config";
+
 	/**
 	 * XML configuration property - see <tt>mvc-configuration.xml</tt>. Value =
 	 * <b>{@value} </b>
