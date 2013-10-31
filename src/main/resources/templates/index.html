@@ -13,14 +13,27 @@ li {
 <body>
 	<h1>Exceptions Demo</h1>
 
-	<p th:switch="${profile}">
-		Demo running with <span th:text="${profile}">profile</span> profile: <span
-			th:case="'GLOBAL'">Exceptions handled globally using a <tt>@ControllerAdvice</tt>
-			and <tt>SimpleMappingExceptionResolver</tt>.
-		</span> <span th:case="'CONTROLLER'">Exceptions handled locally by the
-			controller, unhandled exceptions handled by Spring-Boot's default
-			error-view.</span>
+	<p>
+		Demo running with profiles: <i th:text="${profiles}">profiles</i>
 	</p>
+	<ul>
+		<li th:switch="${#strings.substringBefore(profiles,',')}"><i
+			th:text="${#strings.substringBefore(profiles,',')}">FIRST-PROFILE-NAME</i>:
+			<span th:case="'global'">Exceptions handled globally using a <code>@ControllerAdvice</code>
+				- see <code>GlobalControllerExceptionHandler</code>.
+		</span> <span th:case="'controller'">Exceptions handled locally by the
+				<code>ExceptionHandlingController</code>.
+		</span></li>
+
+		<li th:switch="${#strings.substringAfter(profiles,', ')}"><i
+			th:text="${#strings.substringAfter(profiles,', ')}">SECOND-PROFILE-NAME</i>:
+			Exceptions not handled elsewhere <span th:case="'none'">handled
+				by container. </span> <span th:case="'java-config'">passed to a <code>SimpleMappingExceptionResolver</code>
+				created via Java Configuration - see <code>ExceptionConfiguration</code>.
+		</span> <span th:case="'xml-config'">passed to a <code>SimpleMappingExceptionResolver</code>
+				created via XML Configuration - see <code>mvc-configuration.xml</code>.
+		</span></li>
+	</ul>
 
 	<p>Each of the links below demonstrates one of the exceptions
 		discussed in the Blog (see http://spring.io).</p>
@@ -28,13 +41,15 @@ li {
 	<p>
 		By default the exceptions are handled by the controller that raises
 		them. To switch to global exception handling using a
-		<tt>@ControllerAdvice</tt>
+		<code>@ControllerAdvice</code>
 		edit
-		<tt>Main.java</tt>
-		, then find its constructor and change the profile from
-		<tt>CONTROLLER_PROFILE</tt>
+		<code>Main.java</code>
+		, find the
+		<code>global</code>
+		data-member and change it from
+		<code>false</code>
 		to
-		<tt>GLOBAL_PROFILE</tt>
+		<code>true</code>
 		. To fully understand this demo, review the output in the server log
 		as you click the links below.
 	</p>
@@ -49,10 +64,20 @@ li {
 		to <i>error2.html</i> to see the difference.
 	</p>
 	<p>
-		When the GLOBAL profile is enabled, so is the
-		<tt>SimpleMappingExceptionResolver</tt>
+		When the <i>xml-config</i> or <i>java-config</i> profiles are enabled,
+		they setup a
+		<code>SimpleMappingExceptionResolver</code>
 		and its default error view is used. This can be seen when clicking on
-		the <i>unhandledException</i> link.
+		the <i>unhandledException</i> link. It is not configured by default so
+		edit
+		<code>Main.java</code>
+		, find the
+		<code>smerConfig</code>
+		data-member and change its value to
+		<code>JAVA</code>
+		or
+		<code>XML</code>
+		.
 	</p>
 
 	<ul>
@@ -71,13 +96,13 @@ li {
 		</li>
 		<li>Throw <a href="databaseException">DatabaseException</a> -
 			should generate a specific database-error page due to configuration
-			of <tt>SimpleMappingExceptionResolver</tt> (GLOBAL profile only,
-			otherwise your container's error page is used).
+			of <code>SimpleMappingExceptionResolver</code> (if configured), otherwise
+			your container's error page is used.
 		</li>
 		<li>Throw <a href="invalidCreditCard">InvalidCreditCardException</a>
 			- should generate a specific credit-card error page due to
-			configuration of <tt>SimpleMappingExceptionResolver</tt> (GLOBAL
-			profile only, otherwise your container's error page is used).
+			configuration of <code>SimpleMappingExceptionResolver</code> (if
+			configured), otherwise your container's error page is used.
 		</li>
 		<li>Throw <a href="customException">CustomException</a> - should
 			generate a support oriented error page with hidden stack-trace hidden
@@ -86,15 +111,17 @@ li {
 				planned for V2.1)</i>
 		</li>
 		<li>Throw <a href="unhandledException">UnhandledException</a> -
-			should invoke the default (fall-back) error page defined by <tt>SimpleMappingExceptionResolver</tt>
-			(GLOBAL profile only, otherwise your container's error page is used).
-			<p>
+			should invoke the default (fall-back) error page defined by <code>SimpleMappingExceptionResolver</code>
+			(if configured), otherwise your container's error page is used.
+			<p th:if="${#strings.substringAfter(profiles,', ') != 'none'}">
 				Note how uninformative it is. Subclass
-				<tt>SimpleMappingExceptionResolver</tt>
+				<code>SimpleMappingExceptionResolver</code>
 				and override its
-				<tt>getModelAndView()</tt>
+				<code>getModelAndView()</code>
 				method to make additional context available in the model and in the
-				error page. Or go with the default error-page from Spring Boot.
+				error page (see
+				<code>ExampleSimpleMappingExceptionResolver</code>
+				).
 			</p>
 		</li>
 		<li>A genuinely <a href="unknown">Unknown page</a>. There is no

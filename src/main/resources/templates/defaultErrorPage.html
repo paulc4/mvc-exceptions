@@ -16,14 +16,18 @@
       instead, just to show it can be done.
  -->
 <body>
-	<h1>Default Spring Boot Error Page</h1>
+	<h1>Default Error Page</h1>
 
-	<!--  As we are using Thymeleaf, you might consider using
-	      ${#httpServletRequest.requestURL}. But that returns the path
-	      to this error page.  Hence we explicitly add the url to the
-	      Model in some of the example code. -->
+	<!--  Note that Thymeleaf provides access to the URL anyway via
+	      ${#httpServletRequest}, see below, but it's not so easy in
+	      JSP for example. -->
 	<p th:if="${url}">
 		<b>Page:</b> <span th:text="${url}">Page URL</span>
+	</p>
+
+	<p th:if="${url == null}">
+		<b>URL:</b> <span th:text="${#httpServletRequest.requestURL}">Request
+			URL</span>
 	</p>
 
 	<p th:if="${timestamp}" id='created'>
@@ -44,7 +48,8 @@
 	</p>
 	
 	<p>
-		You are seeing this error page due to Spring Boot.
+		You are seeing this error page due to the definition of the
+		<code>SimpleMappingExceptionResolver</code>.
 	</p>
 
 </body>

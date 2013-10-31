@@ -7,11 +7,10 @@
 </head>
 <body>
 	<h1>Database Error</h1>
-	<p>An internal data storage error has occurred accessing:
-	<ul>
-		<tt th:text="${#httpServletRequest.requestURL}" />
-	</ul>
-	</p>
+	<p>An internal data storage error has occurred accessing:</p>
+	<blockquote>
+		<code th:text="${#httpServletRequest.requestURL}">Request URL</code>
+	</blockquote>
 
 	<h3>Notes</h3>
 	<p>Notice that there is very little information here. Firstly,
@@ -19,9 +18,9 @@
 		exception details are available anyway.</p>
 	<p>
 		Compare this to the code in
-		<tt>ExceptionHandlingController.handleError()</tt>
+		<code>ExceptionHandlingController.handleError()</code>
 		or
-		<tt>GlobalControllerExceptionHandler.handleError()</tt>
+		<code>GlobalControllerExceptionHandler.handleError()</code>
 		which explicitly creates a Model and can put extra details into it.
 	</p>
 	<p>
@@ -34,9 +33,9 @@
 	<p>
 		to add exception and other attributes to the model. Also set the
 		inherited
-		<tt>order</tt>
+		<code>order</code>
 		data-member to a value less than MAX_INT so it runs before the default
-		<tt>ExceptionHandlerExceptionResolver</tt>
+		<code>ExceptionHandlerExceptionResolver</code>
 		instance (it is easier to create your own handler than try to modify
 		the one created by Spring).
 	</p>
