@@ -402,8 +402,8 @@ A demonstration application can be found at <a href="http://github.com/paulc4/mv
 It uses Spring Boot and Thymeleaf to build a simple web application.  Some explanation is needed ...
 
 ###About the Demo
-The demo runs in one of two modes: _controller_ or _global_.  This is set via a boolean
-flag in class <a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/main/Main.java">Main</a>
+The demo runs in one of two modes: _controller_ or _global_.  This is set via a boolean property in class
+<a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/main/Main.java">Main</a>
 which in turn enables a corresponding Spring Bean profile.
 
   * When <tt>Main.global</tt> is set to <tt>false</tt>, _controller_ mode is enabled. A
@@ -416,7 +416,7 @@ which in turn enables a corresponding Spring Bean profile.
     which is a controller-advice.
 
 In addition, a <code>SimpleMappingExceptionResolver</code> may optionally be defined.  Class `Main` has a
-second property called `smerConfig` which can take one of three enumered values:
+second property called `smerConfig` which can take one of three enumerated values:
 
   * `NONE`: No resolver defined.  Unhandled exceptions processed by the container.  Since we are using Tomcat
 the familiar Tomcat error page with a full Java exception stack-trace is produced.
@@ -429,10 +429,12 @@ using Java configuration. See
 
 A description of the most important files in the application is in the project's
 <a href="http://github.com/paulc4/mvc-exceptions/blob/master/README.md">README.md</a>.
-The one and only web-page is
-<a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/resources/templates/index.html">index.html</a>:
 
- * It contains several links, all of which raise exceptions.
+The one and only web-page is
+<a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/resources/templates/index.html">index.html</a>
+which:
+
+ * Contains several links, all of which deliberately raise exceptions.
  * At the bottom of the page are links to Spring Boot endpoints for those interested in Spring Boot.
  
 Thanks to Spring Boot, you can run this demo as a Java application or as a WAR in your favourite container.
@@ -446,7 +448,7 @@ Your choice.
     and other releases.
   * Update the `pom.xml` and/or Java code if necessary.
 
-###About Spring Boot
+###Spring Boot and Error Handling
 <a href="http://spring.io/spring-boot">Spring Boot</a> allows a Spring project to be setup with
 minimal configuration. Spring Boot creates sensible defaults automatically when it detects
 certain key classes and packages on the classpath.  For example if it sees that you are using a Servlet
@@ -457,22 +459,31 @@ Spring MVC offers no default (fall-back) error page out-of-the-box.  The most co
 page has always been the <code>SimpleMappingExceptionResolver</code> (since Spring V1 in fact). However
 Spring Boot also provides for a fallback error-handling page.
 
-At start-up, Spring Boot tries to find a view called `error` that matches your view technology (in the demo
-application it picks up the `error` view corresponding to the `error.html` Thymeleaf template). If no
+At start-up, Spring Boot tries to find a mapping for `/error`. (in the demo application this corresponds
+to the `error` view which maps in turn to the `error.html` Thymeleaf template). If no
 `error` view can be found Spring Boot defines a fall-back error page - the so-called "Whitelabel Error Page"
-(a minimalpage with just the HTTP status information and any error details, such as the message from an uncaught
-exception).  If you rename the `error.html` template to, say, `error2.html` you will see it being used.
+(a minimal page with just the HTTP status information and any error details, such as the message from an uncaught
+exception).  If you rename the `error.html` template to, say, `error2.html` then restart, you will see it being
+used.
 
 By defining a Java configuration `@Bean`method called `defaultErrorView()` you can
 return your own error `View` instance. (see `ErrorMvcAutoConfiguration` for more information).
 
 What if you are already using <code>SimpleMappingExceptionResolver</code> to setup a default
-error view?  Simple, make sure the <code>defaultErrorView</code> property is called _error_
-to match the default view-name expected by Spring Boot.  (Make sure you are using Spring Boot
+error view?  Simple, make sure the <code>defaultErrorView</code> maps to _/error_
+to match the default path expected by Spring Boot.  In the demo application
+`http://localhost/error` (when running as a Java application) or `http://localhost/mvc-exceptions/error` 
+(when running as a WAR).  Make sure you are using Spring Boot
 version <code>0.5.0.BUILD-SNAPSHOT</code> or later.  This does _not_ work with milestone
-<code>0.5.0.M5</code> or earlier).
+<code>0.5.0.M5</code> or earlier).  You can disable Spring boot's error page by setting the property
+`error.whitelabel.enabled`.  There are examples of setting Spring Boot properties in the constructor of
+<a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/main/Main.java">Main</a>
 
-In the demo application I show how to create a support-ready error page with a stack-trace hidden in the
+Note that in the demo the defaultErrorView property of the <code>SimpleMappingExceptionResolver</code> is
+deliberately set to `defaultErrorPage` so you can see when the handler is generating the error page and when
+Spring Boot is responsible. Normally both would be set to `error`.
+
+Also in the demo application I show how to create a support-ready error page with a stack-trace hidden in the
 HTML source (as a comment).  Turns out you cannot currently do this with Thymeleaf (next release they say)
 so I have used JSP instead for just that page.  There is some additional configuration in the demo code to
 allow JSP and Thymeleaf to work side by side (Spring Boot cannot set this up automatically - it needs application
