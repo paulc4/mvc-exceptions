@@ -7,6 +7,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.handler.HandlerExceptionResolverComposite;
 
 /**
  * A simple implementation of a <tt>BeanPostProcessor</tt> that logs every bean
@@ -48,6 +49,15 @@ public class BeanLogger implements BeanPostProcessor {
 			logger.info(bean.getClass().getName() + " - Order: " + order);
 		} else {
 			logger.info(bean.getClass().getName());
+		}
+
+		// Since we are concerned with exception-resolvers, lets print extra
+		// info about this one. It delegates in turn to all the default
+		// resolvers - see "Going Deeper" in the Blog for more details.
+		if (bean instanceof HandlerExceptionResolverComposite) {
+			logger.info("   resolvers: "
+					+ ((HandlerExceptionResolverComposite) bean)
+							.getExceptionResolvers());
 		}
 
 		// Must return the bean or we lose it!
