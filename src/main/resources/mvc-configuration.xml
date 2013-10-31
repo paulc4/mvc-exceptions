@@ -3,31 +3,34 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<!-- This bean is only created if 'global' and 'xml' profiles are BOTH active. -->
-	<beans profile="global">
+	<!-- The use of the "xml-config" profile here is for demonstration only. 
+		A real application wouldn't normally need to switch between XML or Java Configuration. 
+		You would use one, or other, or both, all the time. -->
+	<beans profile="xml-config">
+		<!-- Configure a classic SimpleMappingExceptionResolver. Try using the 
+			ExampleSimpleMappingExceptionResolver and see the difference when
+			/unhandledException is invoked.-->
+		<bean id="simpleMappingExceptionResolver"
+			class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+			<property name="exceptionMappings">
+				<map>
+					<entry key="DatabaseException" value="databaseError" />
+					<entry key="InvalidCreditCardException" value="creditCardError" />
+				</map>
+			</property>
 
-		<!-- The use of the "xml-config" profile here is for demonstration only. 
-			A real application wouldn't normally need to switch between XML or Java Configuration. 
-			You would use one, or other, or both, all the time. -->
-		<beans profile="xml-config">
-			<!-- Configure a classic SimpleMappingExceptionResolver. -->
-			<bean id="simpleMappingExceptionResolver"
-				class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-				<property name="exceptionMappings">
-					<map>
-						<entry key="DatabaseException" value="databaseError" />
-						<entry key="InvalidCreditCardException" value="creditCardError" />
-					</map>
-				</property>
-				<!-- See note below on how this interacts with Spring Boot -->
-				<property name="defaultErrorView" value="error" />
-				<property name="exceptionAttribute" value="ex" />
+			<!-- If using Spring Boot, this should be "error" (see Blog or details). 
+				Here a different view is used deliberately to show when this handler is being 
+				used vs when Spring Boot's error-page is being used. -->
+			<property name="defaultErrorView" value="defaultErrorPage" />
 
-				<!-- Name of logger to use to log exceptions. Unset by default, so logging 
-					disabled -->
-				<property name="warnLogCategory" value="example.MvcLogger" />
-			</bean>
-		</beans>
+			<!-- Override name of exception attribute. Default is 'exception'. -->
+			<property name="exceptionAttribute" value="ex" />
+
+			<!-- Name of logger to use to log exceptions. Unset by default, so logging 
+				disabled -->
+			<property name="warnLogCategory" value="example.MvcLogger" />
+		</bean>
 	</beans>
 
 </beans>
