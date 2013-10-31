@@ -208,12 +208,15 @@ For example: <code>HttpInvokerExporter</code> and the WebFlow Executor are also 
 Behind the scenes, MVC creates three such resolvers by default.  It is these resolvers that implement the
 behaviours discussed above:
 
+  * <code>ExceptionHandlerExceptionResolver</code> matches uncaught exceptions against for
+suitable <code>@ExceptionHandler</code> methods on both the handler and on any controller-advices.
   * <code>ResponseStatusExceptionResolver</code> looks for uncaught exceptions
 annotated by <code>@ResponseStatus</code> (as described in Section 1)
   * <code>DefaultHandlerExceptionResolver</code> converts standard Spring exceptions and converts them
 to HTTP Status Codes (I have not mentioned this above as it is internal to Spring MVC).
-  * <code>ExceptionHandlerExceptionResolver</code> matches uncaught exceptions against for
-suitable <code>@ExceptionHandler</code> methods on both the handler and on any controller-advices.
+
+These are chained and processed in the order listed (internally Spring creates a dedicated bean - the
+<tt>HandlerExceptionResolverComposite</tt> to do this).
 
 Notice that the method signature of ```resolveException``` does not include the ```Model```.  This is why
 ```@ExceptionHandler``` methods cannot be injected with the model.
@@ -312,7 +315,7 @@ public class MyMappingExceptionResolver extends SimpleMappingExceptionResolver {
         ModelAndView mav = super.doResolveException(request, response, handler, exception);
         
         // Make the URL available to the view - note ModelAndView uses addObject() but Model
-        // uses addAttribute(). The work the same. 
+        // uses addAttribute(). They work the same. 
         mav.addObject("url", request.getRequestURI());
         return mav;
     }
@@ -405,9 +408,13 @@ which in turn enables a corresponding Spring Bean profile.
 A description of the most important files in the application is in the project's
 <a href="http://github.com/paulc4/mvc-exceptions/blob/master/README.md">README.md</a>.
 The one and only web-page is
-<a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/resources/templates/index.html">index.html</a>
-- it contains several links, all of which raise exceptions.  At the bottom of the page are links to
-Spring Boot endpoints for those interested in Spring Boot.
+<a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/resources/templates/index.html">index.html</a>:
+
+ * It contains several links, all of which raise exceptions.
+ * At the bottom of the page are links to Spring Boot endpoints for those interested in Spring Boot.
+ 
+Thanks to Spring Boot, you can run this demo as a Java application or as a WAR in your favourite container.
+Your choice. 
 
 ###Warning
 
