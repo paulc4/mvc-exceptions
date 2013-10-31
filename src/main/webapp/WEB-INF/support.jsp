@@ -10,25 +10,34 @@
    An error page with hidden stack-trace suitable for tech support.
  -->
 <body>
-	<h1>Example Support Error Page</h1>
-	<p>Application has encountered an error. Please contact support on
-		...</p>
+	<h1>Example Support-Ready Error Page</h1>
 
-	<c:if test="${timestamp}">
+	<!-- You could use ${requestScope['javax.servlet.forward.request_uri']} 
+	     but it's a lot more verbose and doesn't give you the full page URL. -->
+	<c:if test="${not empty url}">
+		<p>
+			<b>Page:</b> ${url}
+		</p>
+	</c:if>
+
+	<c:if test="${not empty timestamp}">
 		<p id='created'>
 			<b>Occurred:</b> ${timestamp}
 		</p>
 	</c:if>
 
-	<c:if test="${status}">
+	<c:if test="${not empty status}">
 		<p>
 			<b>Response Status:</b> ${status}
 			<c:if test="${error}">(${error})</c:if>
 		</p>
 	</c:if>
 
-    <p>Support may ask you to right click to view page source</p>
-    
+	<p>Application has encountered an error. Please contact support on
+		...</p>
+
+	<p>Support may ask you to right click to view page source.</p>
+
 	<!--
     Failed URL: ${url}
     Exception:  ${exception.message}
