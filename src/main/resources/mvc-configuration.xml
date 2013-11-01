@@ -5,11 +5,12 @@
 
 	<!-- The use of the "xml-config" profile here is for demonstration only. 
 		A real application wouldn't normally need to switch between XML or Java Configuration. 
-		You would use one, or other, or both, all the time. -->
+		You would use one, or other, or both, all the time. This XML setup is an 
+		alternative to the ExceptionConfiguration class. -->
 	<beans profile="xml-config">
 		<!-- Configure a classic SimpleMappingExceptionResolver. Try using the 
-			ExampleSimpleMappingExceptionResolver and see the difference when
-			/unhandledException is invoked.-->
+			ExampleSimpleMappingExceptionResolver and see the difference when /unhandledException 
+			is invoked. -->
 		<bean id="simpleMappingExceptionResolver"
 			class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 			<property name="exceptionMappings">
@@ -25,10 +26,19 @@
 				disabled -->
 			<property name="warnLogCategory" value="example.MvcLogger" />
 
-			<!-- If using Spring Boot, this should be "error" (see Blog or details). 
-				Here a different view is used deliberately to show when this handler is being 
-				used vs when Spring Boot's error-page is being used. Leave this unset to
-				fall back on Spring Boot's default error page. -->
+			<!-- Normally Spring MVC has no default error view and this class is the 
+				only way to define one. A nice feature of Spring Boot is the ability to provide 
+				a very basic default error view (otherwise the application server typically 
+				returns a Java stack trace which is not acceptable in production). See Blog 
+				for more details. -->
+
+			<!-- To stick with the Spring Boot approach, DO NOT set this property 
+				of SimpleMappingExceptionResolver. -->
+
+			<!-- Here we are choosing to use SimpleMappingExceptionResolver since 
+				many Spring applications have used the approach since Spring V1. Normally 
+				we would specify the view as "error" to match Spring Boot, however so you 
+				can see what is happening, we are using a different page. -->
 			<property name="defaultErrorView" value="defaultErrorPage" />
 
 		</bean>
