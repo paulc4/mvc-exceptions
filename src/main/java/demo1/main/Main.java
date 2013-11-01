@@ -68,7 +68,7 @@ public class Main extends SpringBootServletInitializer {
 	 * 
 	 * @see Profiles
 	 */
-	public static final ResolverSetup smerConfig = ResolverSetup.XML;
+	public static final ResolverSetup smerConfig = ResolverSetup.NONE;
 
 	// Local logger
 	protected Logger logger;
