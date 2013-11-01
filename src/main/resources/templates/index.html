@@ -21,13 +21,18 @@
 
 		<li th:switch="${#strings.substringAfter(profiles,', ')}"><i
 			th:text="${#strings.substringAfter(profiles,', ')}">SECOND-PROFILE-NAME</i>:
-			Exceptions not handled elsewhere <span th:case="'none'">handled
+			Exceptions not handled elsewhere are <span th:case="'none'">handled
 				by container. </span> <span th:case="'java-config'">passed to a <code>SimpleMappingExceptionResolver</code>
 				created via Java Configuration - see <code>ExceptionConfiguration</code>.
 		</span> <span th:case="'xml-config'">passed to a <code>SimpleMappingExceptionResolver</code>
 				created via XML Configuration - see <code>mvc-configuration.xml</code>.
 		</span></li>
 	</ul>
+	<p>
+		For details on the different profiles and what they do see <a
+			href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc#sample-application-and-spring-boot">discussion</a>
+		in the Blog.
+	</p>
 
 	<p>
 		Each of the links below demonstrates one of the exception handling
