@@ -10,14 +10,14 @@ where possible.  They are a cross-cutting concern better handled separately in d
 There are three options: per exception, per controller or globally.
 
 _A demonstration application that shows the points discussed here can be found at
-<a href="https://github.com/paulc4/mvc-exceptions">https://github.com/paulc4/mvc-exceptions</a>.
+<a href="http://github.com/paulc4/mvc-exceptions">http://github.com/paulc4/mvc-exceptions</a>.
 See <a href="#sample-application-and-spring-boot">Sample Application and Spring Boot</a> below for details._
 
 ##Using HTTP Status Codes
 
 Normally any unhandled exception thrown when processing a web-request causes the server to return an
 HTTP 500 response.  However, any exception that you write yourself can be annotated with the
-<code>@ResponseStatus</code> annotation (which supports all the HTTP status codes defined by the HTTP
+`@ResponseStatus` annotation (which supports all the HTTP status codes defined by the HTTP
 specification).  When an _annotated_ exception is thrown from a controller method, and not handled elsewhere,
 it will automatically cause the appropriate HTTP response to be returned with the specified status-code.
 
@@ -47,10 +47,10 @@ A familiar HTTP 404 response will be returned if the URL handled by this method 
 ##Controller Based Exception Handling
 ###Using @ExceptionHandler
 
-You can add extra (<code>@ExceptionHandler</code>) methods to any controller to specifically handle exceptions
-thrown by request handling (<code>@RequestMapping</code>) methods in the same controller.  Such methods can:
+You can add extra (`@ExceptionHandler`) methods to any controller to specifically handle exceptions
+thrown by request handling (`@RequestMapping`) methods in the same controller.  Such methods can:
 
-  1. Handle exceptions without the <code>@ResponseStatus</code> annotation (typically predefined exceptions
+  1. Handle exceptions without the `@ResponseStatus` annotation (typically predefined exceptions
 that you didn't write)
   2. Redirect the user to a dedicated error view
   3. Build a totally custom error response
@@ -139,17 +139,17 @@ A controller advice allows you to use exactly the same exception handling techni
 across the whole application, not just to an individual controller.  You can think of them as an annotation
 driven interceptor.
 
-Any class annotated with <code>@ControllerAdvice</code> becomes a controller-advice and three types of method
+Any class annotated with `@ControllerAdvice` becomes a controller-advice and three types of method
 are supported:
 
-  * Exception handling methods annotated with <code>@ExceptionHandler</code>.
+  * Exception handling methods annotated with `@ExceptionHandler`.
   * Model enhancement methods (for adding additional data to the model) annotated with
-<code>@ModelAttribute</code>.  Note that these attributes are _not_ available to the exception handling views.
+`@ModelAttribute`.  Note that these attributes are _not_ available to the exception handling views.
   * Binder initialization methods (used for configuring form-handling) annotated with
-<code>@InitBinder</code>.
+`@InitBinder`.
 
 We are only going to look at exception handling - see the online manual for more on
-<code>@ControllerAdvice</code> methods.
+`@ControllerAdvice` methods.
 
 Any of the exception handlers you saw above can be defined on a controller-advice class - but now they
 apply to exceptions thrown from <em>any</em> controller.  Here is a simple example:
@@ -196,8 +196,8 @@ class GlobalDefaultExceptionHandler {
 
 ###HandlerExceptionResolver
 
-Any Spring bean declared in the <code>DispatcherServlet</code>'s application context that implements
-<code>HandlerExceptionResolver</code> will be used to intercept and process any exception raised
+Any Spring bean declared in the `DispatcherServlet`'s application context that implements
+`HandlerExceptionResolver` will be used to intercept and process any exception raised
 in the MVC system and not handled by a Controller.  The interface looks like this:
 
 ```java
@@ -207,18 +207,18 @@ public interface HandlerExceptionResolver {
 }
 ```
 
-The <code>handler</code> refers to the controller that generated the exception (remember that
-<code>@Controller</code> instances are only one type of handler supported by Spring MVC.
-For example: <code>HttpInvokerExporter</code> and the WebFlow Executor are also types of handler). 
+The `handler` refers to the controller that generated the exception (remember that
+`@Controller` instances are only one type of handler supported by Spring MVC.
+For example: `HttpInvokerExporter` and the WebFlow Executor are also types of handler). 
 
 Behind the scenes, MVC creates three such resolvers by default.  It is these resolvers that implement the
 behaviours discussed above:
 
-  * <code>ExceptionHandlerExceptionResolver</code> matches uncaught exceptions against for
-suitable <code>@ExceptionHandler</code> methods on both the handler (controller) and on any controller-advices.
-  * <code>ResponseStatusExceptionResolver</code> looks for uncaught exceptions
-annotated by <code>@ResponseStatus</code> (as described in Section 1)
-  * <code>DefaultHandlerExceptionResolver</code> converts standard Spring exceptions and converts them
+  * `ExceptionHandlerExceptionResolver` matches uncaught exceptions against for
+suitable `@ExceptionHandler` methods on both the handler (controller) and on any controller-advices.
+  * `ResponseStatusExceptionResolver` looks for uncaught exceptions
+annotated by `@ResponseStatus` (as described in Section 1)
+  * `DefaultHandlerExceptionResolver` converts standard Spring exceptions and converts them
 to HTTP Status Codes (I have not mentioned this above as it is internal to Spring MVC).
 
 These are chained and processed in the order listed (internally Spring creates a dedicated bean - the
@@ -227,23 +227,23 @@ These are chained and processed in the order listed (internally Spring creates a
 Notice that the method signature of ```resolveException``` does not include the ```Model```.  This is why
 ```@ExceptionHandler``` methods cannot be injected with the model.
 
-You can, if you wish, implement your own <code>HandlerExceptionResolver</code> to setup your own custom
+You can, if you wish, implement your own `HandlerExceptionResolver` to setup your own custom
 exception handling system. Handlers typically implement Spring's `Ordered` interface so you can define the
 order that the handlers run in.
 
 ###SimpleMappingExceptionResolver
 
-Spring has long provided a simple but convenient implementation of <code>HandlerExceptionResolver</code>
-that you may well find being used in your appication already - the <code>SimpleMappingExceptionResolver</code>.
+Spring has long provided a simple but convenient implementation of `HandlerExceptionResolver`
+that you may well find being used in your appication already - the `SimpleMappingExceptionResolver`.
 It provides options to:
 
   * Map exception class names to view names - just specify the classname, no package needed.
   * Specify a default (fallback) error page for any exception not handled anywhere else
   * Log a message (this is not enabled by default).
-  * Set the name of the <code>exception</code> attribute to add to the Model so it can be used inside a View
+  * Set the name of the `exception` attribute to add to the Model so it can be used inside a View
 (such as a JSP). By default this attribute is named ```exception```.  Set to ```null``` to disable.  Remember
 that views returned from `@ExceptionHandler` methods _do not_ have access to the exception but views
-defined to <code>SimpleMappingExceptionResolver</code> _do_.
+defined to `SimpleMappingExceptionResolver` _do_.
 
 Here is a typical configuration using XML:
 
@@ -296,13 +296,13 @@ stack-trace - something your users should _never_ see).
 
 ###Extending SimpleMappingExceptionResolver
 
-It is quite common to extend <code>SimpleMappingExceptionResolver</code> for several reasons:
+It is quite common to extend `SimpleMappingExceptionResolver` for several reasons:
 
   * Use the constructor to set properties directly - for example to enable exception logging and set the
 logger to use
-  * Override the default log message by overriding <code>buildLogMessage</code>. The default implementation
+  * Override the default log message by overriding `buildLogMessage`. The default implementation
 always returns this fixed text:<ul style="margin-left: 2em"><i>Handler execution resulted in exception</i></ul>
-  * To make additional information available to the error view by overriding <code>doResolveException</code>
+  * To make additional information available to the error view by overriding `doResolveException`
 
 For example:
 
@@ -337,12 +337,12 @@ This code is in the demo application as
 
 ###Extending ExceptionHandlerExceptionResolver
 
-It is also possible to extend <code>ExceptionHandlerExceptionResolver</code> and override its
-<code>doResolveHandlerMethodException</code> method in the same way. It has almost the same signature
-(it just takes the new <code>HandlerMethod</code> instead of a <code>Handler</code>).
+It is also possible to extend `ExceptionHandlerExceptionResolver` and override its
+`doResolveHandlerMethodException` method in the same way. It has almost the same signature
+(it just takes the new `HandlerMethod` instead of a `Handler`).
 
 To make sure it gets used, also set the inherited order property (for example in the constructor of
-your new class) to a value less than <code>MAX_INT</code> so it runs _before_ the default
+your new class) to a value less than `MAX_INT` so it runs _before_ the default
 ExceptionHandlerExceptionResolver instance (it is easier to create your own handler instance than try to
 modify/replace the one created by Spring).  See
 <a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/web/ExampleExceptionHandlerExceptionResolver.java">ExampleExceptionHandlerExceptionResolver</a>
@@ -382,17 +382,17 @@ As usual, Spring likes to offer you choice, so what should you do?  Here are som
 However if you have a preference for XML configuration or Annotations, that's fine too.
 
 <ul>
-  <li>For exceptions you write, consider adding <code>@ResponseStatus</code> to them.
-  <li>For all other exceptions implement an <code>@ExceptionHandler</code> method on a
-      <code>@ControllerAdvice</code> class or use an instance of <code>SimpleMappingExceptionResolver</code>.
-      You may well have <code>SimpleMappingExceptionResolver</code> configured for your application already,
-      in which case it may be easier to add new exceptions to it than implement a <code>@ControllerAdvice</code>.
-  <li>For Controller specific exception handling add <code>@ExceptionHandler</code> methods to your controller.
+  <li>For exceptions you write, consider adding `@ResponseStatus` to them.
+  <li>For all other exceptions implement an `@ExceptionHandler` method on a
+      `@ControllerAdvice` class or use an instance of `SimpleMappingExceptionResolver`.
+      You may well have `SimpleMappingExceptionResolver` configured for your application already,
+      in which case it may be easier to add new exceptions to it than implement a `@ControllerAdvice`.
+  <li>For Controller specific exception handling add `@ExceptionHandler` methods to your controller.
   <li><b>Warning:</b> Be careful mixing too many of these options in the same application.
    If the same exception can be
-   handed in more than one way, you may not get the behavior you wanted. <code>@ExceptionHandler</code>
+   handed in more than one way, you may not get the behavior you wanted. `@ExceptionHandler`
    methods on the Controller
-   are always selected before those on any <code>@ControllerAdvice</code> instance.  It is <i>undefined</i>
+   are always selected before those on any `@ControllerAdvice` instance.  It is <i>undefined</i>
    what order controller-advices are processed.
 </ul>
 
@@ -415,7 +415,7 @@ which in turn enables a corresponding Spring Bean profile.
     <a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/web/GlobalControllerExceptionHandler.java">GlobalControllerExceptionHandler</a>
     which is a controller-advice.
 
-In addition, a <code>SimpleMappingExceptionResolver</code> may optionally be defined.  Class `Main` has a
+In addition, a `SimpleMappingExceptionResolver` may optionally be defined.  Class `Main` has a
 second property called `smerConfig` which can take one of three enumerated values:
 
   * `NONE`: No resolver defined.  Unhandled exceptions processed by the container.  Since we are using Tomcat
@@ -438,7 +438,9 @@ which:
  * At the bottom of the page are links to Spring Boot endpoints for those interested in Spring Boot.
  
 Thanks to Spring Boot, you can run this demo as a Java application or as a WAR in your favourite container.
-Your choice. 
+Your choice.  The home page URL is <a href="http://localhost:8080">http://localhost:8080</a> when running as
+an application, or <a href="http://localhost:8080/mvc-exceptions">http://localhost:8080/mvc-exceptions</a>
+when running in a container.
 
 ###Warning
 
@@ -456,7 +458,7 @@ environment, it sets up Spring MVC with the most commonly used view-resolvers, h
 If it sees JSP and/or Thymeleaf, it sets up these view-layers.
 
 Spring MVC offers no default (fall-back) error page out-of-the-box.  The most common way to set a default error
-page has always been the <code>SimpleMappingExceptionResolver</code> (since Spring V1 in fact). However
+page has always been the `SimpleMappingExceptionResolver` (since Spring V1 in fact). However
 Spring Boot also provides for a fallback error-handling page.
 
 At start-up, Spring Boot tries to find a mapping for `/error`. (in the demo application this corresponds
@@ -469,19 +471,17 @@ used.
 By defining a Java configuration `@Bean`method called `defaultErrorView()` you can
 return your own error `View` instance. (see `ErrorMvcAutoConfiguration` for more information).
 
-What if you are already using <code>SimpleMappingExceptionResolver</code> to setup a default
-error view?  Simple, make sure the <code>defaultErrorView</code> maps to _/error_
-to match the default path expected by Spring Boot.  In the demo application this corresponds to
-`http://localhost/error` (when running as a Java application) or `http://localhost/mvc-exceptions/error` 
-(when running as a WAR).  Make sure you are using Spring Boot
-version <code>0.5.0.BUILD-SNAPSHOT</code> or later.  This does _not_ work with milestone
-<code>0.5.0.M5</code> or earlier).  You can disable Spring boot's error page by setting the property
+What if you are already using `SimpleMappingExceptionResolver` to setup a default
+error view?  Simple, make sure the `defaultErrorView` maps to _/error_
+to match the default path expected by Spring Boot.    Make sure you are using Spring Boot
+version `0.5.0.BUILD-SNAPSHOT` or later.  This does _not_ work with milestone
+`0.5.0.M5` or earlier).  You can disable Spring boot's error page by setting the property
 `error.whitelabel.enabled` to `false`.  There are examples of setting Spring Boot properties in the constructor of
 <a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/main/Main.java">Main</a>
 
-Note that in the demo the defaultErrorView property of the <code>SimpleMappingExceptionResolver</code> is
+Note that in the demo, the `defaultErrorView` property of the `SimpleMappingExceptionResolver` is
 deliberately set to `defaultErrorPage` so you can see when the handler is generating the error page and when
-Spring Boot is responsible. Normally both would be set to `error`.
+Spring Boot is responsible. Normally _both_ would be set to `error`.
 
 Also in the demo application I show how to create a support-ready error page with a stack-trace hidden in the
 HTML source (as a comment).  Turns out you cannot currently do this with Thymeleaf (next release they say)
