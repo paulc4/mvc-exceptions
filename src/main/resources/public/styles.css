@@ -1,6 +1,23 @@
+/* - - - - - - - - - - - *
+       Local Styles
+ * - - - - - - - - - - - */
+ 
+body {
+	font-family: helvetica;
+	font-size: 13pt;
+}
+
+.navbar, .navbar > a {
+	font-family: helvetica;
+	font-size: 15pt;
+}
 
 ul.openlist li {
 	margin-bottom: 1em;
+}
+
+a {
+	font-family: helvetica;
 }
 
 code {
@@ -14,7 +31,7 @@ code {
 }
 
 footer {
-	margin-top: 5em;
+	margin-top: 3em;
 	border-top: 1px black solid;
 	text-align: center;
 	color:#00BB00;

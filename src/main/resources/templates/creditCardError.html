@@ -11,7 +11,7 @@
 		<span th:text="${ex.message}">error here</span>
 	</p>
 
-    <div th:include="footer :: copy"></div>
+    <div th:substituteby="footer :: copy"></div>
 
 </body>
 </html>

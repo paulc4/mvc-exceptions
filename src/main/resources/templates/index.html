@@ -36,24 +36,24 @@
 
 	<p>
 		Each of the links below demonstrates one of the exception handling
-		techniques discussed in the Blog (see <a
+		techniques discussed in <a
 			href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc">
-			https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc</a>.
+			the Blog</a>.
 	</p>
 
 	<p>
 		By default the exceptions are handled by the controller that raises
 		them. To switch to global exception handling using a
-		<code>@ControllerAdvice</code>
+		<code>@ControllerAdvice</code>:
 		edit
 		<code>Main.java</code>
-		, find the
+		find the
 		<code>global</code>
 		data-member and change it from
 		<code>false</code>
 		to
-		<code>true</code>
-		. To fully understand this demo, review the output in the server log
+		<code>true</code>.
+		To fully understand this demo, review the output in the server (console) log
 		as you click the links below.
 	</p>
 	<p>
@@ -62,25 +62,24 @@
 		JSP and configured by Spring Boot automatically).
 	</p>
 	<p>
-		Spring-Boot sets up <i>error</i> view as the default because Thymeleaf
-		has the corresponding <i>error.html</i> template. Rename <i>error.html</i>
+		Spring-Boot sets up <i>error</i> view as the default and Thymeleaf supplies
+		the corresponding <i>error.html</i> template. Rename <i>error.html</i>
 		to <i>error2.html</i> to see the difference.
 	</p>
 	<p>
-		When the <i>xml-config</i> or <i>java-config</i> profiles are enabled,
-		they setup a
+		When the <i>xml-config</i> or <i>java-config</i> profiles are enabled
+		(instead of <i>none</i>), they setup a
 		<code>SimpleMappingExceptionResolver</code>
 		and its default error view is used. This can be seen when clicking on
-		the <i>unhandledException</i> link. It is not configured by default so
+		the <i>unhandledException</i> link. It is not configured by default so:
 		edit
 		<code>Main.java</code>
-		, find the
+		find the
 		<code>smerConfig</code>
 		data-member and change its value to
 		<code>JAVA</code>
 		or
-		<code>XML</code>
-		.
+		<code>XML</code>.
 	</p>
 
 	<ul class="openlist">
