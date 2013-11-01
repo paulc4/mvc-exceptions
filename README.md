@@ -8,7 +8,9 @@ WARNINGS:
   * Check http://spring.io/spring-boot for snapshot, milestone and other releases.
   * Update the pom.xml if necessary.
 
-This application demos most of the points covered on my MVC Exceptions blog.
+This application demos most of the points covered on my MVC Exceptions blog:
+<a href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc">
+https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc</a>.
 
 The files are:
 

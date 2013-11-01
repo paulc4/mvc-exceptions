@@ -35,8 +35,12 @@ li {
 		</span></li>
 	</ul>
 
-	<p>Each of the links below demonstrates one of the exceptions
-		discussed in the Blog (see http://spring.io).</p>
+	<p>
+		Each of the links below demonstrates one of the exception handling
+		techniques discussed in the Blog (see <a
+			href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc">
+			https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc</a>.
+	</p>
 
 	<p>
 		By default the exceptions are handled by the controller that raises
@@ -96,8 +100,8 @@ li {
 		</li>
 		<li>Throw <a href="databaseException">DatabaseException</a> -
 			should generate a specific database-error page due to configuration
-			of <code>SimpleMappingExceptionResolver</code> (if configured), otherwise
-			your container's error page is used.
+			of <code>SimpleMappingExceptionResolver</code> (if configured),
+			otherwise your container's error page is used.
 		</li>
 		<li>Throw <a href="invalidCreditCard">InvalidCreditCardException</a>
 			- should generate a specific credit-card error page due to
