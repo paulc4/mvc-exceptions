@@ -16,8 +16,8 @@ import demo1.main.Profiles;
  * Setup for exception handling using a {@link SimpleMappingExceptionResolver}
  * bean.
  * <p>
- * If you prefer to do this in XML set the {@link Main#useJavaConfig} property
- * to <tt>false</tt>
+ * If you prefer to do this in XML set the {@link Main#smerConfig} property
+ * to <code>XML</code> (see <code>mvc-configuration.xml</code>).
  * <p>
  * The use of the JAVA_CONFIG profile here is for demonstration only. A real
  * application wouldn't normally need to switch between XML or Java

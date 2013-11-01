@@ -20,10 +20,10 @@ import org.springframework.context.annotation.ImportResource;
  * <p>
  * Details of annotations used:
  * <ul>
- * <li><tt>@EnableAutoConfiguration</tt>: makes Spring Boot setup its defaults.
- * <li><tt>@ComponentScan</tt>: Scan for @Component classes, including @Configuration
+ * <li><code>@EnableAutoConfiguration</code>: makes Spring Boot setup its defaults.
+ * <li><code>@ComponentScan</code>: Scan for @Component classes, including @Configuration
  * classes.
- * <li><tt>@ImportResource</tt>: Import Spring XML configuration file(s).
+ * <li><code>@ImportResource</code>: Import Spring XML configuration file(s).
  * </ul>
  * 
  * @author Paul Chapman
@@ -34,7 +34,7 @@ import org.springframework.context.annotation.ImportResource;
 public class Main extends SpringBootServletInitializer {
 
 	/**
-	 * Options for setting up a <tt>SimpleMappingExceptionResolver</tt>.
+	 * Options for setting up a <code>SimpleMappingExceptionResolver</code>.
 	 * 
 	 * @see Main#smerConfig
 	 */
@@ -62,7 +62,7 @@ public class Main extends SpringBootServletInitializer {
 	public static final boolean global = false;
 
 	/**
-	 * Is a <tt>SimpleMappingExceptionResolver</tt> to be created and if so how?
+	 * Is a <code>SimpleMappingExceptionResolver</code> to be created and if so how?
 	 * Set to 'NONE' to not define one, to 'JAVA' to configure using Java
 	 * Configuration or 'XML' for XML configuration.
 	 * 
@@ -77,8 +77,8 @@ public class Main extends SpringBootServletInitializer {
 	protected Properties props = new Properties();
 
 	/**
-	 * Retrieve requested Profiles. Depends on value of {@link #global} and
-	 * {@link #useJavaConfig}.
+	 * Retrieve requested Profiles. Depends on the value of {@link #global} and
+	 * {@link #smerConfig}.
 	 * 
 	 * @return Comma-separated list of profiles, forced to upper-case.
 	 */
@@ -139,7 +139,7 @@ public class Main extends SpringBootServletInitializer {
 	 * Tomcat by default, running in embedded mode.
 	 * <p>
 	 * This application can also run as a traditional war file because it
-	 * extends <tt>SpringBootServletInitializer</tt> as well.
+	 * extends <code>SpringBootServletInitializer</code> as well.
 	 * 
 	 * @param args
 	 * @throws Exception
@@ -152,7 +152,7 @@ public class Main extends SpringBootServletInitializer {
 	}
 
 	/**
-	 * Run the application using Spring Boot. <tt>SpringApplication.run</tt>
+	 * Run the application using Spring Boot. <code>SpringApplication.run</code>
 	 * tells Spring Boot to use this class as the initialiser for the whole
 	 * application (via the class annotations above). This method is only used
 	 * when running as a Java application.
