@@ -1,18 +1,12 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-<head>
-<title>Exception Blog Demo Code</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<style>
-li {
-	margin-bottom: 1em;
-} /* Quick and dirtly styling */
-</style>
-</head>
-<body>
-	<h1>Exceptions Demo</h1>
 
+<head th:substituteby="header :: copy"></head>
+
+<body>
+
+	<h1>Exceptions Demo</h1>
 	<p>
 		Demo running with profiles: <i th:text="${profiles}">profiles</i>
 	</p>
@@ -84,7 +78,7 @@ li {
 		.
 	</p>
 
-	<ul>
+	<ul class="openlist">
 		<li>Throw <a href="orderNotFound">OrderNotFoundException</a> -
 			should generate a 404.
 		</li>
@@ -148,5 +142,8 @@ li {
 		<li><a th:href="@{/metrics}">Application metrics</a></li>
 		<li><a th:href="@{/trace}">Request call trace</a></li>
 	</ul>
+
+	<div th:substituteby="footer :: copy"></div>
+
 </body>
 </html>

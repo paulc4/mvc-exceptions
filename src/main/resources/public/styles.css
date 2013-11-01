@@ -1,0 +1,22 @@
+
+ul.openlist li {
+	margin-bottom: 1em;
+}
+
+code {
+	background-color: white;
+	border-radius: 0px;
+	color: #80A080;
+	font-size: 100%;
+	font-family: monospace;
+	padding: 0px;
+	white-space: nowrap;
+}
+
+footer {
+	margin-top: 5em;
+	border-top: 1px black solid;
+	text-align: center;
+	color:#00BB00;
+	font-style: italic;
+}

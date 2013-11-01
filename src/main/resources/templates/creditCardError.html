@@ -1,15 +1,17 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-<head>
-<title>Exception Blog Demo Code</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
+
+<head th:substituteby="header :: copy"></head>
+
 <body>
 	<h1>Credit Card Error</h1>
 	<p>
 		Your credit card has been rejected:
 		<span th:text="${ex.message}">error here</span>
 	</p>
+
+    <div th:include="footer :: copy"></div>
+
 </body>
 </html>

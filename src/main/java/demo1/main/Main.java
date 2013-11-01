@@ -195,6 +195,7 @@ public class Main extends SpringBootServletInitializer {
 
 		// Convert our properties to a list of Strings
 		logger.info("Spring Boot configuratoon: properties = " + props);
+		//application.properties(props);   // coming soon
 
 		List<String> strings = new ArrayList<String>();
 		for (Map.Entry<Object, Object> entry : props.entrySet())
