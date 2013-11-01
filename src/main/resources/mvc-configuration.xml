@@ -18,18 +18,19 @@
 					<entry key="InvalidCreditCardException" value="creditCardError" />
 				</map>
 			</property>
-
-			<!-- If using Spring Boot, this should be "error" (see Blog or details). 
-				Here a different view is used deliberately to show when this handler is being 
-				used vs when Spring Boot's error-page is being used. -->
-			<property name="defaultErrorView" value="defaultErrorPage" />
-
 			<!-- Override name of exception attribute. Default is 'exception'. -->
 			<property name="exceptionAttribute" value="ex" />
 
 			<!-- Name of logger to use to log exceptions. Unset by default, so logging 
 				disabled -->
 			<property name="warnLogCategory" value="example.MvcLogger" />
+
+			<!-- If using Spring Boot, this should be "error" (see Blog or details). 
+				Here a different view is used deliberately to show when this handler is being 
+				used vs when Spring Boot's error-page is being used. Leave this unset to
+				fall back on Spring Boot's default error page. -->
+			<property name="defaultErrorView" value="defaultErrorPage" />
+
 		</bean>
 	</beans>
 

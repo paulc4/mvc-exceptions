@@ -64,22 +64,17 @@ public class ExceptionConfiguration {
 		 * only way to define one. A nice feature of Spring Boot is the ability
 		 * to provide a very basic default error view (otherwise the application
 		 * server typically returns a Java stack trace which is not acceptable
-		 * in production). Spring Boot tries to find a view called "error" that
-		 * matches your view technology. Otherwise it defines a fall-back error
-		 * page with the distinctive title of "Whitelabel Error Page". See
-		 * ErrorMvcAutoConfiguration for more information.
-		 * 
-		 * By defining an @Bean method called defaultErrorView() you can
-		 * substitute your own error page.
+		 * in production). See Blog for more details.
 		 * 
 		 * To stick with the Spring Boot approach, DO NOT set this property of
 		 * SimpleMappingExceptionResolver.
 		 * 
 		 * Here we are choosing to use SimpleMappingExceptionResolver since many
-		 * Spring applications have used the approach since Spring V1. Because
-		 * we have called this view "error" it overrides Spring Boot's default.
+		 * Spring applications have used the approach since Spring V1. Normally
+		 * we would specify the view as "error" to match  Spring Boot, however
+		 * so you can see what is happening, we are using a different page.
 		 */
-		r.setDefaultErrorView("error");
+		r.setDefaultErrorView("defaultErrorPage");
 		return r;
 	}
 }
