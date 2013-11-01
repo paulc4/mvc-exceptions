@@ -461,22 +461,25 @@ Spring MVC offers no default (fall-back) error page out-of-the-box.  The most co
 page has always been the `SimpleMappingExceptionResolver` (since Spring V1 in fact). However
 Spring Boot also provides for a fallback error-handling page.
 
-At start-up, Spring Boot tries to find a mapping for `/error`. (in the demo application this corresponds
-to the `error` view which maps in turn to the `error.html` Thymeleaf template). If no
-`/error` mapping can be found Spring Boot defines a fall-back error page - the so-called "Whitelabel Error Page"
-(a minimal page with just the HTTP status information and any error details, such as the message from an uncaught
-exception).  If you rename the `error.html` template to, say, `error2.html` then restart, you will see it being
-used.
+At start-up, Spring Boot tries to find a mapping for `/error`.  By convention, a URL ending in `/error` maps to
+a logical view of the same name: `error`.  In the demo application this view maps in turn to the `error.html`
+Thymeleaf template. If using JSP, it would map to `error.jsp` according to the setup of your
+`InternalResourceViewResolver`.
 
-By defining a Java configuration `@Bean`method called `defaultErrorView()` you can
-return your own error `View` instance. (see `ErrorMvcAutoConfiguration` for more information).
+If no `/error` mapping can be found, Spring Boot defines its own fall-back error page - the so-called
+"Whitelabel Error Page" (a minimal page with just the HTTP status information and any error details, such as
+the message from an uncaught exception).  If you rename the `error.html` template to, say, `error2.html`
+then restart, you will see it being used.
+
+By defining a Java configuration `@Bean`method called `defaultErrorView()` you can return your own
+error `View` instance. (see Spring Boot's `ErrorMvcAutoConfiguration` class for more information).
 
 What if you are already using `SimpleMappingExceptionResolver` to setup a default
-error view?  Simple, make sure the `defaultErrorView` maps to _/error_
-to match the default path expected by Spring Boot.    Make sure you are using Spring Boot
-version `0.5.0.BUILD-SNAPSHOT` or later.  This does _not_ work with milestone
-`0.5.0.M5` or earlier).  You can disable Spring boot's error page by setting the property
-`error.whitelabel.enabled` to `false`.  There are examples of setting Spring Boot properties in the constructor of
+error view?  Simple, make sure the `defaultErrorView` defines the same view that Spring Boot uses: `error`.
+(Make sure you are using Spring Boot version `0.5.0.BUILD-SNAPSHOT` or later.  This does _not_ work with
+milestone `0.5.0.M5` or earlier).  You can disable Spring boot's error page by setting the property
+`error.whitelabel.enabled` to `false`.  Your container's default error page is used instead.
+There are examples of setting this and other Spring Boot properties in the constructor of
 <a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/main/Main.java">Main</a>
 
 Note that in the demo, the `defaultErrorView` property of the `SimpleMappingExceptionResolver` is
