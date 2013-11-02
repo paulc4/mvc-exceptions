@@ -20,7 +20,8 @@ import org.springframework.context.annotation.ImportResource;
  * <p>
  * Details of annotations used:
  * <ul>
- * <li><code>@EnableAutoConfiguration</code>: makes Spring Boot setup its defaults.
+ * <li><code>@EnableAutoConfiguration</code>: makes Spring Boot setup its
+ * defaults.
  * <li><code>@ComponentScan</code>: Scan for @Component classes, including @Configuration
  * classes.
  * <li><code>@ImportResource</code>: Import Spring XML configuration file(s).
@@ -62,8 +63,8 @@ public class Main extends SpringBootServletInitializer {
 	public static final boolean global = false;
 
 	/**
-	 * Is a <code>SimpleMappingExceptionResolver</code> to be created and if so how?
-	 * Set to 'NONE' to not define one, to 'JAVA' to configure using Java
+	 * Is a <code>SimpleMappingExceptionResolver</code> to be created and if so
+	 * how? Set to 'NONE' to not define one, to 'JAVA' to configure using Java
 	 * Configuration or 'XML' for XML configuration.
 	 * 
 	 * @see Profiles
@@ -193,17 +194,14 @@ public class Main extends SpringBootServletInitializer {
 		application.profiles(profiles.toArray(new String[profiles.size()]));
 		// @formatter:on
 
-		// Convert our properties to a list of Strings
+		// Set additional properties. Note: this API does not exist in 0.5.0.M5
+		// or earlier.
 		logger.info("Spring Boot configuratoon: properties = " + props);
-		//application.properties(props);   // coming soon
+		application.properties(props); // New API
 
-		List<String> strings = new ArrayList<String>();
-		for (Map.Entry<Object, Object> entry : props.entrySet())
-			strings.add((String) entry.getKey() + "=" + entry.getValue());
-
-		// Set additional properties. This API does not exist in 0.5.0.M5 or
-		// earlier. Note: the other overloading (using a Map<String,Object>)
-		// works differently and is not suitable here.
-		application.properties(strings.toArray(new String[props.size()]));
+		// NOTE: If you want to stick with M5, set these properties as System
+		// properties by iterating over them and using System.setProperty(). DO
+		// NOT use system.setProperties() or you will lose all the default
+		// properties and get some very weird errors!
 	}
 }
