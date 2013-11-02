@@ -45,14 +45,15 @@
 				<!-- Other Blogs -->
 			</button>
 			<a alt="Spring IO" title="Spring IO" href="http://www.spring.io"><img
-				height="50" src="/spring-trans.png" /></a> &nbsp;&nbsp;&nbsp;
+				height="50" src="spring-trans.png" /></a> &nbsp;&nbsp;&nbsp;
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="/">Home</a></li>
+				<c:url var="home" value="/"></c:url>
+				<li class="active"><a href="${home}">Home</a></li>
 				<li><a
 					href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc">This
 						Blog</a></li>
