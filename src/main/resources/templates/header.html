@@ -34,14 +34,19 @@
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
 				data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>   <!-- Logo -->
-				<span class="icon-bar"></span>   <!-- Home -->
-				<span class="icon-bar"></span>   <!-- This Blog -->
-				<span class="icon-bar"></span>   <!-- Other Blogs -->
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span>
+				<!-- Logo -->
+				<span class="icon-bar"></span>
+				<!-- Home -->
+				<span class="icon-bar"></span>
+				<!-- This Blog -->
+				<span class="icon-bar"></span>
+				<!-- Other Blogs -->
 			</button>
 			<a alt="Spring IO" title="Spring IO" href="http://www.spring.io"><img
-				height="50" src="spring-trans.png" /></a> &nbsp;&nbsp;&nbsp;
+				height="50" th:src="@{/spring-trans.png}" src="spring-trans.png" /></a>
+			&nbsp;&nbsp;&nbsp;
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
@@ -57,7 +62,8 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="http://www.gopivotal.com"><img alt="Pivotal"
-						title="Pivotal" height="25" src="pivotal-logo-600.png" /></a></li>
+						title="Pivotal" height="25" th:src="@{/pivotal-logo-600.png}"
+						src="pivotal-logo-600.png" /></a></li>
 
 			</ul>
 		</div>
