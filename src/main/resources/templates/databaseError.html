@@ -1,4 +1,4 @@
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 
@@ -11,10 +11,12 @@
 		<code th:text="${#httpServletRequest.requestURL}">Request URL</code>
 	</p>
 
+	<hr />
+
 	<h3>Notes</h3>
-	<p>Notice that there is very little information here. Firstly,
-		end-users should not see internal exception details, but secondly, no
-		exception details are available anyway.</p>
+	<p>Notice that there is very little information here (above the
+		line). Firstly, end-users should not see internal exception details,
+		but secondly, no exception details are available anyway.</p>
 	<p>
 		Compare this to the code in
 		<code>ExceptionHandlingController.handleError()</code>
@@ -33,13 +35,15 @@
 		to add exception and other attributes to the model. Also set the
 		inherited
 		<code>order</code>
-		data-member to a value less than <var>MAX_INT</var> so it runs before the default
+		data-member to a value less than
+		<var>MAX_INT</var>
+		so it runs before the default
 		<code>ExceptionHandlerExceptionResolver</code>
 		instance (it is easier to create your own handler than try to modify
 		the one created by Spring).
 	</p>
-	
+
 	<div th:substituteby="footer :: copy"></div>
-	
+
 </body>
 </html>

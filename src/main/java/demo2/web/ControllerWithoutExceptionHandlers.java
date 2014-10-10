@@ -1,38 +1,31 @@
-package demo1.web;
+package demo2.web;
 
 import java.sql.SQLException;
-import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import demo1.exceptions.CustomException;
-import demo1.exceptions.DatabaseException;
-import demo1.exceptions.InvalidCreditCardException;
-import demo1.exceptions.OrderNotFoundException;
-import demo1.exceptions.UnhandledException;
-import demo1.main.Main;
-import demo1.main.Profiles;
+import demo.exceptions.CustomException;
+import demo.exceptions.DatabaseException;
+import demo.exceptions.InvalidCreditCardException;
+import demo.exceptions.OrderNotFoundException;
+import demo.exceptions.UnhandledException;
 
 /**
  * A controller whose request-handler methods deliberately throw exceptions to
  * demonstrate the points discussed in the Blog.
  * <p>
- * This controller is only created when the "global" profile is active. It
- * expects a <tt>@ControllerAdvice</tt> to handle its exceptions - see
- * {@link GlobalControllerExceptionHandler}.
+ * Expects a <tt>@ControllerAdvice</tt> to handle its exceptions - see
+ * {@link GlobalExceptionHandlingControllerAdvice}.
  * 
  * @author Paul Chapman
  */
 @Controller
-@Profile(Profiles.GLOBAL_PROFILE)
+@RequestMapping("/global")
 public class ControllerWithoutExceptionHandlers {
 
 	protected Logger logger;
@@ -42,35 +35,19 @@ public class ControllerWithoutExceptionHandlers {
 	}
 
 	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-	/* . . . . . . . . . . . . . . MODEL ATTRIBUTES . . . . . . . . . . . . . . */
-	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
-	/**
-	 * What profile are we currently using?
-	 * <p>
-	 * Note that error views do not have automatically have access to the model,
-	 * so they do not have access to model-attributes either.
-	 * 
-	 * @return Always includes "GLOBAL".
-	 */
-	@ModelAttribute("profiles")
-	public String getProfiles() {
-		return Main.getProfiles();
-	}
-
-	/**
-	 * Required for compatibility with Spring Boot.
-	 * 
-	 * @return Date and time of current request.
-	 */
-	@ModelAttribute("timestamp")
-	public String getTimestamp() {
-		return new Date().toString();
-	}
-
-	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 	/* . . . . . . . . . . . . . . REQUEST HANDLERS . . . . . . . . . . . . . . */
 	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+	/**
+	 * Controller to demonstrate exception handling.
+	 * 
+	 * @return The view name (an HTML page with Thymeleaf markup).
+	 */
+	@RequestMapping("")
+	String home1() {
+		logger.info("Global home page 1");
+		return "global";
+	}
 
 	/**
 	 * Controller to demonstrate exception handling..
@@ -78,9 +55,9 @@ public class ControllerWithoutExceptionHandlers {
 	 * @return The view name (an HTML page with Thymeleaf markup).
 	 */
 	@RequestMapping("/")
-	String home(Model model) {
-		logger.info("Home page");
-		return "index";
+	String home2() {
+		logger.info("Global home page 2");
+		return "global";
 	}
 
 	/**

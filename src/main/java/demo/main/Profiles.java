@@ -1,11 +1,12 @@
-package demo1.main;
+package demo.main;
 
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
-import demo1.web.ControllerWithoutExceptionHandlers;
-import demo1.web.ExceptionConfiguration;
+import demo.config.DemoExceptionConfiguration;
+import demo.config.ExceptionConfiguration;
 import demo1.web.ExceptionHandlingController;
-import demo1.web.GlobalControllerExceptionHandler;
+import demo2.web.ControllerWithoutExceptionHandlers;
+import demo2.web.GlobalExceptionHandlingControllerAdvice;
 
 /**
  * Spring Bean configuration profiles used in this application. Three profile
@@ -16,7 +17,7 @@ import demo1.web.GlobalControllerExceptionHandler;
  * <li><code>GLOBAL_PROFILE</code> and <code>JAVA_CONFIG_PROFILE</code> - creates a
  * controller with no exception handlers. Instead exceptions are handled
  * globally - see {@link ControllerWithoutExceptionHandlers} and
- * {@link GlobalControllerExceptionHandler}. A
+ * {@link GlobalExceptionHandlingControllerAdvice}. A
  * {@link SimpleMappingExceptionResolver} is also created using Java Config -
  * see {@link ExceptionConfiguration}.
  * <li><code>GLOBAL_PROFILE</code> and <code>XML_CONFIG_PROFILE</code> - as previous but
@@ -32,17 +33,6 @@ import demo1.web.GlobalControllerExceptionHandler;
  * @author Paul Chapman
  */
 public interface Profiles {
-	
-	/**
-	 * Controller profile - exceptions handled by methods on the
-	 * ExceptionController class. Value = <b>{@value} </b>
-	 */
-	public static final String CONTROLLER_PROFILE = "controller";
-	/**
-	 * Global profile - exceptions handled via a <code>@ControllerAdvice</code>
-	 * instance. Value = <b>{@value} </b>
-	 */
-	public static final String GLOBAL_PROFILE = "global";
 
 	/**
 	 * Java configuration profile - see {@link ExceptionConfiguration}. Value =
@@ -55,5 +45,11 @@ public interface Profiles {
 	 * <b>{@value} </b>
 	 */
 	public static final String XML_CONFIG_PROFILE = "xml-config";
+
+	/**
+	 * DEMO mode configuration property - see {@link DemoExceptionConfiguration}. Value =
+	 * <b>{@value} </b>
+	 */
+	public static final String DEMO_CONFIG_PROFILE = "demo-config";
 
 }

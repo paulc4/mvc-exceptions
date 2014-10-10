@@ -1,4 +1,4 @@
-package demo1.exceptions;
+package demo.exceptions;
 
 public class DatabaseException extends RuntimeException {
 

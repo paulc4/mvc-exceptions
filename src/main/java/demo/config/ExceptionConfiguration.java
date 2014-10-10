@@ -1,4 +1,4 @@
-package demo1.web;
+package demo.config;
 
 import java.util.Properties;
 
@@ -9,14 +9,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
-import demo1.main.Main;
-import demo1.main.Profiles;
+import demo.main.Main;
+import demo.main.Profiles;
 
 /**
  * Setup for exception handling using a {@link SimpleMappingExceptionResolver}
  * bean.
  * <p>
- * If you prefer to do this in XML set the {@link Main#smerConfig} property
+ * If you prefer to do this in XML set the {@link Main#simpleMappingExceptionResolverConfig} property
  * to <code>XML</code> (see <code>mvc-configuration.xml</code>).
  * <p>
  * The use of the JAVA_CONFIG profile here is for demonstration only. A real

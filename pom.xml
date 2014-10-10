@@ -5,15 +5,21 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>mvc-exceptions</artifactId>
 	<name>Demo application for Spring Exception Handling Blog</name>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
-	<!-- Must inherit from the Spring Boot parent POM . Note that we are using 
-		the current snapshot release. Spring Boot is still in pre-release so some 
-		of the APIs may change before final release. -->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<start-class>demo.main.Main</start-class>
+		<java.version>1.8</java.version>
+		<spring.version>4.1.0.RELEASE</spring.version>
+	</properties>
+
+	<!-- Must inherit from the Spring Boot parent POM. Note that we are using 
+		the current snapshot release to get Spring 4.1. -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>0.5.0.BUILD-SNAPSHOT</version>
+		<version>1.1.7.RELEASE</version>
 	</parent>
 
 	<!-- Spring boot automatically picks up any other dependencies that it recognises 
@@ -25,52 +31,27 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<!-- RESTful API for monitoring the app. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
-		<!-- Thymeleaf for page rendering. This dependency must exist or Spring 
-			Boot will not setup Thymeleaf. -->
+		<!-- Tell Spring Boot to setup Thymeleaf for page rendering. -->
 		<dependency>
-			<groupId>org.thymeleaf</groupId>
-			<artifactId>thymeleaf-spring3</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 
-		<!-- Need the following for JSP to work as well -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-
-		<!-- Run with Tomcat embedded. Can use other containers if you prefer. -->
-		<dependency>
-			<groupId>org.apache.tomcat.embed</groupId>
-			<artifactId>tomcat-embed-jasper</artifactId>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.scala-lang</groupId> -->
+<!-- 			<artifactId>scala-library</artifactId> -->
+<!-- 			<version>2.10.4</version> -->
+<!-- 		</dependency> -->
 	</dependencies>
 
-	<repositories>
-		<repository>
-			<id>spring-snapshots</id>
-			<name>Spring Snapshots</name>
-			<url>http://repo.spring.io/snapshot</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>http://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-
 	<build>
+		<!-- Specify entry-point class to run as a Java application -->
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -83,5 +64,23 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
+
+		<!-- Allow deployment to Cloud Foundry -->
+		<plugins>
+			<plugin>
+				<groupId>org.cloudfoundry</groupId>
+				<artifactId>cf-maven-plugin</artifactId>
+				<version>1.0.1</version>
+				<configuration>
+					<server>pivotal-cloud-foundry</server>
+					<target>https://api.run.pivotal.io</target>
+					<space>development</space>
+					<appname>mvc-exceptions</appname>
+					<url>mvc-exceptions.cfapps.io</url>
+					<memory>512</memory>
+					<instances>1</instances>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 </project>

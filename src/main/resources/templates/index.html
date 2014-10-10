@@ -1,4 +1,4 @@
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 
@@ -6,136 +6,72 @@
 
 <body>
 
-	<h1>Exceptions Demo</h1>
-	<p>
-		Demo running with profiles: <i th:text="${profiles}">profiles</i>
-	</p>
+	<h1>Exceptions Demo V2</h1>
+	<h3>Details</h3>
 	<ul>
-		<li th:switch="${#strings.substringBefore(profiles,',')}"><i
-			th:text="${#strings.substringBefore(profiles,',')}">FIRST-PROFILE-NAME</i>:
-			<span th:case="'global'">Exceptions handled globally using a <code>@ControllerAdvice</code>
-				- see <code>GlobalControllerExceptionHandler</code>.
-		</span> <span th:case="'controller'">Exceptions handled locally by the
-				<code>ExceptionHandlingController</code>.
-		</span></li>
-
-		<li th:switch="${#strings.substringAfter(profiles,', ')}"><i
-			th:text="${#strings.substringAfter(profiles,', ')}">SECOND-PROFILE-NAME</i>:
-			Exceptions not handled elsewhere are <span th:case="'none'">handled
-				by container. </span> <span th:case="'java-config'">passed to a <code>SimpleMappingExceptionResolver</code>
-				created via Java Configuration - see <code>ExceptionConfiguration</code>.
-		</span> <span th:case="'xml-config'">passed to a <code>SimpleMappingExceptionResolver</code>
-				created via XML Configuration - see <code>mvc-configuration.xml</code>.
-		</span></li>
+		<li>Demo running with profile: <i th:text="${profiles}">profiles</i>
+			<br />To change the profile, edit <a
+			href="https://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/main/Main.java"><code>Main.java</code></a>
+			and change the value of the <code>ActiveProfiles</code> data-member.
+		</li>
+		<li>See <a
+			href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc">
+				Blog</a> for more details.
+		</li>
+		<li>Profile <a
+			href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc#sample-application-and-spring-boot">discussion</a>
+			in the Blog.
+		</li>
+		<li>Demo uses the <a href="http://thymeleaf.org">Thymeleaf</a>
+			view generation system to generate HTML pages (a nice alternative to
+			JSP that cn be configured by Spring Boot automatically).
+		</li>
 	</ul>
 	<p>
-		For details on the different profiles and what they do see <a
-			href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc#sample-application-and-spring-boot">discussion</a>
-		in the Blog.
+		Spring-Boot sets up <i>error</i> view as the default error-page and we
+		are using Thymeleaf to define it via the <i>error.html</i> template
+		(if you don't configure the Spring Boot error page you see the
+		so-called "Whitelabel Error Page").
+	</p>
+	<p>
+		Without Spring Boot you would see your containers default error page.
+		Rename <i>error.html</i> to <i>error2.html</i> to see the difference.
 	</p>
 
-	<p>
-		Each of the links below demonstrates one of the exception handling
-		techniques discussed in <a
-			href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc">
-			the Blog</a>.
-	</p>
+	<p>The previous version of this demo tried to show everything on
+		one page. It has been broken down into different pages for clarity.</p>
 
-	<p>
-		By default the exceptions are handled by the controller that raises
-		them. To switch to global exception handling using a
-		<code>@ControllerAdvice</code>:
-		edit
-		<code>Main.java</code>
-		find the
-		<code>global</code>
-		data-member and change it from
-		<code>false</code>
-		to
-		<code>true</code>.
-		To fully understand this demo, review the output in the server (console) log
-		as you click the links below.
-	</p>
-	<p>
-		This demo uses the <a href="http://thymeleaf.org">Thymeleaf</a> view
-		generation system to generate HTML pages (it's a nice alternative to
-		JSP and configured by Spring Boot automatically).
-	</p>
-	<p>
-		Spring-Boot sets up <i>error</i> view as the default and Thymeleaf supplies
-		the corresponding <i>error.html</i> template. Rename <i>error.html</i>
-		to <i>error2.html</i> to see the difference.
-	</p>
-	<p>
-		When the <i>xml-config</i> or <i>java-config</i> profiles are enabled
-		(instead of <i>none</i>), they setup a
-		<code>SimpleMappingExceptionResolver</code>
-		and its default error view is used. This can be seen when clicking on
-		the <i>unhandledException</i> link. It is not configured by default so:
-		edit
-		<code>Main.java</code>
-		find the
-		<code>smerConfig</code>
-		data-member and change its value to
-		<code>JAVA</code>
-		or
-		<code>XML</code>.
-	</p>
-
+	<h3>The Demo</h3>
 	<ul class="openlist">
-		<li>Throw <a href="orderNotFound">OrderNotFoundException</a> -
-			should generate a 404.
+		<li><a href="/local/">Local Exception Handling</a> - Exceptions
+			handled in the Controller.<br /> URLs on this page are handled by
+			the <a
+			href="https://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/web/ExceptionHandlingController.java">demo1.web.ExceptionHandlingController</a>
+			which handles its own exceptions using its own <code>@ExceptionHandler</code>
+			methods.</li>
+		<li><a href="/global/">Global Exception Handling</a> - Exceptions
+			handled by a Controller Advice.<br />URLs on this page are handled
+			by the <a
+			href="https://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo2/web/ControllerWithoutExceptionHandlers.java">demo2.web.ControllerWithoutExceptionHandlers</a>
+			which relies on a Controller Advice<a
+			href="https://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo2/web/GlobalExceptionHandlingControllerAdvice.java">demo2.web.GlobalExceptionHandlingControllerAdvice</a>
+			to handle any exceptions thrown.</li>
+		<li><a href="/simpleMappingExceptionResolver/on">Simple
+				Mapping Exception Resolver</a> - Exceptions handled by exception
+			resolving bean<br />Exceptions raised by <a
+			href="https://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo3/web/ExceptionThrowingController.java"><code>ExceptionThrowingController</code></a>
 		</li>
-		<li>Throw <a href="dataIntegrityViolation">DataIntegrityViolationException</a>
-			- should generate a 409.
-		</li>
-		<li>Throw <a href="databaseError1">SQLException</a> - should
-			return a specific database-error page.
-		</li>
-		<li>Throw <a href="databaseError2">DataAccessException</a> -
-			should also return the database-error page. Demonstrates catching
-			multiple exceptions with one handler.
-		</li>
-		<li>Throw <a href="databaseException">DatabaseException</a> -
-			should generate a specific database-error page due to configuration
-			of <code>SimpleMappingExceptionResolver</code> (if configured),
-			otherwise your container's error page is used.
-		</li>
-		<li>Throw <a href="invalidCreditCard">InvalidCreditCardException</a>
-			- should generate a specific credit-card error page due to
-			configuration of <code>SimpleMappingExceptionResolver</code> (if
-			configured), otherwise your container's error page is used.
-		</li>
-		<li>Throw <a href="customException">CustomException</a> - should
-			generate a support oriented error page with hidden stack-trace hidden
-			in the page source. <i>This is the only page generated using JSP
-				(Thymeleaf cannot yet generate dynamic output inside HTML comments -
-				planned for V2.1)</i>
-		</li>
-		<li>Throw <a href="unhandledException">UnhandledException</a> -
-			should invoke the default (fall-back) error page defined by <code>SimpleMappingExceptionResolver</code>
-			(if configured), otherwise your container's error page is used.
-			<p th:if="${#strings.substringAfter(profiles,', ') != 'none'}">
-				Note how uninformative it is. Subclass
-				<code>SimpleMappingExceptionResolver</code>
-				and override its
-				<code>getModelAndView()</code>
-				method to make additional context available in the model and in the
-				error page (see
-				<code>ExampleSimpleMappingExceptionResolver</code>
-				).
-			</p>
-		</li>
-		<li>A genuinely <a href="unknown">Unknown page</a>. There is no
-			handler for this URL, so the framework will generate a 404. (No
-			exception handlers do this, this is the standard Spring MVC response
-			to a URL it has no handler for).
-		</li>
+		<li><a href="/simpleMappingExceptionResolver/off">No Handler
+				for Exceptions</a><br />For comparison, the same exceptions as previous
+			option, but with the <code>SimpleMappingExceptionResolver</code>
+			disabled to see what you get by default. Exceptions are not totally
+			unhandled because Server 500 errors are caught by Spring Boot's
+			default error page - mapped to <code>error.html</code>.</li>
 	</ul>
 
 	<h3>Spring Boot URLs</h3>
 	<p>For those interested, Spring Boot provides RESTful URLs for
-		interogating your application (they return JSON):</p>
+		interrogating your application (they return JSON format data):</p>
 
 	<ul>
 		<li><a th:href="@{/beans}">The beans</a></li>

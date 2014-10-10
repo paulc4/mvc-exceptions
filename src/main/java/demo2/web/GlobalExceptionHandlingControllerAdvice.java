@@ -1,4 +1,4 @@
-package demo1.web;
+package demo2.web;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -17,8 +16,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import demo1.exceptions.CustomException;
-import demo1.main.Profiles;
+import demo.exceptions.CustomException;
+import demo1.web.ExceptionHandlingController;
 
 /**
  * Performs the same exception handling as {@link ExceptionHandlingController}
@@ -29,12 +28,11 @@ import demo1.main.Profiles;
  * @author Paul Chapman
  */
 @ControllerAdvice
-@Profile(Profiles.GLOBAL_PROFILE)
-public class GlobalControllerExceptionHandler {
+public class GlobalExceptionHandlingControllerAdvice {
 
 	protected Logger logger;
 
-	public GlobalControllerExceptionHandler() {
+	public GlobalExceptionHandlingControllerAdvice() {
 		logger = LoggerFactory.getLogger(getClass());
 	}
 	
@@ -76,7 +74,7 @@ public class GlobalControllerExceptionHandler {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("exception", exception);
 		mav.addObject("url", req.getRequestURL());
-		mav.addObject("timestamp", new Date());
+		mav.addObject("timestamp", new Date().toString());
 		mav.addObject("status", 500);
 
 		mav.setViewName("support");

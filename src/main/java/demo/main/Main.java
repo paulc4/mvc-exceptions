@@ -1,8 +1,5 @@
-package demo1.main;
+package demo.main;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import org.slf4j.Logger;
@@ -10,9 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.SpringBootServletInitializer;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
+
+import demo.config.ExceptionConfiguration;
+import demo.utils.LoggingUtilities;
 
 /**
  * Main entry point for our application using Spring Boot. It can be run as an
@@ -30,46 +30,26 @@ import org.springframework.context.annotation.ImportResource;
  * @author Paul Chapman
  */
 @EnableAutoConfiguration
-@ComponentScan("demo1.web")
+@ComponentScan({ "demo", "demo1.web", "demo2", "demo3" })
 @ImportResource("classpath:mvc-configuration.xml")
 public class Main extends SpringBootServletInitializer {
 
 	/**
-	 * Options for setting up a <code>SimpleMappingExceptionResolver</code>.
-	 * 
-	 * @see Main#smerConfig
-	 */
-	public enum ResolverSetup {
-		NONE("none"), // Do not create
-		JAVA(Profiles.JAVA_CONFIG_PROFILE), // create using Java configuration
-		XML(Profiles.XML_CONFIG_PROFILE); // create using XML
-
-		String value;
-
-		ResolverSetup(String value) {
-			this.value = value;
-		}
-
-		public String toString() {
-			return value;
-		}
-	}
-
-	/**
-	 * Set true for Global exception handling profile. Value = <b>{@value} </b>
+	 * Hoe should a <code>SimpleMappingExceptionResolver</code> be created?
+	 * <ul>
+	 * <li>DEMO (default) - Java Config is used and a custom
+	 * <code>SimpleMappingExceptionResolver</code> is setup that can be enabled
+	 * or disabled programmatically (just for the purpose of this demo).
+	 * <li>XML - Traditional XML bean configuration is used - see
+	 * <code>mvc-configuration.xml</code>.
+	 * <li>JAVA - Java Configuration is used - see
+	 * {@link ExceptionConfiguration}.
+	 * <li>NONE - No <code>SimpleMappingExceptionResolver</code> is created.
+	 * </ul>
 	 * 
 	 * @see Profiles
 	 */
-	public static final boolean global = false;
-
-	/**
-	 * Is a <code>SimpleMappingExceptionResolver</code> to be created and if so
-	 * how? Set to 'NONE' to not define one, to 'JAVA' to configure using Java
-	 * Configuration or 'XML' for XML configuration.
-	 * 
-	 * @see Profiles
-	 */
-	public static final ResolverSetup smerConfig = ResolverSetup.NONE;
+	public static final String activeProfile = Profiles.DEMO_CONFIG_PROFILE;
 
 	// Local logger
 	protected Logger logger;
@@ -78,14 +58,13 @@ public class Main extends SpringBootServletInitializer {
 	protected Properties props = new Properties();
 
 	/**
-	 * Retrieve requested Profiles. Depends on the value of {@link #global} and
-	 * {@link #smerConfig}.
+	 * Retrieve requested Profiles. Depends on the value of
+	 * {@link #activeProfile}.
 	 * 
-	 * @return Comma-separated list of profiles, forced to upper-case.
+	 * @return Comma-separated list of profiles.
 	 */
 	public static String getProfiles() {
-		return (global ? Profiles.GLOBAL_PROFILE : Profiles.CONTROLLER_PROFILE)
-				+ ", " + smerConfig;
+		return activeProfile;
 	}
 
 	/**
@@ -108,16 +87,6 @@ public class Main extends SpringBootServletInitializer {
 		// changes can be seen next time it is rendered. Should be 'true' in
 		// production for efficiency.
 		props.setProperty("spring.thymeleaf.cache", "false");
-
-		// Setup JSP by defining the prefix and suffix properties of the
-		// InternalResourceViewResolver.
-		//
-		// NOTE: The "support" error view shows how to embed exception
-		// information inside an HTML comment so it is only visible by looking
-		// at the page source. We are only using JSP for this one page because
-		// Thymeleaf can't (yet) generate dynamic content inside comments.
-		props.setProperty("spring.view.prefix", "/WEB-INF/");
-		props.setProperty("spring.view.suffix", ".jsp");
 
 		// Spring boot assumes the fallback error page maps to /error. Set this
 		// property to specify an alternative mapping. If using a
@@ -177,31 +146,17 @@ public class Main extends SpringBootServletInitializer {
 	 *            Spring Boot application builder.
 	 */
 	@Override
-	protected void configure(SpringApplicationBuilder application) {
+	protected SpringApplicationBuilder configure(
+			SpringApplicationBuilder application) {
 		application.sources(Main.class);
 
-		// Set active profiles.
-		// @formatter:off
-		List<String> profiles = new ArrayList<String>();
-		profiles.add(global ? Profiles.GLOBAL_PROFILE
-								: Profiles.CONTROLLER_PROFILE);
+		logger.info("Spring Boot configuration: profiles = " + activeProfile);
+		application.profiles(activeProfile);
 
-		if (smerConfig != ResolverSetup.NONE)
-			profiles.add(smerConfig == ResolverSetup.JAVA ?
-		        Profiles.JAVA_CONFIG_PROFILE : Profiles.XML_CONFIG_PROFILE);
-
-		logger.info("Spring Boot configuration: profiles = " + profiles);
-		application.profiles(profiles.toArray(new String[profiles.size()]));
-		// @formatter:on
-
-		// Set additional properties. Note: this API does not exist in 0.5.0.M5
-		// or earlier.
+		// Set additional properties.
 		logger.info("Spring Boot configuratoon: properties = " + props);
-		application.properties(props); // New API
+		application.properties(props);
 
-		// NOTE: If you want to stick with M5, set these properties as System
-		// properties by iterating over them and using System.setProperty(). DO
-		// NOT use system.setProperties() or you will lose all the default
-		// properties and get some very weird errors!
+		return application;
 	}
 }

@@ -5,10 +5,13 @@
 <head th:substituteby="header :: copy"></head>
 
 <body>
-	<h1>Credit Card Error</h1>
+	<h1>Database Failure</h1>
+	<p>An internal data storage error has occurred accessing:</p>
 	<p>
-		Your credit card has been rejected:
-		<span th:text="${ex.message}">error here</span>
+		<code th:text="${#httpServletRequest.requestURL}">Request URL</code>
+	</p>
+	<p>
+		<code th:text="${ex}">Exception</code>
 	</p>
 
 	<p>
@@ -16,7 +19,7 @@
 		<code>SimpleMappingExceptionResolver</code>.
 	</p>
 
-    <div th:substituteby="footer :: copy"></div>
-
+	<div th:substituteby="footer :: copy"></div>
+	
 </body>
 </html>

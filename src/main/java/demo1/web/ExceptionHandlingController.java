@@ -7,44 +7,34 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import demo1.exceptions.CustomException;
-import demo1.exceptions.DatabaseException;
-import demo1.exceptions.InvalidCreditCardException;
-import demo1.exceptions.OrderNotFoundException;
-import demo1.exceptions.UnhandledException;
-import demo1.main.Main;
-import demo1.main.Profiles;
+import demo.exceptions.CustomException;
+import demo.exceptions.DatabaseException;
+import demo.exceptions.InvalidCreditCardException;
+import demo.exceptions.OrderNotFoundException;
+import demo.exceptions.UnhandledException;
 
 /**
  * A controller whose request-handler methods deliberately throw exceptions to
  * demonstrate the points discussed in the Blog.
  * <p>
- * This controller is only created when the "controller" profile is active. It
- * contains <tt>@ExceptionHandler</tt> methods to handle (most of) the
+ * Contains its own <tt>@ExceptionHandler</tt> methods to handle (most of) the
  * exceptions it raises.
  * 
  * @author Paul Chapman
  */
 @Controller
-@Profile(Profiles.CONTROLLER_PROFILE)
+@RequestMapping("/local")
 public class ExceptionHandlingController {
-
-	@Autowired
-	ThymeleafHelper helper;
 
 	protected Logger logger;
 
@@ -52,32 +42,6 @@ public class ExceptionHandlingController {
 		logger = LoggerFactory.getLogger(getClass());
 	}
 
-	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-	/* . . . . . . . . . . . . . . MODEL ATTRIBUTES . . . . . . . . . . . . .. */
-	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
-	/**
-	 * What profile are we currently using?
-	 * <p>
-	 * Note that error views do not have automatically have access to the model,
-	 * so they do not have access to model-attributes either.
-	 * 
-	 * @return Always includes "CONTROLLER".
-	 */
-	@ModelAttribute("profiles")
-	public String getProfiles() {
-		return Main.getProfiles();
-	}
-
-	/**
-	 * Required for compatibility with Spring Boot.
-	 * 
-	 * @return Date and time of current request.
-	 */
-	@ModelAttribute("timestamp")
-	public String getTimestamp() {
-		return new Date().toString();
-	}
 
 	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 	/* . . . . . . . . . . . . . . REQUEST HANDLERS . . . . . . . . . . . . .. */
@@ -88,10 +52,21 @@ public class ExceptionHandlingController {
 	 * 
 	 * @return The view name (an HTML page with Thymeleaf markup).
 	 */
+	@RequestMapping("")
+	String home1() {
+		logger.info("Local home page 1");
+		return "local";
+	}
+
+	/**
+	 * Home page.
+	 * 
+	 * @return The view name (an HTML page with Thymeleaf markup).
+	 */
 	@RequestMapping("/")
-	String home(Model model) {
-		logger.info("Home page");
-		return "index";
+	String home2() {
+		logger.info("Local home page 2");
+		return "local";
 	}
 
 	/**
@@ -246,7 +221,7 @@ public class ExceptionHandlingController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("exception", exception);
 		mav.addObject("url", req.getRequestURL());
-		mav.addObject("timestamp", getTimestamp());
+		mav.addObject("timestamp", new Date().toString());
 		mav.addObject("status", 500);
 
 		mav.setViewName("support");

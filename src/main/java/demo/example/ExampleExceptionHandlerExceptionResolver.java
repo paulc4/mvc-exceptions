@@ -1,4 +1,4 @@
-package demo1.web;
+package demo.example;
 
 import java.util.Date;
 
@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
+
+import demo.config.ExceptionConfiguration;
 
 /**
  * Not used in this application, but an example of how to extend the

@@ -1,4 +1,4 @@
-package demo1.web;
+package demo.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +25,7 @@ import org.springframework.web.servlet.handler.HandlerExceptionResolverComposite
 public class BeanLogger implements BeanPostProcessor {
 
 	protected Logger logger;
+	protected boolean enabled = false;
 
 	public BeanLogger() {
 		logger = LoggerFactory.getLogger(getClass());
@@ -40,6 +41,9 @@ public class BeanLogger implements BeanPostProcessor {
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName)
 			throws BeansException {
+		if (!enabled)
+			return bean; // Must return the bean or we lose it!
+
 		// Display the bean. If it is Ordered, print its order also. Several MVC
 		// classes are chained by Order and it is often useful to see what order
 		// they are configured to run.
