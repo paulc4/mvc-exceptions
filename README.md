@@ -10,7 +10,7 @@ This application demos most of the points covered on my MVC Exceptions blog:
 <a href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc">
 https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc</a>.
 
-This demo is running on Cloud Foundry at ```http://mvc-exceptions-v2.cfapps.io/```.
+This demo is running on <a href="http://run.pivotal.io/">Cloud Foundry</a> at <a href="http://mvc-exceptions-v2.cfapps.io/">http://mvc-exceptions-v2.cfapps.io/</a>.
 
 The files are:
 
