@@ -34,7 +34,7 @@
 
 	<h3>Details</h3>
 	<p>The exceptions below have no handler defined for them when
-		running the 'demo-profile'. They will generate the default error-page
+		running the <code>demo-config</code> profile. They will generate the default error-page
 		supplied by Spring Boot. A non Spring-Boot application would generate
 		the container's error page.</p>
 
@@ -49,10 +49,6 @@
 		</li>
 		<li>Throw <a href="/throw/invalidCreditCard">InvalidCreditCardException</a>
 			- should generate Spring Boot's error page.
-		</li>
-		<li>Throw <a href="/throw/supportInfoException">SupportInfoException</a> -
-			should generate a support oriented error page with hidden stack-trace
-			hidden in the page source. Whether this is a good idea, is debatable!
 		</li>
 		<li>Throw <a href="/throw/unhandledException">UnhandledException</a>
 			- should generate Spring Boot's error page.

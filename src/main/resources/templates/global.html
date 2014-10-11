@@ -78,7 +78,7 @@
 		Demo 3: <a href="/simpleMappingExceptionResolver/on">Using a
 			Simple Mapping Exception Handler</a>.
 	</p>
-	<p th:else="${profiles != 'demo-config'}">
+	<p th:unless="${profiles == 'demo-config'}">
 		Demo 3: <a href="/unannotated">Using a Simple Mapping Exception
 			Handler</a>.
 	</p>
