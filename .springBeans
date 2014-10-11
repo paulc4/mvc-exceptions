@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beansProjectDescription>
 	<version>1</version>
-	<pluginVersion><![CDATA[3.3.0.201307091516-RELEASE]]></pluginVersion>
+	<pluginVersion><![CDATA[3.6.0.201407080615-RELEASE]]></pluginVersion>
 	<configSuffixes>
 		<configSuffix><![CDATA[xml]]></configSuffix>
 	</configSuffixes>
@@ -10,8 +10,14 @@
 		<config>src/main/resources/mvc-configuration.xml</config>
 		<config>java:org.springframework.boot.actuate.autoconfigure.EndpointWebMvcAutoConfiguration</config>
 		<config>java:org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration</config>
-		<config>java:demo1.web.ExceptionConfiguration</config>
+		<config>java:demo.config.ExceptionConfiguration</config>
+		<config>java:demo.main.Main</config>
+		<config>java:demo.utils.BeanLogger</config>
+		<config>java:demo3.config.DemoExceptionConfiguration</config>
+		<config>java:demo.utils.LoggingUtilities</config>
 	</configs>
+	<autoconfigs>
+	</autoconfigs>
 	<configSets>
 		<configSet>
 			<name><![CDATA[system]]></name>
@@ -20,8 +26,8 @@
 			<configs>
 				<config>src/main/resources/mvc-configuration.xml</config>
 				<config>java:org.springframework.boot.actuate.autoconfigure.EndpointWebMvcAutoConfiguration</config>
-				<config>java:demo1.web.ExceptionConfiguration</config>
 				<config>java:org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration</config>
+				<config>java:demo.config.ExceptionConfiguration</config>
 			</configs>
 			<profiles>
 			</profiles>

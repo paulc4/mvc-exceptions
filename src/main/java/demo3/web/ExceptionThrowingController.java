@@ -7,10 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
-import demo.config.DemoExceptionConfiguration.SwitchableSimpleMappingExceptionResolver;
 import demo.exceptions.CustomException;
 import demo.exceptions.DatabaseException;
 import demo.exceptions.InvalidCreditCardException;
+import demo.exceptions.SupportInfoException;
 import demo.exceptions.UnhandledException;
 
 /**
@@ -106,10 +106,10 @@ public class ExceptionThrowingController {
 	 * @throws CustomException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/customException")
+	@RequestMapping("/supportInfoException")
 	String throwCustomException() throws Exception {
-		logger.info("Throw CustomException");
-		throw new CustomException("Custom exception occurred");
+		logger.info("Throw SupportInfoException");
+		throw new SupportInfoException("Exception occurred");
 	}
 
 	/**

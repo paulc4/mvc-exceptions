@@ -9,11 +9,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import demo.exceptions.CustomException;
-import demo.exceptions.DatabaseException;
-import demo.exceptions.InvalidCreditCardException;
 import demo.exceptions.OrderNotFoundException;
-import demo.exceptions.UnhandledException;
+import demo.exceptions.SupportInfoException;
 
 /**
  * A controller whose request-handler methods deliberately throw exceptions to
@@ -117,61 +114,18 @@ public class ControllerWithoutExceptionHandlers {
 	}
 
 	/**
-	 * Simulates an illegal credit-card exception by always throwing
-	 * <tt>InvalidCreditCardException</tt>. Handled by
-	 * <tt>SimpleMappingExceptionResolver</tt>.
+	 * Always throws a <tt>SupportInfoException</tt>. Must be caught by an
+	 * exception handler.
 	 * 
 	 * @return Nothing - it always throws the exception.
-	 * @throws InvalidCreditCardException
+	 * @throws SupportInfoException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/invalidCreditCard")
-	String throwInvalidCreditCard() throws Exception {
-		logger.info("Throw InvalidCreditCardException");
-		throw new InvalidCreditCardException("1234123412341234");
-	}
-
-	/**
-	 * Simulates a database exception by always throwing
-	 * <tt>DatabaseException</tt>. Handled by
-	 * <tt>SimpleMappingExceptionResolver</tt>.
-	 * 
-	 * @return Nothing - it always throws the exception.
-	 * @throws DatabaseException
-	 *             Always thrown.
-	 */
-	@RequestMapping("/databaseException")
-	String throwDatabaseException() throws Exception {
-		logger.info("Throw InvalidCreditCardException");
-		throw new DatabaseException("Database not found: info.db");
-	}
-
-	/**
-	 * Simulates a database exception by always throwing
-	 * <tt>CustomException</tt>. Must be caught by an exception handler.
-	 * 
-	 * @return Nothing - it always throws the exception.
-	 * @throws CustomException
-	 *             Always thrown.
-	 */
-	@RequestMapping("/customException")
+	@RequestMapping("/supportInfoException")
 	String throwCustomException() throws Exception {
-		logger.info("Throw CustomException");
-		throw new CustomException("Custom exception occurred");
+		logger.info("Throw SupportInfoException");
+		throw new SupportInfoException("Custom exception occurred");
 	}
 
-	/**
-	 * Simulates a database exception by always throwing
-	 * <tt>UnhandledException</tt>. Must be caught by an exception handler.
-	 * 
-	 * @return Nothing - it always throws the exception.
-	 * @throws UnhandledException
-	 *             Always thrown.
-	 */
-	@RequestMapping("/unhandledException")
-	String throwUnhandledException() throws Exception {
-		logger.info("Throw UnhandledException");
-		throw new UnhandledException("Some exception occurred");
-	}
 
 }

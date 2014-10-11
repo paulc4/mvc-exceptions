@@ -2,11 +2,11 @@ package demo.main;
 
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
-import demo.config.DemoExceptionConfiguration;
 import demo.config.ExceptionConfiguration;
 import demo1.web.ExceptionHandlingController;
 import demo2.web.ControllerWithoutExceptionHandlers;
 import demo2.web.GlobalExceptionHandlingControllerAdvice;
+import demo3.config.DemoExceptionConfiguration;
 
 /**
  * Spring Bean configuration profiles used in this application. Three profile

@@ -4,6 +4,7 @@ target/*
 .classpath
 .settings/
 bin/
+Thumbs.db
 
 # Package Files #
 *.jar

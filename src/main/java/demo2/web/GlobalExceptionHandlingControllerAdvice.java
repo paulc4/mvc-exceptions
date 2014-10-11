@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import demo.exceptions.CustomException;
+import demo.exceptions.SupportInfoException;
 import demo1.web.ExceptionHandlingController;
 
 /**
@@ -35,12 +35,14 @@ public class GlobalExceptionHandlingControllerAdvice {
 	public GlobalExceptionHandlingControllerAdvice() {
 		logger = LoggerFactory.getLogger(getClass());
 	}
-	
+
 	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 	/* . . . . . . . . . . . . . EXCEPTION HANDLERS . . . . . . . . . . . . . . */
 	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-	// Convert a predefined exception to an HTTP Status code
+	/**
+	 * Convert a predefined exception to an HTTP Status code
+	 */
 	@ResponseStatus(value = HttpStatus.CONFLICT, reason = "Data integrity violation")
 	// 409
 	@ExceptionHandler(DataIntegrityViolationException.class)
@@ -49,8 +51,12 @@ public class GlobalExceptionHandlingControllerAdvice {
 		// Nothing to do
 	}
 
-	// Specify the name of a specific view that will be used to display the
-	// error:
+	/**
+	 * Convert a predefined exception to an HTTP Status code and specify the
+	 * name of a specific view that will be used to display the error.
+	 * 
+	 * @return Exception view.
+	 */
 	@ExceptionHandler({ SQLException.class, DataAccessException.class })
 	public String databaseError(Exception exception) {
 		// Nothing to do. Return value 'databaseError' used as logical view name
@@ -59,8 +65,20 @@ public class GlobalExceptionHandlingControllerAdvice {
 		return "databaseError";
 	}
 
-	// Total control - setup a model and return the view name
-	@ExceptionHandler(CustomException.class)
+	/**
+	 * Demonstrates how to take total control - setup a model, add useful
+	 * information and return the "support" view name. This method explicitly
+	 * creates and returns
+	 * 
+	 * @param req
+	 *            Current HTTP request.
+	 * @param exception
+	 *            The exception thrown - always {@link SupportInfoException}.
+	 * @return The model and view used by the DispatcherServlet to generate
+	 *         output.
+	 * @throws Exception
+	 */
+	@ExceptionHandler(SupportInfoException.class)
 	public ModelAndView handleError(HttpServletRequest req, Exception exception)
 			throws Exception {
 

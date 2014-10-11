@@ -12,14 +12,19 @@
 	</p>
 	<p>
 		<code th:text="${ex}">Exception</code>
+		<blockquote>
+			<i>Note: You would never generate a page that displays a Java
+				exception to an end-user in a real application</i>
+		</blockquote>
 	</p>
 
 	<p>
 		You are seeing this error page due to the definition of the
-		<code>SimpleMappingExceptionResolver</code>.
+		<code>SimpleMappingExceptionResolver</code>
+		.
 	</p>
 
 	<div th:substituteby="footer :: copy"></div>
-	
+
 </body>
 </html>

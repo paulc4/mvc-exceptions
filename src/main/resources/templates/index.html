@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 
-<head th:substituteby="header :: copy"></head>
+<head th:replace="header :: copy"></head>
 
 <body>
 
@@ -10,16 +10,15 @@
 	<h3>Details</h3>
 	<ul>
 		<li>Demo running with profile: <i th:text="${profiles}">profiles</i>
-			<br />To change the profile, edit <a
-			href="https://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/main/Main.java"><code>Main.java</code></a>
-			and change the value of the <code>ActiveProfiles</code> data-member.
+			<br />To change the profile, edit <code>Main.java</code><a
+			th:href="${gitHubSrc + '/java/demo/main/Main.java'}"><img
+				th:src="@{/extlink.png}" src="extlink.png" title="View in github" /></a>
+			and change the value of the <code>activeProfile</code> data-member.
 		</li>
-		<li>See <a
-			href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc">
-				Blog</a> for more details.
+		<li>See <a th:replace="link :: blog"></a> for more details.
 		</li>
-		<li>Profile <a
-			href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc#sample-application-and-spring-boot">discussion</a>
+		<li>Profile <a href="sample-application-and-spring-boot"
+			th:href="${blogUrl + '#sample-application-and-spring-boot'}">discussion</a>
 			in the Blog.
 		</li>
 		<li>Demo uses the <a href="http://thymeleaf.org">Thymeleaf</a>
@@ -30,43 +29,89 @@
 	<p>
 		Spring-Boot sets up <i>error</i> view as the default error-page and we
 		are using Thymeleaf to define it via the <i>error.html</i> template
-		(if you don't configure the Spring Boot error page you see the
-		so-called "Whitelabel Error Page").
+		(if you don't configure your own error view you see the so-called
+		"Whitelabel Error Page").
 	</p>
 	<p>
-		Without Spring Boot you would see your containers default error page.
-		Rename <i>error.html</i> to <i>error2.html</i> to see the difference.
+		Without Spring Boot you would see your container's default error page.
+		Rename <i>error.html</i> to <i>error2.html</i> and restart to see this
+		for yourself.
 	</p>
 
 	<p>The previous version of this demo tried to show everything on
 		one page. It has been broken down into different pages for clarity.</p>
 
 	<h3>The Demo</h3>
+
 	<ul class="openlist">
 		<li><a href="/local/">Local Exception Handling</a> - Exceptions
 			handled in the Controller.<br /> URLs on this page are handled by
-			the <a
-			href="https://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/web/ExceptionHandlingController.java">demo1.web.ExceptionHandlingController</a>
+			the <code>demo1.web.ExceptionHandlingController</code><a
+			th:href="${gitHubSrc + '/java/demo1/web/ExceptionHandlingController.java'}"><img
+				th:src="@{/extlink.png}" src="extlink.png" title="View in github" /></a>
 			which handles its own exceptions using its own <code>@ExceptionHandler</code>
 			methods.</li>
+
 		<li><a href="/global/">Global Exception Handling</a> - Exceptions
 			handled by a Controller Advice.<br />URLs on this page are handled
-			by the <a
-			href="https://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo2/web/ControllerWithoutExceptionHandlers.java">demo2.web.ControllerWithoutExceptionHandlers</a>
-			which relies on a Controller Advice<a
-			href="https://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo2/web/GlobalExceptionHandlingControllerAdvice.java">demo2.web.GlobalExceptionHandlingControllerAdvice</a>
+			by the <code>demo2.web.ControllerWithoutExceptionHandlers</code><a
+			th:href="${gitHubSrc + '/java/demo2/web/ControllerWithoutExceptionHandlers.java'}"><img
+				th:src="@{/extlink.png}" src="extlink.png" title="View in github" /></a>
+			which relies on a Controller Advice <code>demo2.web.GlobalExceptionHandlingControllerAdvice</code><a
+			th:href="${gitHubSrc + '/java/demo2/web/GlobalExceptionHandlingControllerAdvice.java'}"><img
+				th:src="@{/extlink.png}" src="extlink.png" title="View in github" /></a>
 			to handle any exceptions thrown.</li>
-		<li><a href="/simpleMappingExceptionResolver/on">Simple
-				Mapping Exception Resolver</a> - Exceptions handled by exception
-			resolving bean<br />Exceptions raised by <a
-			href="https://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo3/web/ExceptionThrowingController.java"><code>ExceptionThrowingController</code></a>
+
+		<!--  This HTML looks horrid but it is just a switch to determine what
+		      Profile we are using: XML, JAVA or DEMO.
+		      CASE XML: A SimpleMappingExceptionResolver is defined by mvc-configuration.xml
+		          (probably what most developers are used to). It is always present.
+		      CASE JAVA: An identical  SimpleMappingExceptionResolver is defined by
+		          ExceptionConfiguration (using Java Configuration instead). It is always
+		          present.
+		      CASE DEMO: A for demonstration switchable SimpleMappingExceptionResolver is
+		          created by DemoExceptionConfiguration that can be turned on and off to
+		          see the difference.
+		-->
+		<li th:switch="${profiles}">
+			<!-- Configuration - XML: Resolver defined using XML --> <span
+			th:case="xml-config"><a href="/unannotated">With Exception
+					Resolver</a> - Exceptions handled by a customized <span
+				th:replace="link :: simpleMappingExceptionResolver"></span> bean
+				defined in <code>mvc-configuration.xml</code><a
+				href="mvc-configuration.xml"
+				th:href="${gitHubSrc + '/resources/mvc-configuration.xml'}"><img
+					th:replace="link :: github"></img></a>. </span> <!-- Configuration - JAVA: Resolver defined using Java Configuration -->
+			<span th:case="java-config"><a href="/unannotated">With
+					Exception Resolver</a> - Exceptions handled by a customized <span
+				th:replace="link :: simpleMappingExceptionResolver"></span> bean
+				defined in <code>demo.config.ExceptionConfiguration</code><a
+				href="ExceptionConfiguration.java"
+				th:href="${gitHubSrc + '/java/demo/config/ExceptionConfiguration.java'}"><img
+					th:replace="link :: github"></img></a>. </span> <!--  DEMO Configuration --> <span
+			th:case="demo-config"><a
+				href="/simpleMappingExceptionResolver/on">With Exception
+					Resolver</a> - Exceptions handled by a runtime switchable (for demo
+				purposes only) <span
+				th:replace="link :: simpleMappingExceptionResolver"></span> bean
+				defined by <code>demo3.config.DemoExceptionConfiguration</code><a
+				href="DemoExceptionConfiguration.java"
+				th:href="${gitHubSrc + '/java/demo3/config/DemoExceptionConfiguration.java'}"><img
+					th:replace="link :: github"></img></a>. </span> <br />Exceptions raised by <code>demo3.web.ExceptionThrowingController</code><a
+			href="${gitHubSrc + '/java/demo3/web/ExceptionThrowingController.java'}"><img
+				th:replace="link :: github"></img></a>
 		</li>
-		<li><a href="/simpleMappingExceptionResolver/off">No Handler
-				for Exceptions</a><br />For comparison, the same exceptions as previous
-			option, but with the <code>SimpleMappingExceptionResolver</code>
-			disabled to see what you get by default. Exceptions are not totally
-			unhandled because Server 500 errors are caught by Spring Boot's
-			default error page - mapped to <code>error.html</code>.</li>
+
+		<!-- This option is only available when using the DEMO profile -->
+		<li th:if="${profiles == 'demo-config'}"><a
+			href="/simpleMappingExceptionResolver/off">No Resolver for
+				Exceptions</a><br />For comparison, the same exceptions as previous
+			option, but with the resolver disabled to see what you get by
+			default. Exceptions are not totally unhandled because they are caught
+			by Spring Boot's default error page - mapped to <code>error.html</code>.</li>
+
+		<li><a href="/demo5">Using Spring Boot</a> - demonstrates how
+			Spring Boot's error-handling setup works.</li>
 	</ul>
 
 	<h3>Spring Boot URLs</h3>
@@ -83,7 +128,7 @@
 		<li><a th:href="@{/trace}">Request call trace</a></li>
 	</ul>
 
-	<div th:substituteby="footer :: copy"></div>
+	<div th:replace="footer :: copy"></div>
 
 </body>
 </html>

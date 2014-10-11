@@ -38,13 +38,19 @@
 			th:if="${error}" th:text="'('+${error}+')'">error ...</span>
 	</p>
 
-	<p
+	<!--/* ${ex} is set by ourSimpleMappingExceptionResolver,
+	       ${exception} or ${message} are set internally by Spring Boot. */-->
+	<div
 		th:if="${ex} or ${exception} or (${message} and ${message.length() != 0})">
 		<b>Cause:</b> <span th:if="${ex}" th:text="${ex.message}">exception
 			...</span> <span th:if="${exception}" th:text="${exception.message}">exception
 			...</span> <span th:if="${message} and ${message.length() != 0}"
 			th:text="${message}">message ...</span>
-	</p>
+		<blockquote>
+			<i>Note: You would never generate a page that displays a Java
+				exception to an end-user in a real application</i>
+		</blockquote>
+	</div>
 	
 	<p>
 		You are seeing this error page due to the definition of the

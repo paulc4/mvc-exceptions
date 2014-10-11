@@ -30,12 +30,12 @@ import demo.utils.LoggingUtilities;
  * @author Paul Chapman
  */
 @EnableAutoConfiguration
-@ComponentScan({ "demo", "demo1.web", "demo2", "demo3" })
+@ComponentScan({ "demo", "demo1", "demo2", "demo3", "demo4" })
 @ImportResource("classpath:mvc-configuration.xml")
 public class Main extends SpringBootServletInitializer {
 
 	/**
-	 * Hoe should a <code>SimpleMappingExceptionResolver</code> be created?
+	 * How should a <code>SimpleMappingExceptionResolver</code> be created?
 	 * <ul>
 	 * <li>DEMO (default) - Java Config is used and a custom
 	 * <code>SimpleMappingExceptionResolver</code> is setup that can be enabled
@@ -46,6 +46,9 @@ public class Main extends SpringBootServletInitializer {
 	 * {@link ExceptionConfiguration}.
 	 * <li>NONE - No <code>SimpleMappingExceptionResolver</code> is created.
 	 * </ul>
+	 * <p>
+	 * Demo mode is the default - set to "java-config" or "xml-config" to match
+	 * however you intend to use Spring for a mor realistic setup.
 	 * 
 	 * @see Profiles
 	 */

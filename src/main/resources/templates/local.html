@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 
-<head th:substituteby="header :: copy"></head>
+<head th:replace="header :: copy"></head>
 
 <body>
 
@@ -15,9 +15,7 @@
 		</li>
 		<li>Key classes: <code>ExceptionHandlingController</code>.
 		</li>
-		<li>See <a
-			href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc">
-				Blog</a> for more details.
+		<li>See <a th:substituteby="link :: blog"></a> for more details.
 		</li>
 	</ul>
 
@@ -26,8 +24,12 @@
 		The exceptions below are thrown and handled within the same Controller
 		using its own
 		<code>@ExceptionHandler</code>
-		methods. The controller is <a
-			href="https://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/web/ExceptionHandlingController.java">demo1.web.ExceptionHandlingController</a>.
+		methods. The controller is
+		<code>demo1.web.ExceptionHandlingController</code>
+		<a href="ExceptionHandlingController.java"
+			th:href="${gitHubSrc + '/java/demo1/web/ExceptionHandlingController.java'}">
+			<img th:replace="link :: github" />
+		</a>.
 	</p>
 	<p>To fully understand this demo, review the output in the server
 		(console) log as you click the links below.</p>
@@ -52,6 +54,12 @@
 			- should also return the database-error page. Demonstrates catching
 			multiple exceptions with one handler.
 		</li>
+		<li>Throw <a href="/local/supportInfoException">SupportInfoException</a>
+			- should generate a support oriented error page with hidden
+			stack-trace hidden in the page source. Whether this is a good idea,
+			is debatable! but it shows how to add extra information into the
+			model for the exception view to use.
+		</li>
 	</ul>
 
 	<p>
@@ -59,7 +67,7 @@
 		Controller Advice
 	</p>
 
-	<div th:substituteby="footer :: copy"></div>
+	<div th:replace="footer :: copy"></div>
 
 </body>
 </html>

@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import demo.exceptions.CustomException;
 import demo.exceptions.DatabaseException;
 import demo.exceptions.InvalidCreditCardException;
 import demo.exceptions.OrderNotFoundException;
+import demo.exceptions.SupportInfoException;
 import demo.exceptions.UnhandledException;
 
 /**
@@ -41,7 +41,6 @@ public class ExceptionHandlingController {
 	public ExceptionHandlingController() {
 		logger = LoggerFactory.getLogger(getClass());
 	}
-
 
 	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 	/* . . . . . . . . . . . . . . REQUEST HANDLERS . . . . . . . . . . . . .. */
@@ -156,17 +155,17 @@ public class ExceptionHandlingController {
 	}
 
 	/**
-	 * Simulates a database exception by always throwing
-	 * <tt>CustomException</tt>. Must be caught by an exception handler.
+	 * Always throws a <tt>SupportInfoException</tt>. Must be caught by an
+	 * exception handler.
 	 * 
 	 * @return Nothing - it always throws the exception.
-	 * @throws CustomException
+	 * @throws SupportInfoException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/customException")
+	@RequestMapping("/supportInfoException")
 	String throwCustomException() throws Exception {
-		logger.info("Throw CustomException");
-		throw new CustomException("Custom exception occurred");
+		logger.info("Throw SupportInfoException");
+		throw new SupportInfoException("Custom exception occurred");
 	}
 
 	/**
@@ -187,7 +186,9 @@ public class ExceptionHandlingController {
 	/* . . . . . . . . . . . . . EXCEPTION HANDLERS . . . . . . . . . . . . .. */
 	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-	// Convert a predefined exception to an HTTP Status code
+	/**
+	 * Convert a predefined exception to an HTTP Status code
+	 */
 	@ResponseStatus(value = HttpStatus.CONFLICT, reason = "Data integrity violation")
 	// 409
 	@ExceptionHandler(DataIntegrityViolationException.class)
@@ -196,8 +197,12 @@ public class ExceptionHandlingController {
 		// Nothing to do
 	}
 
-	// Specify the name of a specific view that will be used to display the
-	// error:
+	/**
+	 * Convert a predefined exception to an HTTP Status code and specify the
+	 * name of a specific view that will be used to display the error.
+	 * 
+	 * @return Exception view.
+	 */
 	@ExceptionHandler({ SQLException.class, DataAccessException.class })
 	public String databaseError(Exception exception) {
 		// Nothing to do. Return value 'databaseError' used as logical view name
@@ -206,8 +211,20 @@ public class ExceptionHandlingController {
 		return "databaseError";
 	}
 
-	// Total control - setup a model and return the view name
-	@ExceptionHandler(CustomException.class)
+	/**
+	 * Demonstrates how to take total control - setup a model, add useful
+	 * information and return the "support" view name. This method explicitly
+	 * creates and returns
+	 * 
+	 * @param req
+	 *            Current HTTP request.
+	 * @param exception
+	 *            The exception thrown - always {@link SupportInfoException}.
+	 * @return The model and view used by the DispatcherServlet to generate
+	 *         output.
+	 * @throws Exception
+	 */
+	@ExceptionHandler(SupportInfoException.class)
 	public ModelAndView handleError(HttpServletRequest req, Exception exception)
 			throws Exception {
 

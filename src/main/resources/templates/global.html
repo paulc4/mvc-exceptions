@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 
-<head th:substituteby="header :: copy"></head>
+<head th:replace="header :: copy"></head>
 
 <body>
 
@@ -16,9 +16,7 @@
 		<li>Key classes: <code>ControllerWithoutExceptionHandlers</code>,
 			<code>GlobalExceptionHandlingControllerAdvice</code>.
 		</li>
-		<li>See <a
-			href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc">
-				Blog</a> for more details.
+		<li>See <a th:substituteby="link :: blog"></a> for more details.
 		</li>
 	</ul>
 
@@ -27,11 +25,24 @@
 		The exceptions below are are not handled by the controller that threw
 		them, but rely on a
 		<code>ControllerAdvice</code>
-		instead. The Controller is <a
-			href="https://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo2/web/ControllerWithoutExceptionHandlers.java">demo2.web.ControllerWithoutExceptionHandlers</a>
-		and the Controller Advice <a
-			href="https://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo2/web/GlobalExceptionHandlingControllerAdvice.java">demo2.web.GlobalExceptionHandlingControllerAdvice</a>
+		<a
+			href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html#mvc-ann-controller-advice">
+			<img th:replace="link :: spring"></img>
+		</a> instead.
 	</p>
+	<ul>
+		<li>Controller: <code>demo2.web.ControllerWithoutExceptionHandlers</code>
+			<a href="ControllerWithoutExceptionHandlers.java"
+			th:href="${gitHubSrc + '/java/demo2/web/ControllerWithoutExceptionHandlers.java'}">
+				<img th:replace="link :: github" />
+		</a></li>
+		<li>Controller Advice: <code>demo2.web.GlobalExceptionHandlingControllerAdvice</code>
+			<a href="GlobalExceptionHandlingControllerAdvice.java"
+			th:href="${gitHubSrc + '/java/demo2/web/GlobalExceptionHandlingControllerAdvice.java'}">
+				<img th:replace="link :: github" />
+		</a></li>
+	</ul>
+
 	<p>To fully understand this demo, review the output in the server
 		(console) log as you click the links below.</p>
 
@@ -55,14 +66,24 @@
 			- should also return the database-error page. Demonstrates catching
 			multiple exceptions with one handler.
 		</li>
+		<li>Throw <a href="/global/supportInfoException">SupportInfoException</a>
+			- should generate a support oriented error page with hidden
+			stack-trace hidden in the page source. Whether this is a good idea,
+			is debatable! but it shows how to add extra information into the
+			model for the exception view to use.
+		</li>
 	</ul>
 
-	<p>
+	<p th:if="${profiles == 'demo-config'}">
 		Demo 3: <a href="/simpleMappingExceptionResolver/on">Using a
 			Simple Mapping Exception Handler</a>.
 	</p>
+	<p th:else="${profiles != 'demo-config'}">
+		Demo 3: <a href="/unannotated">Using a Simple Mapping Exception
+			Handler</a>.
+	</p>
 
-	<div th:substituteby="footer :: copy"></div>
+	<div th:replace="footer :: copy"></div>
 
 </body>
 </html>

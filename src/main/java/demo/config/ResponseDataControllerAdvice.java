@@ -7,17 +7,24 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
-import demo.config.DemoExceptionConfiguration.SwitchableSimpleMappingExceptionResolver;
 import demo.main.Main;
+import demo3.web.SwitchableSimpleMappingExceptionResolver;
 
 /**
- * Adds useful data into to the model for every request.
+ * Adds useful data into to the model for every request. This is another use of
+ * a Controller Advice (besides exception handling).
  * 
- * @author paulchapman
+ * @author Paul Chapman
  *
  */
 @ControllerAdvice
 public class ResponseDataControllerAdvice {
+
+	public static final String SOURCE_ON_GITHUB = //
+	"https://github.com/paulc4/mvc-exceptions/blob/master/src/main";
+
+	public static final String BLOG_URL = //
+	"https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc";
 
 	private SimpleMappingExceptionResolver resolver;
 
@@ -77,5 +84,25 @@ public class ResponseDataControllerAdvice {
 					.isEnabled() ? "on" : "off";
 		} else
 			return "on";
+	}
+
+	/**
+	 * URL of this source on github.
+	 * 
+	 * @return
+	 */
+	@ModelAttribute("gitHubSrc")
+	public String getGitHubSrcURL() {
+		return SOURCE_ON_GITHUB;
+	}
+
+	/**
+	 * Add Blog URL to model for use in any web-page.
+	 * 
+	 * @return URL of the Spring IO Blog article this demo relates to.
+	 */
+	@ModelAttribute("blogUrl")
+	public String getBlogUrl() {
+		return BLOG_URL;
 	}
 }

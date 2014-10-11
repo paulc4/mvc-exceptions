@@ -16,8 +16,8 @@ import demo.main.Profiles;
  * Setup for exception handling using a {@link SimpleMappingExceptionResolver}
  * bean.
  * <p>
- * If you prefer to do this in XML set the {@link Main#simpleMappingExceptionResolverConfig} property
- * to <code>XML</code> (see <code>mvc-configuration.xml</code>).
+ * If you prefer to do this in XML set the {@link Main#activeProfile} property
+ * to <code>XML_CONFIG_PROFILE</code> (see <code>mvc-configuration.xml</code>).
  * <p>
  * The use of the JAVA_CONFIG profile here is for demonstration only. A real
  * application wouldn't normally need to switch between XML or Java
@@ -52,7 +52,7 @@ public class ExceptionConfiguration {
 		SimpleMappingExceptionResolver r = new SimpleMappingExceptionResolver();
 
 		Properties mappings = new Properties();
-		mappings.setProperty("DatabaseException", "databaseError");
+		mappings.setProperty("DatabaseException", "databaseException");
 		mappings.setProperty("InvalidCreditCardException", "creditCardError");
 
 		r.setExceptionMappings(mappings); // None by default
@@ -71,8 +71,8 @@ public class ExceptionConfiguration {
 		 * 
 		 * Here we are choosing to use SimpleMappingExceptionResolver since many
 		 * Spring applications have used the approach since Spring V1. Normally
-		 * we would specify the view as "error" to match  Spring Boot, however
-		 * so you can see what is happening, we are using a different page.
+		 * we would specify the view as "error" to match Spring Boot, however so
+		 * you can see what is happening, we are using a different page.
 		 */
 		r.setDefaultErrorView("defaultErrorPage");
 		return r;

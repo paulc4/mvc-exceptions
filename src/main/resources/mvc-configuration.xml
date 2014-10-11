@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+	<!-- This file shows how to configure a a SimpleMappingExceptionResolver 
+		via XML configuration (which is how most developers are used to seeing it 
+		done). The equivalent Java Configuration is in the ExceptionConfiguration 
+		class -->
+
 	<!-- The use of the "xml-config" profile here is for demonstration only. 
 		A real application wouldn't normally need to switch between XML or Java Configuration. 
-		You would use one, or other, or both, all the time. This XML setup is an 
-		alternative to the ExceptionConfiguration class. -->
+		You would use one, or other, or both, all the time. -->
 	<beans profile="xml-config">
 		<!-- Configure a classic SimpleMappingExceptionResolver. Try using the 
 			ExampleSimpleMappingExceptionResolver and see the difference when /unhandledException 
@@ -17,7 +20,7 @@
 			class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 			<property name="exceptionMappings">
 				<map>
-					<entry key="DatabaseException" value="databaseError" />
+					<entry key="DatabaseException" value="databaseException" />
 					<entry key="InvalidCreditCardException" value="creditCardError" />
 				</map>
 			</property>
