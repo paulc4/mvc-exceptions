@@ -44,16 +44,16 @@
 	<h3>Demo</h3>
 	<ul class="openlist">
 
-		<li>Throw <a href="/throw/databaseException">DatabaseException</a>
+		<li>Throw <a th:href="@{/throw/databaseException}">DatabaseException</a>
 			- should generate Spring Boot's error page.
 		</li>
-		<li>Throw <a href="/throw/invalidCreditCard">InvalidCreditCardException</a>
+		<li>Throw <a th:href="@{/throw/invalidCreditCard}">InvalidCreditCardException</a>
 			- should generate Spring Boot's error page.
 		</li>
-		<li>Throw <a href="/throw/unhandledException">UnhandledException</a>
+		<li>Throw <a th:href="@{/throw/unhandledException}">UnhandledException</a>
 			- should generate Spring Boot's error page.
 		</li>
-		<li>A genuinely <a href="/unknown">Unknown page</a>. There is no
+		<li>A genuinely <a th:href="@{/unknown}">Unknown page</a>. There is no
 			handler for this URL, so the framework will generate a 404. (No
 			exception handler in the application does this, this is the standard
 			Spring MVC response to a URL it has no handler for).
@@ -61,7 +61,7 @@
 	</ul>
 
 	<p>
-		Demo 5: <a href="/demo5">Working with Spring Boot</a>.
+		Demo 5: <a th:href="@{/demo5}">Working with Spring Boot</a>.
 	</p>
 
 

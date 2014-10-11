@@ -62,15 +62,15 @@
 	<h3>Demo</h3>
 	<ul class="openlist">
 
-		<li>Throw <a href="/throw/databaseException">DatabaseException</a>
+		<li>Throw <a th:href="@{/throw/databaseException}">DatabaseException</a>
 			- should generate a specific database-error page due to configuration
 			of <code>SimpleMappingExceptionResolver</code>.
 		</li>
-		<li>Throw <a href="/throw/invalidCreditCard">InvalidCreditCardException</a>
+		<li>Throw <a th:href="@{/throw/invalidCreditCard}">InvalidCreditCardException</a>
 			- should generate a specific credit-card error page due to
 			configuration of <code>SimpleMappingExceptionResolver</code>.
 		</li>
-		<li>Throw <a href="/throw/unhandledException">UnhandledException</a>
+		<li>Throw <a th:href="@{/throw/unhandledException}">UnhandledException</a>
 			- should invoke the default (fall-back) error page defined by <code>SimpleMappingExceptionResolver</code>.
 			<p th:if="${#strings.substringAfter(profiles,', ') != 'none'}">
 				Note how uninformative it is. Subclass
@@ -86,7 +86,7 @@
 				</a>.
 			</p>
 		</li>
-		<li>A genuinely <a href="/unknown">Unknown page</a>. There is no
+		<li>A genuinely <a th:href="@{/unknown}">Unknown page</a>. There is no
 			handler for this URL, so the framework will generate a 404. (No
 			exception handler in the application does this, this is the standard
 			Spring MVC response to a URL it has no handler for).
@@ -94,12 +94,12 @@
 	</ul>
 
 	<p th:if="${profiles == 'demo-config'}">
-		Demo 4: <a href="/simpleMappingExceptionResolver/off">No Handler</a>.
+		Demo 4: <a th:href="@{/simpleMappingExceptionResolver/off}">No Handler</a>.
 		For comparison, the same exceptions with no Simple Mapping Exception
 		Resolver.
 	</p>
 	<p th:unless="${profiles == 'demo-config'}">
-		Demo 5: <a href="/demo5">Working with Spring Boot</a>.
+		Demo 5: <a th:href="@{/demo5}">Working with Spring Boot</a>.
 	</p>
 
 	<div th:substituteby="footer :: copy"></div>

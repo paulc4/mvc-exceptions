@@ -36,14 +36,14 @@
 
 	<h3>Demo</h3>
 	<ul class="openlist">
-		<li>Throw an <a href="/demo5/return">exception</a> and make the <code>@ExceptionHandler</code>
+		<li>Throw an <a th:href="@{/demo5/return}">exception</a> and make the <code>@ExceptionHandler</code>
 			method return the logical view-name "<code>error</code>" - this will
 			display the <code>error.html</code> template. Notice it contains no
 			useful data because, by default, <code>@ExceptionHandler</code>
 			methods don't provide any.
 		</li>
 		<li><p>
-				Throw an <a href="/demo5/forward">exception</a> and make the
+				Throw an <a th:href="@{/demo5/forward}">exception</a> and make the
 				<code>@ExceptionHandler</code>
 				forward the request to
 				<code>/error</code>
@@ -75,7 +75,7 @@
 	</ul>
 
 	<p>
-		Return to <a href="/">Home</a> page.
+		Return to <a th:href="@{/}">Home</a> page.
 	</p>
 
 	<div th:replace="footer :: copy"></div>

@@ -47,26 +47,26 @@
 		(console) log as you click the links below.</p>
 
 	<p>
-		The behavior of this demo is the same as <a href="/local">Demo 1</a> -
+		The behavior of this demo is the same as <a th:href="@{/local/}">Demo 1</a> -
 		just implemented differently.
 	</p>
 
 	<h3>Demo</h3>
 	<ul class="openlist">
-		<li>Throw <a href="/global/orderNotFound">OrderNotFoundException</a>
+		<li>Throw <a th:href="@{/global/orderNotFound}">OrderNotFoundException</a>
 			- should generate a 404 (in the Spring Boot error page).
 		</li>
-		<li>Throw <a href="/global/dataIntegrityViolation">DataIntegrityViolationException</a>
+		<li>Throw <a th:href="@{/global/dataIntegrityViolation}">DataIntegrityViolationException</a>
 			- should generate a 409 (in the Spring Boot error page).
 		</li>
-		<li>Throw <a href="/global/databaseError1">SQLException</a> -
+		<li>Throw <a th:href="@{/global/databaseError1}">SQLException</a> -
 			should return a specific database-error page.
 		</li>
-		<li>Throw <a href="/global/databaseError2">DataAccessException</a>
+		<li>Throw <a th:href="@{/global/databaseError2}">DataAccessException</a>
 			- should also return the database-error page. Demonstrates catching
 			multiple exceptions with one handler.
 		</li>
-		<li>Throw <a href="/global/supportInfoException">SupportInfoException</a>
+		<li>Throw <a th:href="@{/global/supportInfoException}">SupportInfoException</a>
 			- should generate a support oriented error page with hidden
 			stack-trace hidden in the page source. Whether this is a good idea,
 			is debatable! but it shows how to add extra information into the
@@ -75,11 +75,11 @@
 	</ul>
 
 	<p th:if="${profiles == 'demo-config'}">
-		Demo 3: <a href="/simpleMappingExceptionResolver/on">Using a
+		Demo 3: <a th:href="@{/simpleMappingExceptionResolver/on}">Using a
 			Simple Mapping Exception Handler</a>.
 	</p>
 	<p th:unless="${profiles == 'demo-config'}">
-		Demo 3: <a href="/unannotated">Using a Simple Mapping Exception
+		Demo 3: <a th:href="@{/unannotated}">Using a Simple Mapping Exception
 			Handler</a>.
 	</p>
 

@@ -44,7 +44,7 @@
 	<h3>The Demo</h3>
 
 	<ul class="openlist">
-		<li><a href="/local/">Local Exception Handling</a> - Exceptions
+		<li><a th:href="@{/local/}">Local Exception Handling</a> - Exceptions
 			handled in the Controller.<br /> URLs on this page are handled by
 			the <code>demo1.web.ExceptionHandlingController</code><a
 			th:href="${gitHubSrc + '/java/demo1/web/ExceptionHandlingController.java'}"><img
@@ -52,7 +52,7 @@
 			which handles its own exceptions using its own <code>@ExceptionHandler</code>
 			methods.</li>
 
-		<li><a href="/global/">Global Exception Handling</a> - Exceptions
+		<li><a th:href="@{/global/}">Global Exception Handling</a> - Exceptions
 			handled by a Controller Advice.<br />URLs on this page are handled
 			by the <code>demo2.web.ControllerWithoutExceptionHandlers</code><a
 			th:href="${gitHubSrc + '/java/demo2/web/ControllerWithoutExceptionHandlers.java'}"><img
@@ -75,14 +75,14 @@
 		-->
 		<li th:switch="${profiles}">
 			<!-- Configuration - XML: Resolver defined using XML --> <span
-			th:case="xml-config"><a href="/unannotated">With Exception
+			th:case="xml-config"><a th:href="@{/unannotated}">With Exception
 					Resolver</a> - Exceptions handled by a customized <span
 				th:replace="link :: simpleMappingExceptionResolver"></span> bean
 				defined in <code>mvc-configuration.xml</code><a
 				href="mvc-configuration.xml"
 				th:href="${gitHubSrc + '/resources/mvc-configuration.xml'}"><img
 					th:replace="link :: github"></img></a>. </span> <!-- Configuration - JAVA: Resolver defined using Java Configuration -->
-			<span th:case="java-config"><a href="/unannotated">With
+			<span th:case="java-config"><a th:href="@{/unannotated}">With
 					Exception Resolver</a> - Exceptions handled by a customized <span
 				th:replace="link :: simpleMappingExceptionResolver"></span> bean
 				defined in <code>demo.config.ExceptionConfiguration</code><a
@@ -90,7 +90,7 @@
 				th:href="${gitHubSrc + '/java/demo/config/ExceptionConfiguration.java'}"><img
 					th:replace="link :: github"></img></a>. </span> <!--  DEMO Configuration --> <span
 			th:case="demo-config"><a
-				href="/simpleMappingExceptionResolver/on">With Exception
+				th:href="@{/simpleMappingExceptionResolver/on}">With Exception
 					Resolver</a> - Exceptions handled by a runtime switchable (for demo
 				purposes only) <span
 				th:replace="link :: simpleMappingExceptionResolver"></span> bean
@@ -104,13 +104,13 @@
 
 		<!-- This option is only available when using the DEMO profile -->
 		<li th:if="${profiles == 'demo-config'}"><a
-			href="/simpleMappingExceptionResolver/off">No Resolver for
+			th:href="@{/simpleMappingExceptionResolver/off}">No Resolver for
 				Exceptions</a><br />For comparison, the same exceptions as previous
 			option, but with the resolver disabled to see what you get by
 			default. Exceptions are not totally unhandled because they are caught
 			by Spring Boot's default error page - mapped to <code>error.html</code>.</li>
 
-		<li><a href="/demo5">Using Spring Boot</a> - demonstrates how
+		<li><a th:href="@{/demo5}">Using Spring Boot</a> - demonstrates how
 			Spring Boot's error-handling setup works.</li>
 	</ul>
 
