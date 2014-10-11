@@ -5,7 +5,6 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
@@ -30,7 +29,7 @@ import demo.utils.LoggingUtilities;
  * @author Paul Chapman
  */
 @EnableAutoConfiguration
-@ComponentScan({ "demo", "demo1", "demo2", "demo3", "demo4" })
+@ComponentScan({ "demo", "demo1", "demo2", "demo3", "demo5" })
 @ImportResource("classpath:mvc-configuration.xml")
 public class Main extends SpringBootServletInitializer {
 
@@ -71,13 +70,13 @@ public class Main extends SpringBootServletInitializer {
 	}
 
 	/**
-	 * We are using the constructor to perform some useful initialisations:
+	 * We are using the constructor to perform some useful initializations:
 	 * <ol>
 	 * <li>Set the Spring Profile to use 'controller' or 'global' which in turn
 	 * selects how exceptions will be handled. Profiles are a Spring feature
 	 * from V3.1 onwards.
-	 * <li>Disable Thymeleaf caching. See {@link ThymeleafAutoConfiguration} to
-	 * see how this is used.</li>
+	 * <li>Disable Thymeleaf caching so templates (HTML files with Thymeleaf
+	 * namespace attributes) can be modified whilst the application is running.</li>
 	 * <li>Enable DEBUG level logging so you can see Spring MVC as its working.</li>
 	 * </ol>
 	 */
@@ -108,7 +107,7 @@ public class Main extends SpringBootServletInitializer {
 
 	/**
 	 * Back to the future: run the application as a Java application and it will
-	 * pick up a container Tomcat, Jetty) automatically if present. Pulls in
+	 * pick up a container (Tomcat, Jetty) automatically if present. Pulls in
 	 * Tomcat by default, running in embedded mode.
 	 * <p>
 	 * This application can also run as a traditional war file because it
@@ -141,9 +140,9 @@ public class Main extends SpringBootServletInitializer {
 	}
 
 	/**
-	 * Configure the application usign the supplied builder. This method is
-	 * invoked automatically when running in a container and explicitly by
-	 * {@link #runAsJavaApplication(String[])}.
+	 * Configure the application using the supplied builder when running as a
+	 * WAR. This method is invoked automatically when running in a container and
+	 * explicitly by {@link #runAsJavaApplication(String[])}.
 	 * 
 	 * @param application
 	 *            Spring Boot application builder.
