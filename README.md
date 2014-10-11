@@ -59,13 +59,11 @@ The files are:
   * <code>src/main/resources/mvc-configuration.xml</code>
      * XML alternative to `ExceptionConfiguration`. Also sets up a `SimpleMappingExceptionResolver`. Only used if
        the `xml-config` profile is active.
-  * <code>src/main/resources/templates/contacts.html</code>
   * <code>src/main/resources/templates/creditCardError.html</code>
   * <code>src/main/resources/templates/databaseError.html</code>
+  * <code>src/main/resources/templates/databaseException.html</code>
   * <code>src/main/resources/templates/error.html</code>
   * <code>src/main/resources/templates/exceptionPage.html</code>
-  * <code>src/main/resources/templates/index.html</code>
+  * <code>src/main/resources/templates/support.html</code>
+  * <code>src/main/resources/templates/index.html</code> (home page)
      * All the views used, generated via Thymeleaf.
-  * <code>src/main/webapp/WEB-INF/support.jsp</code>
-     * A JSP error page with exception details, including a stack-trace hidden in a comment.  It can be
-       revealed by viewing the Page Source (for example at the request of your Support team).
