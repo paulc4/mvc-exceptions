@@ -49,18 +49,18 @@
 	</dependencies>
 
 	<build>
-		<!-- Spring Boot plugin enables: spring-boot:run -->
-		<plugin>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-maven-plugin</artifactId>
-		</plugin>
-
-		<!--
-		  // Allow deployment to Cloud Foundry.  To use, run:
-		  //    mvn install
-		  //    mvn -Dcf.username=xxxm -Dcf.password=xxx -Dcf.org=xxx cf:push
-                  -->
 		<plugins>
+			<!-- Spring Boot plugin enables: spring-boot:run -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<!--
+			  // Allow deployment to Cloud Foundry.  To use, run:
+			  //    mvn install
+			  //    mvn -Dcf.username=xxxm -Dcf.password=xxx -Dcf.org=xxx cf:push
+			  -->
 			<plugin>
 				<groupId>org.cloudfoundry</groupId>
 				<artifactId>cf-maven-plugin</artifactId>
