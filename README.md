@@ -1,13 +1,11 @@
 mvc-exceptions
 ==============
 
-WARNINGS:
+NOTES:
 
-  * This project is built using the latest M5 snapshot release of Spring Boot.
-  * APIs may change and this project may not build.
-  * Check http://spring.io/spring-boot for snapshot, milestone and other releases.
-  * Update the pom.xml if necessary.
-
+  * This project is built using release 1.1.8 of Spring Boot, Java 8 and Spring 4.1 - see pom.xml.
+  * The POM builds a JAR file, not a WAR, so you must run it as a Java application: ```mvn exec:java``` will run it then goto ```http://localhost:8080```.
+ 
 This application demos most of the points covered on my MVC Exceptions blog:
 <a href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc">
 https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc</a>.
