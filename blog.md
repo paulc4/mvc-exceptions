@@ -1,7 +1,4 @@
-#Exception Handling in Spring MVC
-
-Spring MVC provides several complimentary approaches to exception handling but, when teaching Spring MVC, 
-I often find that my students are confused or not comfortable with them.
+Spring MVC provides several complimentary approaches to exception handling but, when teaching Spring MVC, I often find that my students are confused or not comfortable with them.
 
 Today I'm going to show you the
 various options available.  Our goal is to <i>not</i> handle exceptions explicitly in Controller methods
@@ -11,7 +8,9 @@ There are three options: per exception, per controller or globally.
 
 _A demonstration application that shows the points discussed here can be found at
 <a href="http://github.com/paulc4/mvc-exceptions">http://github.com/paulc4/mvc-exceptions</a>.
-See <a href="#sample-application-and-spring-boot">Sample Application and Spring Boot</a> below for details._
+See <a href="#user-content-sample-application">Sample Application</a> below for details._
+
+__NOTE:__ _The demo applications has been revamped and updated (October 2014) to use Spring Boot 1.1.8 and is (hopefully) easier to use and understand._
 
 ##Using HTTP Status Codes
 
@@ -126,9 +125,9 @@ do something like this to output the exception and the corresponding stack-trace
     -->
 ```
 
-The result looks like this (see also
-<a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/webapp/WEB-INF/support.jsp">support.jsp</a>
-in the demo application):
+For the Thymeleaf equivalent see 
+<a href="https://github.com/paulc4/mvc-exceptions/blob/master/src/main/resources/templates/support.html">support.html</a>
+in the demo application.  The result looks like this.  
 
 ![Example of an error page with a hidden exception for support](http://assets.spring.io/wp/wp-content/uploads/2013/10/support-page-example.png "Error Page with Hidden Exception")
 
@@ -382,80 +381,63 @@ As usual, Spring likes to offer you choice, so what should you do?  Here are som
 However if you have a preference for XML configuration or Annotations, that's fine too.
 
 <ul>
-  <li>For exceptions you write, consider adding `@ResponseStatus` to them.
-  <li>For all other exceptions implement an `@ExceptionHandler` method on a
-      `@ControllerAdvice` class or use an instance of `SimpleMappingExceptionResolver`.
-      You may well have `SimpleMappingExceptionResolver` configured for your application already,
-      in which case it may be easier to add new exceptions to it than implement a `@ControllerAdvice`.
-  <li>For Controller specific exception handling add `@ExceptionHandler` methods to your controller.
+  <li>For exceptions you write, consider adding <code>@ResponseStatus</code> to them.
+  <li>For all other exceptions implement an <code>@ExceptionHandler</code> method on a
+     <code>@ControllerAdvice</code> class or use an instance of <code>SimpleMappingExceptionResolver</code>.
+      You may well have <code>SimpleMappingExceptionResolver</code> configured for your application already,
+      in which case it may be easier to add new exception classes to it than implement a <code>@ControllerAdvice</code>.
+  <li>For Controller specific exception handling add <code>@ExceptionHandler</code> methods to your controller.
   <li><b>Warning:</b> Be careful mixing too many of these options in the same application.
    If the same exception can be
-   handed in more than one way, you may not get the behavior you wanted. `@ExceptionHandler`
+   handed in more than one way, you may not get the behavior you wanted. <code>@ExceptionHandler</code>
    methods on the Controller
-   are always selected before those on any `@ControllerAdvice` instance.  It is <i>undefined</i>
+   are always selected before those on any <code>@ControllerAdvice</code> instance.  It is <i>undefined</i>
    what order controller-advices are processed.
 </ul>
 
-##Sample Application and Spring Boot
+##Sample Application
 
 A demonstration application can be found at <a href="http://github.com/paulc4/mvc-exceptions">github</a>.
-It uses Spring Boot and Thymeleaf to build a simple web application.  Some explanation is needed ...
+It uses Spring Boot and Thymeleaf to build a simple web application.
+
+The application was revised (Oct 2014) and is (hopefully) better and easier to understand.  The fundamentals stay the same.  It uses Spring Boot V1.1.8 and Spring 4.1 but the code is applicable to Spring 3.x also.
+
+The demo is running on Cloud Foundry at <a href="http://mvc-exceptions-v2.cfapps.io/">http://mvc-exceptions-v2.cfapps.io/</a>.
 
 ###About the Demo
-The demo runs in one of two modes: _controller_ or _global_.  This is set via a boolean property in class
-<a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/main/Main.java">Main</a>
-which in turn enables a corresponding Spring Bean profile.
+The application leads the user through 5 demo pages, highlighting different exception handling techniques:
 
-  * When <tt>Main.global</tt> is set to <tt>false</tt>, _controller_ mode is enabled. A
-    <a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/web/ExceptionHandlingController.java">ExceptionHandlingController</a></tt>
-    is created which handles all requests and also any exceptions generated.
-  * When <tt>Main.global</tt> is set to <tt>true</tt>, _global_ mode is enabled. A
-    <a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/web/ControllerWithoutExceptionHandlers.java">ControllerWithoutExceptionHandlers</a>
-    is created to just handle requests.  Exceptions are handled globally by an instance of 
-    <a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/web/GlobalControllerExceptionHandler.java">GlobalControllerExceptionHandler</a>
-    which is a controller-advice.
+  1. A controller with `@ExceptionHandler` methods to handle its own exceptions
+  1. A contoller that throws exceptions for a global ControllerAdvice to handle 
+  1. Using a `SimpleMappingExceptionResolver` to handle exceptions
+  1. Same as demo 3 but with the `SimpleMappingExceptionResolver`  disabled for comparison
+  1. Shows how Spring Boot generates its error page
 
-In addition, a `SimpleMappingExceptionResolver` may optionally be defined.  Class `Main` has a
-second property called `smerConfig` which can take one of three enumerated values:
-
-  * `NONE`: No resolver defined.  Unhandled exceptions processed by the container.  Since we are using Tomcat
-the familiar Tomcat error page with a full Java exception stack-trace is produced.
-  * `XML`: A `SimpleMappingExceptionResolver` is configured using XML - see
-<a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/resources/mvc-configuration.xml">mvc-configuration.xml</a>.
-A Spring bean profile `xml-config` makes this happen.  If you prefer XML, this is the way to go.
-  * `JAVA`: Also sets up a `SimpleMappingExceptionResolver` by enabling a different Spring profile, `java-config`,
-using Java configuration. See
-<a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/web/ExceptionConfiguration.java">ExceptionConfiguration</a>
-
-A description of the most important files in the application is in the project's
+A description of the most important files in the application and how they relate to each demo can be found in the project's
 <a href="http://github.com/paulc4/mvc-exceptions/blob/master/README.md">README.md</a>.
 
-The one and only web-page is
+The home web-page is
 <a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/resources/templates/index.html">index.html</a>
 which:
 
- * Contains several links, all of which deliberately raise exceptions.
- * At the bottom of the page are links to Spring Boot endpoints for those interested in Spring Boot.
+ * Links to each demo page
+ * Links (bottom of the page) to Spring Boot endpoints for those interested in Spring Boot.
  
-Thanks to Spring Boot, you can run this demo as a Java application or as a WAR in your favourite container.
-Your choice.  The home page URL is <a href="http://localhost:8080">http://localhost:8080</a> when running as
-an application, or <a href="http://localhost:8080/mvc-exceptions">http://localhost:8080/mvc-exceptions</a>
-when running in a container.
+Each demo page contains several links, all of which deliberately raise exceptions.  You will need to use the back-button on your browser each time to return to the demo page.
 
-###Warning
+Thanks to Spring Boot, you can run this demo as a Java application (it runs an embedded Tomcat container).  To run the application, you can use one of the following (the second is thanks to the Spring Boot maven plugin):
 
-  * This project is built using the latest (0.5.0 at time of writing) snapshot release of Spring Boot.
-  * APIs may have since changed and this project may not build.
-  * Check <a href="http://spring.io/spring-boot">http://spring.io/spring-boot</a> for snapshot, milestone
-    and other releases.
-  * Update the `pom.xml` and/or Java code if necessary.
+   * `mvn exec:java`
+   * `mvn spring-boot:run`
+ 
+Your choice.  The home page URL will be <a href="http://localhost:8080">http://localhost:8080</a>.
 
 ###Spring Boot and Error Handling
 <a href="http://spring.io/spring-boot">Spring Boot</a> allows a Spring project to be setup with
 minimal configuration. Spring Boot creates sensible defaults automatically when it detects
 certain key classes and packages on the classpath.  For example if it sees that you are using a Servlet
 environment, it sets up Spring MVC with the most commonly used view-resolvers, hander mappings and so forth.
-If it sees JSP and/or Thymeleaf, it sets up these view-layers.
+If it sees JSP and/or Thymeleaf, it sets up these view-technologies.
 
 Spring MVC offers no default (fall-back) error page out-of-the-box.  The most common way to set a default error
 page has always been the `SimpleMappingExceptionResolver` (since Spring V1 in fact). However
@@ -463,36 +445,24 @@ Spring Boot also provides for a fallback error-handling page.
 
 At start-up, Spring Boot tries to find a mapping for `/error`.  By convention, a URL ending in `/error` maps to
 a logical view of the same name: `error`.  In the demo application this view maps in turn to the `error.html`
-Thymeleaf template. If using JSP, it would map to `error.jsp` according to the setup of your
-`InternalResourceViewResolver`.
+Thymeleaf template. (If using JSP, it would map to `error.jsp` according to the setup of your
+`InternalResourceViewResolver`).
 
-If no `/error` mapping can be found, Spring Boot defines its own fall-back error page - the so-called
-"Whitelabel Error Page" (a minimal page with just the HTTP status information and any error details, such as
-the message from an uncaught exception).  If you rename the `error.html` template to, say, `error2.html`
+If no mapping from `/error` to a View can be found, Spring Boot defines its own fall-back error page - the so-called "Whitelabel Error Page" (a minimal page with just the HTTP status information and any error details, such as the message from an uncaught exception).  If you rename the `error.html` template to, say, `error2.html`
 then restart, you will see it being used.
 
-By defining a Java configuration `@Bean`method called `defaultErrorView()` you can return your own
-error `View` instance. (see Spring Boot's `ErrorMvcAutoConfiguration` class for more information).
+By defining a Java configuration `@Bean` method called `defaultErrorView()` you can return your own error `View` instance. (see Spring Boot's `ErrorMvcAutoConfiguration` class for more information).
 
 What if you are already using `SimpleMappingExceptionResolver` to setup a default
-error view?  Simple, make sure the `defaultErrorView` defines the same view that Spring Boot uses: `error`.
-(Make sure you are using Spring Boot version `0.5.0.BUILD-SNAPSHOT` or later.  This does _not_ work with
-milestone `0.5.0.M5` or earlier).  You can disable Spring boot's error page by setting the property
+error view?  Simple, make sure the `defaultErrorView` defines the same view that Spring Boot uses: `error`.  Or you can disable Spring boot's error page by setting the property
 `error.whitelabel.enabled` to `false`.  Your container's default error page is used instead.
-There are examples of setting this and other Spring Boot properties in the constructor of
-<a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/main/Main.java">Main</a>
+There are examples of setting Spring Boot properties in the constructor of
+<a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo/main/Main.java">Main</a>.
 
 Note that in the demo, the `defaultErrorView` property of the `SimpleMappingExceptionResolver` is
-deliberately set to `defaultErrorPage` so you can see when the handler is generating the error page and when
+deliberately set not to `error` but to `defaultErrorPage` so you can see when the handler is generating the error page and when
 Spring Boot is responsible. Normally _both_ would be set to `error`.
 
-Also in the demo application I show how to create a support-ready error page with a stack-trace hidden in the
-HTML source (as a comment).  Turns out you cannot currently do this with Thymeleaf (next release they say)
-so I have used JSP instead for just that page.  There is some additional configuration in the demo code to
-allow JSP and Thymeleaf to work side by side (Spring Boot cannot set this up automatically - it needs application
-specific information.  See Javadoc in
-<a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/web/ExtraThymeleafConfigurer.java">ExtraThymeleafConfigurer</a>
-for details).
-
-
-
+Also in the demo application I show how to create a support-ready error page with a stack-trace hidden in the HTML source (as a comment).  Ideally support should get this information from the logs, but life isn't always ideal. Regardless, what this page _does_ show is how the underlying error-handling method `handleError` creates its own `ModelAndView` to provide extra information in the error page.  See:
+   * `ExceptionHandlingController.handleError()` on <a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/web/ExceptionHandlingController.java">github</a>
+   * `GlobalControllerExceptionHandler.handleError()` on <a href="https://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo2/web/GlobalExceptionHandlingControllerAdvice.java">github</a>
