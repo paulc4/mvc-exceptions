@@ -4,7 +4,7 @@ mvc-exceptions
 NOTES:
 
   * This project is built using release 1.1.8 of Spring Boot, Java 8 and Spring 4.1 - see pom.xml.
-  * The POM builds a JAR file, not a WAR, so you must run it as a Java application: ```mvn exec:java``` will run it then goto ```http://localhost:8080```.
+  * The POM builds a JAR file, not a WAR, so you must run it as a Java application.  Use `mvn exec:java` or `mvc spring-boot:run` to run it, then goto ```http://localhost:8080```.
  
 This application demos most of the points covered on my MVC Exceptions blog:
 <a href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc">
@@ -20,7 +20,7 @@ Demo 1
 Controller with @ExceptionHandler methods
 
   * <code>src/main/java/demo1/web/ExceptionHandlingController.java</code>
-     * A controller that raises exceptions and provided handlers to catch and process them.
+     * A controller that raises exceptions and provides its own handlers to catch and process them.
 
 Demo 2
 ------
@@ -43,11 +43,11 @@ mode (profile is set to `demo-config`, which is setup by default), it defines a
 (Demo 4) to show the difference.
 
    * <code>src/main/java/demo3/config/DemoExceptionConfiguration.java</code>
-       * Sets up the 
+       * Java configuration to setup the beans for this demo.
    * <code>src/main/java/demo3/web/ExceptionThrowingController.java</code>
-       * Controller used by the demo
+       * Controller used by the demo.
    * <code>src/main/java/demo3/web/SwitchableSimpleMappingExceptionResolver.java</code>
-       * The resolver subclass described above
+       * The resolver subclass described above.
    * <code>src/main/java/demo3/web/ExceptionThrowingController.java</code>
        * Controller that provides `/simpleMappingExceptionResolver/on` and
          `/simpleMappingExceptionResolver/off` for switching the resolver on/off.
@@ -73,12 +73,17 @@ Exceptions
   
 Application Setup
 -----------------
+The Demo configuration profile is useful for this demo application, but not typical.  So two other profiles are provided
+to configure a `SimpleMappingExceptionResolver` in a more typical way using either Java configuration or an XML
+bean file.
 
   * <code>src/main/java/demo/main/Main.java</code>
      * Main entry point for the application.  Can run as a Java application (using an embedded Tomcat container)
-       or as a WAR inside a container.  Sets a few initialization properties and Spring Bean profile(s).
+       or as a WAR inside a container.  Sets a few initialization properties and Spring Bean profile to use.
+       Available profiles are `demo-config` (default), `java-config`, `xml-config`.
   * <code>src/main/java/demo/main/Profiles.java</code>
     * The Spring Bean profiles used in the application.
+ 
   * <code>src/main/java/demo/config/ExceptionConfiguration.java</code>
      * Java configuration class to setup a `SimpleMappingExceptionResolver`. Only used if
        the `java-config` profile is active.
@@ -86,7 +91,7 @@ Application Setup
      * XML alternative to `ExceptionConfiguration`. Also sets up a
        `SimpleMappingExceptionResolver`. Only used if the `xml-config` profile is active.
   * <code>src/main/java/demo/config/ResponseDataControllerAdvice</code>
-      * Controller advice that puts useful data into the model for every request
+      * Controller advice that puts useful data into the model for every request.
 
 Utility Classes
 ---------------
