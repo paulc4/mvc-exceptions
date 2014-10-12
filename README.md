@@ -1,5 +1,4 @@
-mvc-exceptions
-==============
+# mvc-exceptions
 
 NOTES:
 
@@ -10,20 +9,24 @@ This application demos most of the points covered on my MVC Exceptions blog:
 <a href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc">
 https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc</a>.
 
-This demo is running on <a href="http://run.pivotal.io/">Cloud Foundry</a> at <a href="http://mvc-exceptions-v2.cfapps.io/">http://mvc-exceptions-v2.cfapps.io/</a>.
+<b>This demo is running on <a href="http://run.pivotal.io/">Cloud Foundry</a> at <a href="http://mvc-exceptions-v2.cfapps.io/">http://mvc-exceptions-v2.cfapps.io/</a>.</b>
+
+### Release History
+  * Novemeber 2013: V1
+  * October 2014: V2
+
+## Contents
 
 The files are:
 
-Demo 1
-------
+### Demo 1
 
 Controller with @ExceptionHandler methods
 
   * <code>src/main/java/demo1/web/ExceptionHandlingController.java</code>
      * A controller that raises exceptions and provides its own handlers to catch and process them.
 
-Demo 2
-------
+### Demo 2
 
 Controller relying on a ControllerAdvice to handle its exceptions.
 
@@ -34,8 +37,7 @@ Controller relying on a ControllerAdvice to handle its exceptions.
      * `@ControllerAdvice` class with all the same handlers as `ExceptionHandlingController`, but they would
        apply to all controllers.
 
-Demo 3 and 4
-------------
+### Demo 3 and 4
 
 Exception handling using a `SimpleMappingExceptionResolver`.  When running in demo
 mode (profile is set to `demo-config`, which is setup by default), it defines a
@@ -52,13 +54,12 @@ mode (profile is set to `demo-config`, which is setup by default), it defines a
        * Controller that provides `/simpleMappingExceptionResolver/on` and
          `/simpleMappingExceptionResolver/off` for switching the resolver on/off.
 
-Demo 5
-------
+### Demo 5
+
    * <code>ReturnOrRedirectController</code>
        * Controller highlighting how Spring Boot implements its error-page mechanism.
        
-Exceptions
-----------
+### Exceptions
 
   * <code>src/main/java/demo/exceptions/CustomException.java</code>
   * <code>src/main/java/demo/exceptions/DatabaseException.java</code>
@@ -71,8 +72,8 @@ Exceptions
   * <code>src/main/java/org/springframework/dao/DataIntegrityViolationException.java</code>
      * Example of a predefined annotation, copied from Spring.
   
-Application Setup
------------------
+### Application Setup
+
 The Demo configuration profile is useful for this demo application, but not typical.  So two other profiles are provided
 to configure a `SimpleMappingExceptionResolver` in a more typical way using either Java configuration or an XML
 bean file.
@@ -93,8 +94,7 @@ bean file.
   * <code>src/main/java/demo/config/ResponseDataControllerAdvice</code>
       * Controller advice that puts useful data into the model for every request.
 
-Utility Classes
----------------
+### Utility Classes
 
   * <code>src/main/java/demo/utils/BeanLogger.java</code>
      * Simple BeanPostProcessor to log all beans created.  Not required by the demo, but as Spring Boot is new,
@@ -102,8 +102,8 @@ Utility Classes
   * <code>src/main/java/demo/utils/LoggingUtilities.java</code>
      * Handy utility for setting logging levels - the code is put here to keep the classes that use it simpler.
 
-Templates
----------
+### Templates
+
 All the views used, generated via Thymeleaf.
 
   * <code>src/main/resources/templates/creditCardError.html</code>
@@ -114,13 +114,12 @@ All the views used, generated via Thymeleaf.
   * <code>src/main/resources/templates/support.html</code>
   * <code>src/main/resources/templates/index.html</code> (home page)
 
-Build
------
+### Build
+
   * <code>pom.xml</code>
      * Maven POM - notice short it is - Spring Boot does most of the work.  However heed the comments in the file.
 
-Examples
---------
+### Examples
 
 Not used by the application, but provided as sample code.
      
