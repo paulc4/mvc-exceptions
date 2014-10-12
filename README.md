@@ -84,7 +84,6 @@ bean file.
        Available profiles are `demo-config` (default), `java-config`, `xml-config`.
   * <code>src/main/java/demo/main/Profiles.java</code>
     * The Spring Bean profiles used in the application.
- 
   * <code>src/main/java/demo/config/ExceptionConfiguration.java</code>
      * Java configuration class to setup a `SimpleMappingExceptionResolver`. Only used if
        the `java-config` profile is active.
