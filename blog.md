@@ -1,3 +1,7 @@
+# Exception Handling in Spring MVC
+
+This article on the <a href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc">Spring Blog</a>.
+
 Spring MVC provides several complimentary approaches to exception handling but, when teaching Spring MVC, I often find that my students are confused or not comfortable with them.
 
 Today I'm going to show you the
