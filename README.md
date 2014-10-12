@@ -11,13 +11,13 @@ https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc</a>.
 
 <b>This demo is running on <a href="http://run.pivotal.io/">Cloud Foundry</a> at <a href="http://mvc-exceptions-v2.cfapps.io/">http://mvc-exceptions-v2.cfapps.io/</a>.</b>
 
-### Release History
+#### Release History
   * Novemeber 2013: V1
   * October 2014: V2
 
-## Contents
+## Application Overview 
 
-The files are:
+The most significant files are:
 
 ### Demo 1
 
