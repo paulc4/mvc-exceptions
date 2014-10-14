@@ -14,7 +14,6 @@
 		<config>java:demo.main.Main</config>
 		<config>java:demo.utils.BeanLogger</config>
 		<config>java:demo3.config.DemoExceptionConfiguration</config>
-		<config>java:demo.utils.LoggingUtilities</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

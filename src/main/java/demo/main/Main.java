@@ -11,7 +11,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 
 import demo.config.ExceptionConfiguration;
-import demo.utils.LoggingUtilities;
 
 /**
  * Main entry point for our application using Spring Boot. It can be run as an
@@ -85,6 +84,8 @@ public class Main extends SpringBootServletInitializer {
 		logger = LoggerFactory.getLogger(getClass());
 		logger.info("Application starting ");
 
+		// These properties could alternatively be set in application.properties
+		
 		// Disable caching - during development if a page is changed, the
 		// changes can be seen next time it is rendered. Should be 'true' in
 		// production for efficiency.
@@ -94,7 +95,6 @@ public class Main extends SpringBootServletInitializer {
 		// property to specify an alternative mapping. If using a
 		// SimpleMappingExceptionResolver, make sure it's defaultErrorView
 		// corresponds to the same page (see ErrorMvcAutoConfiguration).
-		//
 		props.setProperty("error.path", "/error");
 
 		// Set to false to turn-off Spring Boot's error page. Unhandled
@@ -102,7 +102,7 @@ public class Main extends SpringBootServletInitializer {
 		props.setProperty("error.whitelabel.enabled", "true");
 
 		// Enable internal logging for Spring MVC
-		LoggingUtilities.setLogLevel("org.springframework.web", "DEBUG");
+		props.setProperty("org.springframework.web", "DEBUG");
 	}
 
 	/**
