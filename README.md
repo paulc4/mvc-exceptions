@@ -98,8 +98,6 @@ bean file.
   * <code>src/main/java/demo/utils/BeanLogger.java</code>
      * Simple BeanPostProcessor to log all beans created.  Not required by the demo, but as Spring Boot is new,
        it allows all the beans created to be logged.
-  * <code>src/main/java/demo/utils/LoggingUtilities.java</code>
-     * Handy utility for setting logging levels - the code is put here to keep the classes that use it simpler.
 
 ### Templates
 
