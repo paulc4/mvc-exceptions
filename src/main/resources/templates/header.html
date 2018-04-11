@@ -29,7 +29,8 @@
 </head>
 
 <body th:fragment="copy" class="container">
-	<nav class="navbar navbar-default navbar-inverse" role="navigation">
+	<nav class="navbar navbar-default navbar-inverse" role="navigation"
+		style="margin-bottom: 2px;">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -44,8 +45,8 @@
 				<span class="icon-bar"></span>
 				<!-- Other Blogs -->
 			</button>
-			<a title="Spring IO" href="http://www.spring.io"><img
-				height="50" th:src="@{/spring-trans.png}" src="spring-trans.png" /></a>
+			<a title="Spring IO" href="http://www.spring.io"><img height="50"
+				th:src="@{/spring-trans.png}" src="spring-trans.png" /></a>
 			&nbsp;&nbsp;&nbsp;
 		</div>
 
@@ -58,9 +59,13 @@
 					href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc">This
 						Blog</a></li>
 				<li><a href="http://spring.io/blog">Other Blogs</a></li>
-
 			</ul>
+
 			<ul class="nav navbar-nav navbar-right">
+				<li><a href="http://run.pivotal.io"><img
+						alt="Powered by CloudFoundry" title="Powered by CloudFoundry"
+						height="30" th:src="@{/pws-header-logo_new.png}"
+						src="pws-header-logo_new.png" /></a></li>
 				<li><a href="http://www.pivotal.io"><img alt="Pivotal"
 						title="Pivotal" height="25" th:src="@{/pivotal-logo-600.png}"
 						src="pivotal-logo-600.png" /></a></li>
@@ -69,6 +74,8 @@
 		</div>
 		<!-- /.navbar-collapse -->
 	</nav>
-
+	<div style="font-size: 80%; text-align: right;">
+		<a href="http://run.pivotal.io">Powered by CloudFoundry </a>
+	</div>
 </body>
 </html>
