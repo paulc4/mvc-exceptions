@@ -1,0 +1,9 @@
+# Deployment manifest (blueprint) for deploying to Cloud Foundry
+#
+---
+applications:
+- name: mvc-exceptions
+  memory: 1G
+  instances: 1
+  host: mvc-exceptions-v2
+  path: target/mvc-exceptions-2.1.0-RELEASE.jar
