@@ -54,7 +54,7 @@ public class ReturnOrRedirectController {
 		throw new DemoException(Action.RETURN_ACTION);
 	}
 
-/**
+	/**
 	 * Throws a {@link DemoException} with the action "return" - see
 	 * {@link 
 	 * 
