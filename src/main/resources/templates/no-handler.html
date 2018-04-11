@@ -12,22 +12,41 @@
 	<h3>Summary</h3>
 	<ul>
 		<li>Demo running with profiles: <i th:text="${profiles}">profiles</i></li>
-		<li th:switch="${profiles}"><i th:text="${profiles}">PROFILE-NAME</i>:
-			Exceptions not handled elsewhere are <span th:case="'none'">handled
-				by container. </span> <span th:case="'java-config'">passed to a <code>SimpleMappingExceptionResolver</code>
+
+		<li th:switch="${profiles}">
+			<i th:text="${profiles}">PROFILE-NAME</i>:
+			Exceptions not handled elsewhere are 
+
+			<!-- NONE Profile enabled -->
+			<span th:case="'none'">handled by container. </span>
+
+			<!-- JAVA Profile enabled -->
+			<span th:case="'java-config'">passed to a <code>SimpleMappingExceptionResolver</code>
 				created via Java Configuration - see <code>ExceptionConfiguration</code>.
-		</span> <span th:case="'xml-config'">passed to a <code>SimpleMappingExceptionResolver</code>
+			</span>
+
+			<!-- XML Profile enabled -->
+			<span th:case="'xml-config'">passed to a <code>SimpleMappingExceptionResolver</code>
 				created via XML Configuration - see <code>mvc-configuration.xml</code>.
-		</span> <span th:case="'demo-config'">passed to a switchable <code>SimpleMappingExceptionResolver</code>
+			</span>
+
+			<!-- DEMO Profile enabled -->
+			<span th:case="'demo-config'">passed to a switchable <code>SimpleMappingExceptionResolver</code>
 				that may or may not choose to handle the exception - see <code>DemoExceptionConfiguration</code>.
-				Switch state = <i th:text="${switchState}">on/off</i>. <span
-				th:switch="${switchState}"> Resolver is <span th:case="'on'">enabled
-						(<a href="/simpleMappingExceptionResolver/off">disable</a>)
-				</span> <span th:case="'off'">disabled (<a
-						href="/simpleMappingExceptionResolver/on">enable</a>)
+				<br/>
+				>> Switch state = <i th:text="${switchState}">on/off</i>.
+				<span th:switch="${switchState}">
+					Resolver is
+					<span th:case="'on'">
+						enabled (<a href="/simpleMappingExceptionResolver/off">disable</a>)
+					</span>
+					<span th:case="'off'">
+						disabled (<a href="/simpleMappingExceptionResolver/on">enable</a>)
+					</span>
 				</span>
 			</span>
-		</span></li>
+		</li>
+		
 		<li>See <a th:substituteby="link :: blog"></a> for more details.
 		</li>
 	</ul>
