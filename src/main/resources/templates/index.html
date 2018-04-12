@@ -110,8 +110,11 @@
 			Spring Boot's error-handling setup works.</li>
 			
 		<li><a href="/broken">Throwing an exception in a filter</a> - this link causes the
-		    <tt>BrokenFilter</tt> to throw an exception. Note it is still reported by our
-		    default Error page.</li>
+		    <tt>BrokenFilter</tt>
+		    <a href="BrokenFilter.java" th:href="${gitHubSrc + '/java/demo/filter/BrokenFilter.java'}">
+				<img th:replace="link :: github"></img>
+			</a>
+		    to throw an exception. Note it is still reported by our default Error page.</li>
 	</ul>
 
 	<h3>Spring Boot URLs</h3>
