@@ -2,14 +2,14 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<groupId>io.spring.demo</groupId>
-	<version>2.1.0-RELEASE</version>
 	<modelVersion>4.0.0</modelVersion>
+	<groupId>io.spring.demo</groupId>
+	<version>2.0.1-RELEASE</version>
 	<artifactId>mvc-exceptions</artifactId>
-	<name>Demo application for Spring Exception Handling Blog</name>
+	<name>Demo WAR for Spring Exception Handling Blog</name>
 
-	<!-- Build as a JAR running Tomcat embedded -->
-	<packaging>jar</packaging>
+	<!-- Build as a WAR file -->
+	<packaging>war</packaging>
 
 	<!-- Uncomment to set Java or Spring version -->
 	<properties>
@@ -26,13 +26,20 @@
 		<version>2.0.1.RELEASE</version>
 	</parent>
 
-	<!-- Spring boot starters automatically configure common setups. It also 
+	<!-- Spring boot starters automatically configure common setups.  It also
 		detects known dependencies like Thymeleaf. -->
 	<dependencies>
 		<!-- Spring Boot itself. Version number inherited from parent POM. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- Not running embedded, Tomcat is provided externally -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- Tell Spring Boot to setup Thymeleaf for page rendering. -->
@@ -46,13 +53,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-
-		<!-- Auto-restart application if its source changes -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>true</optional>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -64,9 +64,9 @@
 			</plugin>
 
 			<!--
-			  // Allow deployment to Cloud Foundry. To use, run:
-			  //   mvn install 
-			  //   mvn -Dcf.username=xxxm -Dcf.password=xxx -Dcf.org=xxx cf:push
+			  // Allow deployment to Cloud Foundry.  To use, run:
+			  //    mvn install
+			  //    mvn -Dcf.username=xxxm -Dcf.password=xxx -Dcf.org=xxx cf:push
 			  -->
 			<plugin>
 				<groupId>org.cloudfoundry</groupId>
