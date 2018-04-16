@@ -1,0 +1,22 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'io.spring.demo'
+version = '2.1.0-RELEASE'
+
+description = """Demo application for Spring Exception Handling Blog"""
+
+sourceCompatibility = 1.5
+targetCompatibility = 1.5
+
+repositories {
+     //maven { url "https://repo.spring.io/libs-milestone" }
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'2.0.1.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version:'2.0.1.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version:'2.0.1.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version:'2.0.1.RELEASE'
+}

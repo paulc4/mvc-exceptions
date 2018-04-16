@@ -1,5 +1,7 @@
 *.class
 target/*
+build/
+.gradle/
 .project
 .classpath
 .settings/
