@@ -2,7 +2,7 @@
 
 NOTES:
 
-  * This project is built using release 1.1.8 of Spring Boot, Java 8 and Spring 4.1 - see pom.xml.
+  * This project is built using release 2.0.1 of Spring Boot, Java 8 and Spring 5.0 - see pom.xml.
   * The POM builds a JAR file, not a WAR, so you must run it as a Java application.  Use `mvn exec:java` or `mvn spring-boot:run` to run it, then goto ```http://localhost:8080```.
     * If you wish to build a WAR, see pom-war.xml 
  
