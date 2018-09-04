@@ -4,6 +4,7 @@ NOTES:
 
   * This project is built using release 1.1.8 of Spring Boot, Java 8 and Spring 4.1 - see pom.xml.
   * The POM builds a JAR file, not a WAR, so you must run it as a Java application.  Use `mvn exec:java` or `mvc spring-boot:run` to run it, then goto ```http://localhost:8080```.
+    * If you wish to build a WAR, see pom-war.xml 
  
 This application demos most of the points covered on my MVC Exceptions blog:
 <a href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc">
@@ -96,8 +97,8 @@ bean file.
 ### Utility Classes
 
   * <code>src/main/java/demo/utils/BeanLogger.java</code>
-     * Simple BeanPostProcessor to log all beans created.  Not required by the demo, but as Spring Boot is new,
-       it allows all the beans created to be logged.
+     * Simple BeanPostProcessor to log all beans created.  Not required by the demo, but as Spring Boot does so much,
+       it allows all the beans created to be easily logged.
 
 ### Templates
 
