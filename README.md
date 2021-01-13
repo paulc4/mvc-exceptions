@@ -4,7 +4,7 @@ NOTES:
 
   * This project is built using release 2.0.1 of Spring Boot, Java 8 and Spring 5.0 - see pom.xml.
   * The POM builds a JAR file, not a WAR, so you must run it as a Java application.  Use `mvn exec:java` or `mvn spring-boot:run` to run it, then goto ```http://localhost:8080```.
-    * If you wish to build a WAR, see pom-war.xml 
+  * If you wish to build a WAR, see `pom-war.xml`
  
 This application demos most of the points covered on my MVC Exceptions blog:
 <a href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc">
@@ -15,6 +15,7 @@ https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc</a>.
 #### Release History
   * November 2013: V1
   * October 2014: V2
+  * April 2018: V2.0.1
 
 ## Application Overview 
 
@@ -115,7 +116,7 @@ All the views used, generated via Thymeleaf.
 ### Build
 
   * <code>pom.xml</code>
-     * Maven POM - notice short it is - Spring Boot does most of the work.  However heed the comments in the file.
+     * Maven POM - notice how short it is - Spring Boot does most of the work.  However heed the comments in the file.
 
 ### Examples
 
