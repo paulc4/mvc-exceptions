@@ -31,7 +31,7 @@
 
     <!--
       // Hidden Exception Details  - this is not a recommendation, but here is
-      // how you hide an exception in the page using Thymeleaf
+      // how you could hide an exception in the page using Thymeleaf
       -->
 	<div th:utext="'&lt;!--'" th:remove="tag"></div>
 	<div th:utext="'Failed URL: ' +  ${url}" th:remove="tag">${url}</div>

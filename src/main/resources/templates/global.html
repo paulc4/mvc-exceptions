@@ -6,8 +6,8 @@
 
 <body>
 
-	<h1>Exceptions Demo 2</h1>
-	<h2>Controller Advice Exception Handling</h2>
+	<h1>Demo 2 - Global Exception Handling</h1>
+	<p class="alert alert-info">Handling exceptions using a global Controller Advice.</p>
 
 	<h3>Summary</h3>
 	<ul>
@@ -16,7 +16,7 @@
 		<li>Key classes: <code>ControllerWithoutExceptionHandlers</code>,
 			<code>GlobalExceptionHandlingControllerAdvice</code>.
 		</li>
-		<li>See <a th:substituteby="link :: blog"></a> for more details.
+		<li>See <a th:substituteby="link :: blog"></a> for full details.
 		</li>
 	</ul>
 
@@ -26,7 +26,7 @@
 		them, but rely on a
 		<code>ControllerAdvice</code>
 		<a
-			href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html#mvc-ann-controller-advice">
+			href="https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-ann-controller-advice">
 			<img th:replace="link :: spring"></img>
 		</a> instead.
 	</p>
@@ -52,6 +52,9 @@
 	</p>
 
 	<h3>Demo</h3>
+	
+	<p><b>Note:</b> After clicking on any of the links below, use your browser's <i>back</i> button to return to this page.</p>
+	
 	<ul class="openlist">
 		<li>Throw <a th:href="@{/global/orderNotFound}">OrderNotFoundException</a>
 			- should generate a 404 (in the Spring Boot error page).

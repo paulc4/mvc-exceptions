@@ -6,8 +6,9 @@
 
 <body>
 
-	<h1>Exceptions Demo 5</h1>
-	<h2>Doing it the Spring Boot Way</h2>
+	<h1>Demo 5 - Using Spring Boot</h1>
+	
+	<p class="alert alert-info">Exception handling with Spring Boot.</p>
 
 	<h3>Summary</h3>
 	<ul>
@@ -15,7 +16,7 @@
 		</li>
 		<li>Key classes: <code>ReturnOrRedirectContoller</code>, <code>BasicErrorController</code>.
 		</li>
-		<li>See <a th:substituteby="link :: blog"></a> for more details.
+		<li>See <a th:substituteby="link :: blog"></a> for full details.
 		</li>
 	</ul>
 
@@ -35,6 +36,9 @@
 		(console) log as you click the links below.</p>
 
 	<h3>Demo</h3>
+
+    <p><b>Note:</b> After clicking on any of the links below, use your browser's <i>back</i> button to return to this page.</p>
+
 	<ul class="openlist">
 		<li>Throw an <a th:href="@{/demo5/return}">exception</a> and make the <code>@ExceptionHandler</code>
 			method return the logical view-name "<code>error</code>" - this will
@@ -49,7 +53,7 @@
 				<code>/error</code>
 				. This will also display the
 				<code>error.html</code>
-				template but notice it now contains no useful data.
+				template but notice it now contains useful data.
 			</p>
 			<p>
 				This is because Spring Boot's internal
@@ -62,12 +66,12 @@
 				Model. Look for the
 				<code>BasicErrorController.errorHtml()</code>
 				<a
-					href="https://github.com/spring-projects/spring-boot/blob/master/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/web/BasicErrorController.java">
+					href="https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/web/servlet/error/BasicErrorController.java">
 					<img th:replace="link :: github"></img>
 				</a> which in turn relies on
 				<code>DefaultErrorAttributes.getErrorAttributes()</code>
 				<a
-					href="https://github.com/spring-projects/spring-boot/blob/master/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/web/DefaultErrorAttributes.java">
+					href="https://github.com/spring-projects/spring-boot/blob/2.4.x/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/web/servlet/error/DefaultErrorAttributes.java">
 					<img th:replace="link :: github"></img>
 				</a>
 			</p></li>

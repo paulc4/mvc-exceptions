@@ -52,11 +52,16 @@
 		th:unless="${ex} or ${exception} or (${message} and ${message.length() != 0})">
 		Cause unknown (no exception details available)</p>
 
-	<p>
+    <p class="filler"></p>  <!--  force space before details -->
+    
+    <hr/>
+    
+    <!-- Additional explanation - you would not normally have this in your error page. -->
+	<p class="alert alert-warning">
 		You are seeing this error page due to Spring Boot (which returns a
 		view called "error" in response to uncaught exceptions. Since we are
 		using Thymeleaf this corresponds to the template
-		<code>error.html</code>
+		<code class="bg-none">error.html</code>
 		)
 	</p>
 

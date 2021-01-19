@@ -6,8 +6,9 @@
 
 <body>
 
-	<h1>Exceptions Demo 3</h1>
-	<h2>Using Simple Mapping Exception Resolver</h2>
+	<h1>Demo 3 - Simple Mapping Exception Resolver</h1>
+	<p class="alert alert-info">Using the Simple Mapping Exception Resolver instead of annotations.</h2>
+	
 	<h3>Summary</h3>
 	<ul>
 		<li>Demo running with profiles: <i th:text="${profiles}">profiles</i></li>
@@ -39,7 +40,7 @@
 					<img th:replace="link :: github"></img>
 				</a>.
 				<br/>
-				>> Switch state = <i th:text="${switchState}">on/off</i>.
+				<span class="p-1 m-2"></span><b>NOTE:</b> Switch state = <i th:text="${switchState}">on/off</i>.</span>
 				<span th:switch="${switchState}"> Resolver is <span th:case="'on'">
 					enabled (<a href="/simpleMappingExceptionResolver/off">disable</a>)
 				</span>
@@ -50,7 +51,7 @@
 			</span>
 		</li>
 
-		<li>See <a th:replace="link :: blog"></a> for more details.
+		<li>See <a th:replace="link :: blog"></a> for full details.
 		</li>
 	</ul>
 
@@ -67,6 +68,9 @@
 		(console) log as you click the links below.</p>
 
 	<h3>Demo</h3>
+	
+	<p><b>Note:</b> After clicking on any of the links below, use your browser's <i>back</i> button to return to this page.</p>
+	
 	<ul class="openlist">
 
 		<li>Throw <a th:href="@{/throw/databaseException}">DatabaseException</a>

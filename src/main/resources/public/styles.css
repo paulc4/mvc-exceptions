@@ -16,8 +16,20 @@ ul.openlist li {
 	margin-bottom: 1em;
 }
 
+li {
+	margin-bottom: 1em;
+}
+
 a {
 	font-family: helvetica;
+}
+
+h1, h3 {
+	color: #206090;
+}
+
+h3 {
+	font-size:16pt;
 }
 
 code {
@@ -36,4 +48,16 @@ footer {
 	text-align: center;
 	color:#6DB33F;   /* Spring Green */
 	font-style: italic;
+}
+
+code, .bg-none {
+	background:none !important;
+}
+
+pre {
+	margin-left: 2em;
+}
+
+.filler {
+	height: 5em;
 }

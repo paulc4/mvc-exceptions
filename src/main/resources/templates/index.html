@@ -23,9 +23,9 @@
 		</li>
 	</ul>
 	<p>
-		Spring-Boot sets up <i>error</i> view as the default error-page and we
+		Spring-Boot sets up a view called <code>error</code> as the default error-page and we
 		are using Thymeleaf to define it via the <i>error.html</i> template
-		(if you don't configure your own error view you see the so-called
+		(if you don't configure your own error view you see the default
 		"Whitelabel Error Page").
 	</p>
 	<p>
@@ -39,7 +39,7 @@
 
 	<h3>The Demo</h3>
 
-	<ul class="openlist">
+	<ol class="openlist m-1">
 		<li><a th:href="@{/local/}">Local Exception Handling</a> - Exceptions
 			handled in the Controller.<br /> URLs on this page are handled by
 			the <code>demo1.web.ExceptionHandlingController</code><a
@@ -115,20 +115,19 @@
 				<img th:replace="link :: github"></img>
 			</a>
 		    to throw an exception. Note it is still reported by our default Error page.</li>
-	</ul>
+	</ol>
 
 	<h3>Spring Boot URLs</h3>
 	<p>For those interested, Spring Boot provides RESTful URLs for
 		interrogating your application (they return JSON format data):</p>
 
 	<ul>
-		<li><a th:href="@{/beans}">The beans</a></li>
-		<li><a th:href="@{/env}">The environment</a></li>
-		<li><a th:href="@{/dump}">Thread dump</a></li>
-		<li><a th:href="@{/health}">Application health</a></li>
-		<li><a th:href="@{/info}">Application information</a></li>
-		<li><a th:href="@{/metrics}">Application metrics</a></li>
-		<li><a th:href="@{/trace}">Request call trace</a></li>
+		<li><a th:href="@{/actuator/beans}">The beans</a></li>
+		<li><a th:href="@{/actuator/env}">The environment</a></li>
+		<li><a th:href="@{/actuator/dump}">Thread dump</a></li>
+		<li><a th:href="@{/actuator/health}">Application health</a></li>
+		<li><a th:href="@{/actuator/info}">Application information</a></li>
+		<li><a th:href="@{/actuator/metrics}">Application metrics</a></li>
 	</ul>
 
 	<div th:replace="footer :: copy"></div>
