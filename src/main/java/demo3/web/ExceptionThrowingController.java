@@ -23,7 +23,7 @@ import demo.exceptions.UnhandledException;
  * @author Paul Chapman
  */
 @Controller
-@GetMapping("/throw")
+@RequestMapping("/throw")
 public class ExceptionThrowingController {
 
 	protected Logger logger;
