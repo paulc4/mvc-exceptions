@@ -1,6 +1,7 @@
 package demo.web;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import demo.config.ResponseDataControllerAdvice;
@@ -15,22 +16,22 @@ import demo.config.ResponseDataControllerAdvice;
 @Controller
 public class ViewMappingController {
 
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String home() {
 		return "index";
 	}
 
-	@RequestMapping("/unannotated")
+	@GetMapping("/unannotated")
 	public String unannotated() {
 		return "unannotated";
 	}
 
-	@RequestMapping("/no-handler")
+	@GetMapping("/no-handler")
 	public String noHandler() {
 		return "no-handler";
 	}
 	
-	@RequestMapping("/demo5")
+	@GetMapping("/demo5")
 	public String demo4() {
 		return "demo5";
 	}

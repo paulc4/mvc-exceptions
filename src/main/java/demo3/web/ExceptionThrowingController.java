@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
@@ -22,7 +23,7 @@ import demo.exceptions.UnhandledException;
  * @author Paul Chapman
  */
 @Controller
-@RequestMapping("/throw")
+@GetMapping("/throw")
 public class ExceptionThrowingController {
 
 	protected Logger logger;
@@ -53,7 +54,7 @@ public class ExceptionThrowingController {
 	 * 
 	 * @return The view name (an HTML page with Thymeleaf markup).
 	 */
-	@RequestMapping("/")
+	@GetMapping("/")
 	String home() {
 		logger.info("Throw home page");
 
@@ -77,7 +78,7 @@ public class ExceptionThrowingController {
 	 * @throws DatabaseException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/databaseException")
+	@GetMapping("/databaseException")
 	String throwDatabaseException() throws Exception {
 		logger.info("Throw DatabaseException");
 		throw new DatabaseException("Database not found: info.db");
@@ -92,7 +93,7 @@ public class ExceptionThrowingController {
 	 * @throws InvalidCreditCardException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/invalidCreditCard")
+	@GetMapping("/invalidCreditCard")
 	String throwInvalidCreditCard() throws Exception {
 		logger.info("Throw InvalidCreditCardException");
 		throw new InvalidCreditCardException("1234123412341234");
@@ -106,7 +107,7 @@ public class ExceptionThrowingController {
 	 * @throws CustomException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/supportInfoException")
+	@GetMapping("/supportInfoException")
 	String throwCustomException() throws Exception {
 		logger.info("Throw SupportInfoException");
 		throw new SupportInfoException("Exception occurred");
@@ -120,7 +121,7 @@ public class ExceptionThrowingController {
 	 * @throws UnhandledException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/unhandledException")
+	@GetMapping("/unhandledException")
 	String throwUnhandledException() throws Exception {
 		logger.info("Throw UnhandledException");
 		throw new UnhandledException("Some exception occurred");
