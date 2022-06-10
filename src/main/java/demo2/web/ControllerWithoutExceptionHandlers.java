@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import demo.exceptions.OrderNotFoundException;
@@ -40,7 +41,7 @@ public class ControllerWithoutExceptionHandlers {
 	 * 
 	 * @return The view name (an HTML page with Thymeleaf markup).
 	 */
-	@RequestMapping("")
+	@GetMapping("")
 	String home1() {
 		logger.info("Global home page 1");
 		return "global";
@@ -51,7 +52,7 @@ public class ControllerWithoutExceptionHandlers {
 	 * 
 	 * @return The view name (an HTML page with Thymeleaf markup).
 	 */
-	@RequestMapping("/")
+	@GetMapping("/")
 	String home2() {
 		logger.info("Global home page 2");
 		return "global";
@@ -65,7 +66,7 @@ public class ControllerWithoutExceptionHandlers {
 	 * @throws OrderNotFoundException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/orderNotFound")
+	@GetMapping("/orderNotFound")
 	String throwOrderNotFoundException() {
 		logger.info("Throw OrderNotFoundException for unknown order 12345");
 		throw new OrderNotFoundException("12345");
@@ -79,7 +80,7 @@ public class ControllerWithoutExceptionHandlers {
 	 * @throws DataIntegrityViolationException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/dataIntegrityViolation")
+	@GetMapping("/dataIntegrityViolation")
 	String throwDataIntegrityViolationException() throws SQLException {
 		logger.info("Throw DataIntegrityViolationException");
 		throw new DataIntegrityViolationException("Duplicate id");
@@ -93,7 +94,7 @@ public class ControllerWithoutExceptionHandlers {
 	 * @throws SQLException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/databaseError1")
+	@GetMapping("/databaseError1")
 	String throwDatabaseException1() throws SQLException {
 		logger.info("Throw SQLException");
 		throw new SQLException();
@@ -107,7 +108,7 @@ public class ControllerWithoutExceptionHandlers {
 	 * @throws DataAccessException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/databaseError2")
+	@GetMapping("/databaseError2")
 	String throwDatabaseException2() throws DataAccessException {
 		logger.info("Throw DataAccessException");
 		throw new DataAccessException("Error accessing database");
@@ -121,7 +122,7 @@ public class ControllerWithoutExceptionHandlers {
 	 * @throws SupportInfoException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/supportInfoException")
+	@GetMapping("/supportInfoException")
 	String throwCustomException() throws Exception {
 		logger.info("Throw SupportInfoException");
 		throw new SupportInfoException("Custom exception occurred");

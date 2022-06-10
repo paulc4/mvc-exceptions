@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import demo.exceptions.OrderNotFoundException;
@@ -48,7 +49,7 @@ public class ReturnOrRedirectController {
 	 * @throws OrderNotFoundException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/demo5/return")
+	@GetMapping("/demo5/return")
 	String throwDemoException1() {
 		logger.info("Throw DemoException - ask hander to return 'error' view");
 		throw new DemoException(Action.RETURN_ACTION);
@@ -62,7 +63,7 @@ public class ReturnOrRedirectController {
 	 * @throws OrderNotFoundException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/demo5/forward")
+	@GetMapping("/demo5/forward")
 	String throwDemoException2() {
 		logger.info("Throw DemoException - ask hander to return 'error' view");
 		throw new DemoException(Action.FORWARD_ACTION);
@@ -73,7 +74,7 @@ public class ReturnOrRedirectController {
 	 * redirecting to the "/error" URL. The first shows the error page with no
 	 * additional information (ExceptionResolvers by default don't provide any).
 	 * The second forces a redirect via Spring Boot's internal
-	 * BasicErrorController whose <code>@RequestMapping</code> method adds
+	 * BasicErrorController whose <code>@GetMapping</code> method adds
 	 * exception and other details into the Model for the error view to use.
 	 * 
 	 * @return Exception view.

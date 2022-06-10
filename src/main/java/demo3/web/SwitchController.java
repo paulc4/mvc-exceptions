@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +45,7 @@ public class SwitchController {
 	 *            What to do. Resolver is enabled if set to "ON" (case ignored).
 	 * @return Redirection back to the home page.
 	 */
-	@RequestMapping("/simpleMappingExceptionResolver/{action}")
+	@GetMapping("/simpleMappingExceptionResolver/{action}")
 	public String enable(@PathVariable("action") String action, Model model) {
 		LoggerFactory.getLogger(getClass()).info(
 				"SwitchableSimpleMappingExceptionResolver is " + action);
