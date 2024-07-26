@@ -11,7 +11,7 @@
 	<!-- Build as a WAR file -->
 	<packaging>war</packaging>
 
-	<!-- Uncomment to set Java or Spring version -->
+	<!-- Modify to set Java or Spring version -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<start-class>demo.main.Main</start-class>

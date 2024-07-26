@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<groupId>io.spring.demo</groupId>
 	<version>2.1.0</version>
@@ -11,11 +12,11 @@
 	<!-- Build as a JAR running Tomcat embedded -->
 	<packaging>jar</packaging>
 
-	<!-- Uncomment to set Java or Spring version -->
+	<!-- Modify to set Java or Spring version -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<start-class>demo.main.Main</start-class>
-		 <java.version>1.8</java.version> 
+		<java.version>1.8</java.version>
 	</properties>
 
 	<!-- Must inherit from the Spring Boot parent POM. -->
