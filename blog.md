@@ -1,6 +1,6 @@
 # Exception Handling in Spring MVC
 
-This article on the <a href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc">Spring Blog</a>.
+This article is also on the <a href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc">Spring Blog</a>.
 
 Spring MVC provides several complimentary approaches to exception handling but, when teaching Spring MVC, I often find that my students are confused or not comfortable with them.
 
@@ -16,7 +16,7 @@ See <a href="#user-content-sample-application">Sample Application</a> below for 
 
 __NOTE:__ _The demo applications has been revamped and updated (October 2014) to use Spring Boot 1.1.8 and is (hopefully) easier to use and understand._
 
-##Using HTTP Status Codes
+## Using HTTP Status Codes
 
 Normally any unhandled exception thrown when processing a web-request causes the server to return an
 HTTP 500 response.  However, any exception that you write yourself can be annotated with the
@@ -47,8 +47,8 @@ And here is a controller method using it:
 
 A familiar HTTP 404 response will be returned if the URL handled by this method includes an unknown order id.
 
-##Controller Based Exception Handling
-###Using @ExceptionHandler
+## Controller Based Exception Handling
+###  Using @ExceptionHandler
 
 You can add extra (`@ExceptionHandler`) methods to any controller to specifically handle exceptions
 thrown by request handling (`@RequestMapping`) methods in the same controller.  Such methods can:
@@ -109,7 +109,7 @@ as `HttpServletRequest`, `HttpServletResponse`, `HttpSession` and/or `Principle`
 `Model` may __not__ be a parameter of any `@ExceptionHandler` method.  Instead, setup a model inside the method
 using a `ModelAndView` as shown by `handleError()` above.
 
-###Exceptions and Views
+### Exceptions and Views
 
 Be careful when adding exceptions to the model.  Your users do not want to see
 web-pages containing Java exception details and stack-traces. However, it can be useful to put exception
@@ -135,8 +135,8 @@ in the demo application.  The result looks like this.
 
 ![Example of an error page with a hidden exception for support](http://assets.spring.io/wp/wp-content/uploads/2013/10/support-page-example.png "Error Page with Hidden Exception")
 
-##Global Exception Handling
-###Using @ControllerAdvice Classes
+## Global Exception Handling
+### Using @ControllerAdvice Classes
 
 A controller advice allows you to use exactly the same exception handling techniques but apply them
 across the whole application, not just to an individual controller.  You can think of them as an annotation
@@ -195,9 +195,9 @@ class GlobalDefaultExceptionHandler {
 }
 ```
 
-##Going Deeper
+## Going Deeper
 
-###HandlerExceptionResolver
+### HandlerExceptionResolver
 
 Any Spring bean declared in the `DispatcherServlet`'s application context that implements
 `HandlerExceptionResolver` will be used to intercept and process any exception raised
@@ -234,7 +234,7 @@ You can, if you wish, implement your own `HandlerExceptionResolver` to setup you
 exception handling system. Handlers typically implement Spring's `Ordered` interface so you can define the
 order that the handlers run in.
 
-###SimpleMappingExceptionResolver
+### SimpleMappingExceptionResolver
 
 Spring has long provided a simple but convenient implementation of `HandlerExceptionResolver`
 that you may well find being used in your appication already - the `SimpleMappingExceptionResolver`.
@@ -297,7 +297,7 @@ The _defaultErrorView_ property is especially useful as it ensures any uncaught 
 a suitable application defined error page. (The default for most application servers is to display a Java
 stack-trace - something your users should _never_ see).
 
-###Extending SimpleMappingExceptionResolver
+### Extending SimpleMappingExceptionResolver
 
 It is quite common to extend `SimpleMappingExceptionResolver` for several reasons:
 
@@ -338,7 +338,7 @@ public class MyMappingExceptionResolver extends SimpleMappingExceptionResolver {
 This code is in the demo application as
 <a href="https://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/web/ExampleSimpleMappingExceptionResolver.java">ExampleSimpleMappingExceptionResolver</a>
 
-###Extending ExceptionHandlerExceptionResolver
+### Extending ExceptionHandlerExceptionResolver
 
 It is also possible to extend `ExceptionHandlerExceptionResolver` and override its
 `doResolveHandlerMethodException` method in the same way. It has almost the same signature
@@ -351,7 +351,7 @@ modify/replace the one created by Spring).  See
 <a href="http://github.com/paulc4/mvc-exceptions/blob/master/src/main/java/demo1/web/ExampleExceptionHandlerExceptionResolver.java">ExampleExceptionHandlerExceptionResolver</a>
 in the demo app for more.
 
-###Errors and REST
+### Errors and REST
 
 RESTful GET requests may also generate exceptions and we have already seen how we can return standard HTTP
 Error response codes.  However, what if you want to return information about the error?  This is very easy to do.
@@ -379,7 +379,7 @@ Now we can return an instance from a handler as the ```@ResponseBody``` like thi
 } 
 ```
 
-##What to Use When?
+## What to Use When?
 
 As usual, Spring likes to offer you choice, so what should you do?  Here are some rules of thumb.
 However if you have a preference for XML configuration or Annotations, that's fine too.
@@ -399,14 +399,14 @@ However if you have a preference for XML configuration or Annotations, that's fi
    what order controller-advices are processed.
 </ul>
 
-##Sample Application
+## Sample Application
 
 A demonstration application can be found at <a href="http://github.com/paulc4/mvc-exceptions">github</a>.
 It uses Spring Boot and Thymeleaf to build a simple web application.
 
 The application was revised (Oct 2014) and is (hopefully) better and easier to understand.  The fundamentals stay the same.  It uses Spring Boot V1.1.8 and Spring 4.1 but the code is applicable to Spring 3.x also.
 
-###About the Demo
+### About the Demo
 The application leads the user through 5 demo pages, highlighting different exception handling techniques:
 
   1. A controller with `@ExceptionHandler` methods to handle its own exceptions
@@ -434,7 +434,7 @@ Thanks to Spring Boot, you can run this demo as a Java application (it runs an e
  
 Your choice.  The home page URL will be <a href="http://localhost:8080">http://localhost:8080</a>.
 
-###Spring Boot and Error Handling
+### Spring Boot and Error Handling
 <a href="http://spring.io/spring-boot">Spring Boot</a> allows a Spring project to be setup with
 minimal configuration. Spring Boot creates sensible defaults automatically when it detects
 certain key classes and packages on the classpath.  For example if it sees that you are using a Servlet
