@@ -13,6 +13,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,7 +52,7 @@ public class ExceptionHandlingController {
 	 * 
 	 * @return The view name (an HTML page with Thymeleaf markup).
 	 */
-	@RequestMapping("")
+	@GetMapping("")
 	String home1() {
 		logger.info("Local home page 1");
 		return "local";
@@ -62,7 +63,7 @@ public class ExceptionHandlingController {
 	 * 
 	 * @return The view name (an HTML page with Thymeleaf markup).
 	 */
-	@RequestMapping("/")
+	@GetMapping("/")
 	String home2() {
 		logger.info("Local home page 2");
 		return "local";
@@ -76,7 +77,7 @@ public class ExceptionHandlingController {
 	 * @throws OrderNotFoundException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/orderNotFound")
+	@GetMapping("/orderNotFound")
 	String throwOrderNotFoundException() {
 		logger.info("Throw OrderNotFoundException for unknown order 12345");
 		throw new OrderNotFoundException("12345");
@@ -90,7 +91,7 @@ public class ExceptionHandlingController {
 	 * @throws DataIntegrityViolationException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/dataIntegrityViolation")
+	@GetMapping("/dataIntegrityViolation")
 	String throwDataIntegrityViolationException() throws SQLException {
 		logger.info("Throw DataIntegrityViolationException");
 		throw new DataIntegrityViolationException("Duplicate id");
@@ -104,7 +105,7 @@ public class ExceptionHandlingController {
 	 * @throws SQLException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/databaseError1")
+	@GetMapping("/databaseError1")
 	String throwDatabaseException1() throws SQLException {
 		logger.info("Throw SQLException");
 		throw new SQLException();
@@ -118,7 +119,7 @@ public class ExceptionHandlingController {
 	 * @throws DataAccessException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/databaseError2")
+	@GetMapping("/databaseError2")
 	String throwDatabaseException2() throws DataAccessException {
 		logger.info("Throw DataAccessException");
 		throw new DataAccessException("Error accessing database");
@@ -133,7 +134,7 @@ public class ExceptionHandlingController {
 	 * @throws InvalidCreditCardException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/invalidCreditCard")
+	@GetMapping("/invalidCreditCard")
 	String throwInvalidCreditCard() throws Exception {
 		logger.info("Throw InvalidCreditCardException");
 		throw new InvalidCreditCardException("1234123412341234");
@@ -148,7 +149,7 @@ public class ExceptionHandlingController {
 	 * @throws DatabaseException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/databaseException")
+	@GetMapping("/databaseException")
 	String throwDatabaseException() throws Exception {
 		logger.info("Throw InvalidCreditCardException");
 		throw new DatabaseException("Database not found: info.db");
@@ -162,7 +163,7 @@ public class ExceptionHandlingController {
 	 * @throws SupportInfoException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/supportInfoException")
+	@GetMapping("/supportInfoException")
 	String throwCustomException() throws Exception {
 		logger.info("Throw SupportInfoException");
 		throw new SupportInfoException("Custom exception occurred");
@@ -176,7 +177,7 @@ public class ExceptionHandlingController {
 	 * @throws UnhandledException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/unhandledException")
+	@GetMapping("/unhandledException")
 	String throwUnhandledException() throws Exception {
 		logger.info("Throw UnhandledException");
 		throw new UnhandledException("Some exception occurred");

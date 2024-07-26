@@ -406,8 +406,6 @@ It uses Spring Boot and Thymeleaf to build a simple web application.
 
 The application was revised (Oct 2014) and is (hopefully) better and easier to understand.  The fundamentals stay the same.  It uses Spring Boot V1.1.8 and Spring 4.1 but the code is applicable to Spring 3.x also.
 
-The demo is running on Cloud Foundry at <a href="http://mvc-exceptions-v2.cfapps.io/">http://mvc-exceptions-v2.cfapps.io/</a>.
-
 ###About the Demo
 The application leads the user through 5 demo pages, highlighting different exception handling techniques:
 
