@@ -2,15 +2,16 @@
 
 ## Project Overview
 
-* Last updated January 2021
-* This project is built using release 2.4.2 of Spring Boot, Java 8 and Spring 5.3.3 - see pom.xml.
-* Web pages use Thymeleaf 3.0.12 and Bootstrap 4.5.3.
+* Last updated July 2024
+* This project is built using release 2.7.18 of Spring Boot, Java 8 and Spring 5.3.31 - see pom.xml.
+* Web pages use Thymeleaf 3.0.15 and Bootstrap 4.5.3.
 * The POM builds a JAR file, not a WAR, so you must run it as a Java application.  Use `mvn exec:java` or `mvn spring-boot:run` to run it, then goto ```http://localhost:8080```.
 * If you wish to build a WAR, see `pom-war.xml`
 
 This application demos most of the points covered on my MVC Exceptions blog:
 
-* https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc.
+* Local copy is here: [blog.md](blog.md).
+* Original blog: https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc.
 
 ## Release History
 
@@ -18,6 +19,7 @@ This application demos most of the points covered on my MVC Exceptions blog:
 * October 2014: V2
 * April 2018: V2.0.1
 * January 2021: V2.1.0
+* January 2021: V2.1.1
 
 ## Application Overview
 
